@@ -1,43 +1,48 @@
-# Astro Starter Kit: Minimal
+# Holimedicine website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+The website for Natalia i Donat Cupiał — family medicine and a holistic approach
+to health. Built with **Astro** (static output), **Tailwind CSS v4**, and
+**Keystatic** as a Git-based CMS.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Live: https://holimedicine.github.io/website/
 
-## 🚀 Project Structure
+## Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Astro** — pages in `src/pages/*.astro`, shared UI in `src/components` and
+  `src/layouts`.
+- **Tailwind CSS v4** (via PostCSS) — the whole theme lives in
+  `src/styles/global.css` (`@theme` tokens + `@layer components`).
+- **Keystatic** — admin UI at `/keystatic/`; content is stored as MDX in the repo.
+- **GitHub Actions** — builds and deploys to GitHub Pages on every push to `main`.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Content
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Two collections, one MDX file per entry:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `src/content/edukacja/*.mdx` — educational articles.
+- `src/content/przepisy/*.mdx` — recipes.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Both are editable through the Keystatic admin in dev (requires a GitHub App; see
+`.env.example`). Recipe images live at
+`public/images/przepisy/<slug>/coverImage.jpg`.
 
-## 🧞 Commands
+## Commands
 
-All commands are run from the root of the project, from a terminal:
+| Command             | Action                                                        |
+| ------------------- | ------------------------------------------------------------- |
+| `npm install`       | Install dependencies                                          |
+| `npm run dev`       | Dev server at `localhost:4321` (admin at `/keystatic/`)       |
+| `npm run build`     | Static production build to `./dist/`                          |
+| `npm run preview`   | Preview the build at `localhost:4322/website/`                |
+| `npm run typecheck` | Type-check with `tsc`                                         |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Deployment
 
-## 👀 Want to learn more?
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and
+publishes to GitHub Pages. Requires **Settings → Pages → Source = "GitHub
+Actions"** (one-time). You never commit build output.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Architecture decisions
+
+See [`docs/adr/`](./docs/adr/README.md) for the reasoning behind the framework,
+styling, CMS, content model, deploy and base-path choices.
