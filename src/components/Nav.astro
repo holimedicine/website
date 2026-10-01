@@ -1,0 +1,29 @@
+---
+import { withBase } from '../utils/url';
+
+const links = [
+  { href: '/#o-nas', label: 'O nas' },
+  { href: '/#podejscie', label: 'Podejście' },
+  { href: '/#zakres', label: 'Zakres opieki' },
+  { href: '/przepisy', label: 'Przepisy' },
+  { href: '/edukacja', label: 'Edukacja' },
+  { href: '/produkty', label: 'Polecane produkty' },
+  { href: '/galeria', label: 'Galeria' },
+  { href: '/#opinie', label: 'Opinie' },
+].map((link) => ({ ...link, href: withBase(link.href) }));
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href={withBase('/')} class="nav-brand">Natalia i Donat Cupiał</a>
+    <div class="nav-links">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+    <a href={withBase('/#kontakt')} class="nav-cta">Umów wizytę</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Otwórz menu">☰</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    <a href={withBase('/#kontakt')}>Umów wizytę</a>
+  </div>
+</nav>

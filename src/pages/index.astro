@@ -1,0 +1,346 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { withBase } from '../utils/url';
+
+const services = [
+  {
+    title: 'Medycyna rodzinna',
+    body: 'Kompleksowa opieka dla pacjentów w każdym wieku, od diagnostyki po prowadzenie chorób przewlekłych.',
+  },
+  {
+    title: 'Medycyna stylu życia i medycyna profilaktyczna',
+    body: 'Jako pierwsza linia leczenia i profilaktyki chorób. A w niej: optymalizacja nawyków i biohacking; normalizacja snu; dbałość o zdrowy ruch; świadome odżywianie; relacje społeczne. Ponadto: badania okresowe, plan profilaktyki dopasowany do wieku, historii rodzinnej i stylu życia.',
+  },
+  {
+    title: 'Choroby metaboliczne i endokrynologiczne',
+    body: 'Diagnostyka i leczenie: cukrzycy, dyslipidemii, otyłości, insulinooporności, zespołu metabolicznego, chorób tarczycy, nadciśnienia tętniczego..',
+  },
+  {
+    title: 'Wsparcie żywieniowe',
+    body: 'Podstawy dietetyki klinicznej wplecione w codzienną opiekę, dostosowane do stylu życia, poziomu aktywności fizycznej, a także istniejących schorzeń. Leczenie żywieniowe w myśl sentencji „Niech pożywienie będzie twoim lekiem, a lek pożywieniem',
+  },
+  {
+    title: 'Diagnostyka laboratoryjna',
+    body: 'Interpretacja wyników badań w szerszym kontekście, nie tylko jako pojedyncze liczby poza normą.',
+  },
+  {
+    title: 'Zdrowie psychiczne',
+    body: 'Pierwszy kontakt i wsparcie przy stresie, wypaleniu i zaburzeniach snu, z jasną ścieżką dalszej pomocy.',
+  },
+  {
+    title: 'Przewlekłe stany zapalne',
+    body: 'Szukanie i usuwanie źródeł przewlekłego zapalenia w organizmie, nie tylko łagodzenie jego objawów',
+  },
+  {
+    title: 'Choroby autoimmunologiczne',
+    body: 'Diagnostyka i prowadzenie schorzeń takich jak: choroby tarczycy (Hashimoto, Graves-Basedow); reumatyczne zapalenie stawów i polimialgia reumatyczna; nieswoiste choroby zapalne jelit (WZJG, ChLC), choroby dermatologiczne (np.: łuszczyca), Ponadto leczenie chorób alergicznych i związanych z nietolerancjami pokarmowymi.',
+  },
+  {
+    title: 'Choroby przewodu pokarmowego',
+    body: 'Wsparcie przy nieswoistych chorobach zapalnych jelit - WZJG, ChLC; eradykacja H.pylori; zapalenie żołądka; dysbioza bakteryjna - SIBO, IMO, SIFO, LIBO; zespół jelita drażliwego (IBS) oraz w przewlekłych dolegliwościach takich jak: zaparcia, wzdęcia, biegunki, nudności, niespecyficzne bóle brzucha.',
+  },
+  {
+    title: 'Choroby narządu ruchu',
+    body: 'Diagnoza i leczenie dolegliwości układu mięśniowo-szkieletowego. Na przykład: ostre i przewlekłe bóle kręgosłupa, dyskopatie, rwa kulszowa i barkowa, zmiany zwyrodnieniowe stawów, zespoły przeciążeniowe (np. łokieć tenisisty, zespół cieśni nadgarstka, zapalenie Achillesa, zespół bolesnego barku), zablokowania stawowe oraz wady postawy. Wykorzystanie podejścia funkcjonalnego, terapii manualnej, chiropraktyki.',
+  },
+  {
+    title: 'Choroby neurologiczne',
+    body: 'WProfilaktyka chorobie Parkinsona, Alzheimera oraz otępienia; różne rodzaje bóli głowy i migreny, neuralgie, zespoły bólowe kręgosłupa, wykorzystanie leków nootropowych oraz marihuany medycznej. Wielokierunkowa ocena bólu przewlekłego i wspólne wypracowanie planu, który realnie poprawia jakość życia.',
+  },
+  {
+    title: 'Edukacja zdrowotna',
+    body: 'Przystępna edukacja pomagająca pacjentom rozumieć własne zdrowie oraz szerzyć świadomość w rodzinnym gronie.',
+  },
+];
+---
+
+<SiteLayout
+  title="Natalia i Donat Cupiał — holimedicine.eu.org"
+  description="Medycyna rodzinna i holistyczne podejście do zdrowia. Natalia i Donat Cupiał."
+>
+  <!-- HERO -->
+  <header class="hero">
+    <svg
+      class="hero-motif"
+      viewBox="0 0 400 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M200 300 C198 240 202 200 190 160 C178 120 150 100 120 70"
+        stroke="var(--color-accent-red)"
+        stroke-width="1.6"
+        opacity="0.6"></path>
+      <path
+        d="M190 160 C205 130 230 115 260 95"
+        stroke="var(--color-accent-red)"
+        stroke-width="1.2"
+        opacity="0.45"></path>
+      <path
+        d="M200 300 C202 235 200 190 215 150 C230 110 265 90 300 60"
+        stroke="var(--color-accent-gold)"
+        stroke-width="1.4"
+        opacity="0.5"></path>
+      <path
+        d="M120 70 C105 55 95 35 88 10"
+        stroke="var(--color-accent-red)"
+        stroke-width="1"
+        opacity="0.4"></path>
+      <path
+        d="M120 70 C138 60 150 45 155 25"
+        stroke="var(--color-accent-red)"
+        stroke-width="1"
+        opacity="0.4"></path>
+      <path
+        d="M260 95 C275 80 280 60 275 35"
+        stroke="var(--color-accent-gold)"
+        stroke-width="1"
+        opacity="0.4"></path>
+      <path
+        d="M215 150 C195 140 178 145 160 130"
+        stroke="var(--color-accent-red)"
+        stroke-width="1"
+        opacity="0.35"></path>
+    </svg>
+    <svg
+      class="hero-motif-heart"
+      viewBox="0 0 200 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M100 170 C40 130 15 95 15 65 C15 40 35 22 58 22 C75 22 90 32 100 48 C110 32 125 22 142 22 C165 22 185 40 185 65 C185 95 160 130 100 170 Z"
+        stroke="var(--color-accent-red)"
+        stroke-width="1.4"
+        opacity="0.55"></path>
+      <path
+        d="M20 90 L55 90 L68 65 L82 115 L95 80 L105 100 L180 100"
+        stroke="var(--color-accent-gold)"
+        stroke-width="1.2"
+        opacity="0.6"></path>
+    </svg>
+    <div class="hero-inner">
+      <p class="eyebrow">Medycyna rodzinna · podejście holistyczne · holimedicine.eu.org</p>
+      <h1>Leczymy <span class="accent">całego człowieka</span>,<br />nie tylko listę objawów.</h1>
+      <p class="lead">
+        Jesteśmy małżeństwem lekarzy. Łączymy rzetelną diagnostykę medycyny rodzinnej z uważnym
+        spojrzeniem na sen, stres, dietę i codzienne nawyki — bo to one najczęściej decydują o zdrowiu
+        na co dzień.
+      </p>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Umów wizytę</a>
+        <a href="#o-nas" class="btn-secondary">Poznaj nas</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- O NAS -->
+  <section class="section site-container" id="o-nas">
+    <div class="section-head reveal">
+      <p class="eyebrow">O nas</p>
+      <h2>Dwoje lekarzy, jedna misja</h2>
+    </div>
+
+    <p class="mission reveal">
+      Wspólnie pragniemy realizować się poprzez pomoc innym. Zależy nam na poszerzaniu świadomości na
+      temat zdrowia i zdrowego stylu życia oraz na inspirowaniu do czegoś dobrego i pięknego. Na co
+      dzień leczymy ludzi, patrząc na <strong>osobę jako na całość</strong>, a nie przez pryzmat
+      jednego problemu.
+    </p>
+
+    <div class="couple-photo-wrap reveal">
+      <img src={withBase('/images/natalia-donat.jpg')} alt="Natalia i Donat Cupiał" loading="lazy" />
+    </div>
+
+    <div class="profiles-grid reveal">
+      <div class="profile-card">
+        <div class="role">Lekarz · od 2024</div>
+        <h3>Donat Cupiał</h3>
+        <p>
+          Lekarz, absolwent Uniwersytetu Medycznego w Łodzi na kierunku Wojskowo-lekarskim, rezydent
+          medycyny rodzinnej. W przeszłości student fizjoterapii - doświadczenie jakie tam nabył
+          kształtuje sposób, w jaki patrzy na ciało człowieka: funkcjonalnie i całościowo, nie tylko
+          przez pryzmat pojedynczej dolegliwości lub pojedynczego wyniku w badaniu laboratoryjnym. W
+          swojej codziennej pracy wykorzystuje umiejętności nabyte w trakcie wielu lat ciągłej nauki.
+          Stawia nie tylko na holistyczne podejście do chorób internistycznych, ale także na
+          praktyczne umiejętności takie jak terapia manualna.
+        </p>
+      </div>
+      <div class="profile-card">
+        <div class="role">Lekarz · od 2025</div>
+        <h3>Natalia Cupiał</h3>
+        <p>
+          Lekarz, absolwent Uniwersytetu Medycznego w Łodzi na kierunku Wojskowo-lekarskim. Ponadto
+          magister analityki medycznej — łączy dokładność diagnostyki laboratoryjnej z codzienną
+          praktyką lekarską, dzięki czemu decyzje kliniczne opiera na solidnych danych. W swojej
+          codziennej pracy zwraca szczególną uwagę na bliskie sercu aspekty związane z psychiką
+          człowieka i estetyką. Swoje zamiłowanie do gotowania przekłada na przygotowywanie zdrowych,
+          pysznych i pięknie wyglądających przepisów - do Waszej dyspozycji!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PODEJŚCIE -->
+  <section class="section site-container" id="podejscie">
+    <div class="section-head reveal">
+      <p class="eyebrow">Filozofia pracy</p>
+      <h2>Trzy filary, jedna osoba</h2>
+      <p>
+        Ciało, umysł i dusza rzadko funkcjonują osobno — dlatego traktujemy je razem, nie po kolei. U
+        podstaw naszej praktyki leży <strong>medycyna stylu życia</strong>: przekonanie, że codzienne
+        wybory dotyczące snu, ruchu, odżywiania i relacji mają większy wpływ na zdrowie niż pojedyncza
+        wizyta w gabinecie.
+      </p>
+    </div>
+    <div class="phil-grid">
+      <div class="phil-card reveal">
+        <h3>Ciało</h3>
+        <p>
+          Diagnoza oparta na dowodach, ale zawsze w kontekście całego organizmu — nie pojedynczego
+          objawu wyrwanego z historii pacjenta.
+        </p>
+      </div>
+      <div class="phil-card reveal">
+        <h3>Umysł</h3>
+        <p>
+          Stres, sen i emocje wpływają na zdrowie fizyczne równie mocno jak dieta czy genetyka.
+          Rozmawiamy o nich tak samo poważnie.
+        </p>
+      </div>
+      <div class="phil-card reveal">
+        <h3>Dusza</h3>
+        <p>
+          Sens, wartości i wewnętrzny spokój wpływają na to, jak radzimy sobie z chorobą i jak dbamy o
+          siebie na co dzień. Dajemy przestrzeń na rozmowę o tym, co dla pacjenta naprawdę ważne.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZAKRES OPIEKI -->
+  <section class="section site-container" id="zakres">
+    <div class="section-head reveal">
+      <p class="eyebrow">Zakres opieki</p>
+      <h2>W czym możemy pomóc</h2>
+    </div>
+    <div class="services-grid reveal">
+      {services.map((service) => (
+        <div class="service-item">
+          <h3>{service.title}</h3>
+          <p>{service.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- OPINIE -->
+  <section class="section site-container" id="opinie">
+    <div class="section-head reveal">
+      <p class="eyebrow">Opinie</p>
+      <h2>Co mówią pacjenci</h2>
+      <p>Zostaw opinię o naszej działalności — podaj imię, nazwisko i adres e-mail.</p>
+    </div>
+    <div class="reviews-wrap reveal">
+      <form class="review-form" id="reviewForm">
+        <label for="reviewName">Imię i nazwisko</label>
+        <input type="text" id="reviewName" required />
+        <label for="reviewEmail">Adres e-mail</label>
+        <input type="email" id="reviewEmail" required />
+        <label for="reviewText">Treść opinii</label>
+        <textarea id="reviewText" required></textarea>
+        <button type="submit" class="btn-primary">Dodaj opinię</button>
+        <p class="form-note">
+          E-mail nie będzie publicznie widoczny — potrzebujemy go tylko do weryfikacji. Opinie
+          zapisują się lokalnie w tej przeglądarce.
+        </p>
+      </form>
+      <div>
+        <div class="review-list" id="reviewList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="section site-container" id="kontakt">
+    <div class="contact-box reveal">
+      <h2>Porozmawiajmy o Twoim zdrowiu</h2>
+      <p>Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.</p>
+      <div class="contact-meta">
+        <div><strong>Telefon</strong>+48 000 000 000</div>
+        <div><strong>E-mail</strong>dscupial@gmail.com</div>
+        <div><strong>Gabinet</strong>ul. Paderewskiego 25, 42-400 Zawiercie</div>
+      </div>
+      <div class="hero-actions justify-center mt-8">
+        <a href="mailto:kontakt@holimedicine.eu.org" class="btn-primary">Napisz e-mail</a>
+        <a href="tel:+48000000000" class="btn-secondary">Zadzwoń</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const STORAGE_KEY = 'cupial-gabinet-opinie';
+    const reviewForm = document.getElementById('reviewForm') as HTMLFormElement | null;
+    const reviewList = document.getElementById('reviewList');
+
+    function loadReviews(): Array<{ name: string; email: string; text: string; date: string }> {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveReviews(reviews: unknown[]) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+    }
+
+    function escapeHtml(str: string) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function renderReviews() {
+      if (!reviewList) return;
+      const reviews = loadReviews();
+      if (reviews.length === 0) {
+        reviewList.innerHTML =
+          '<p class="review-empty">Na razie brak opinii — bądź pierwszą osobą, która ją doda.</p>';
+        return;
+      }
+      reviewList.innerHTML = reviews
+        .slice()
+        .reverse()
+        .map(
+          (r) => `
+          <div class="review-item">
+            <span class="review-name">${escapeHtml(r.name)}</span>
+            <span class="review-date">${escapeHtml(r.date)}</span>
+            <p>${escapeHtml(r.text)}</p>
+          </div>
+        `
+        )
+        .join('');
+    }
+
+    reviewForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('reviewName') as HTMLInputElement).value.trim();
+      const email = (document.getElementById('reviewEmail') as HTMLInputElement).value.trim();
+      const text = (document.getElementById('reviewText') as HTMLTextAreaElement).value.trim();
+      if (!name || !email || !text) return;
+
+      const reviews = loadReviews();
+      reviews.push({ name, email, text, date: new Date().toLocaleDateString('pl-PL') });
+      saveReviews(reviews);
+      renderReviews();
+      reviewForm.reset();
+    });
+
+    renderReviews();
+  </script>
+</SiteLayout>

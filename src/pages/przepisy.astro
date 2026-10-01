@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { withBase } from '../utils/url';
+
+const entries = (await getCollection('przepisy')).sort((a, b) => a.data.order - b.data.order);
+const naWynos = entries.filter((entry) => entry.data.category === 'na-wynos');
+const dania = entries.filter((entry) => entry.data.category === 'dania');
+---
+
+<SiteLayout title="Przepisy — Natalia i Donat Cupiał">
+  <PageHeader
+    eyebrow="Przepisy"
+    title="Jemy tak, jak zalecamy"
+    lead="Przepisy niskowęglowodanowe, bogate w warzywa i zdrowe tłuszcze — zgodnie z zasadami, które sami stosujemy na co dzień."
+  />
+
+  <section class="section site-container">
+    <div class="subcat-tabs">
+      <button class="subcat-tab active" data-target="na-wynos">Na wynos</button>
+      <button class="subcat-tab" data-target="dania">Dania</button>
+    </div>
+
+    <div class="subcat-panel active" id="na-wynos">
+      <div class="recipes-grid reveal">
+        {naWynos.map((entry) => (
+          <div class="recipe-card">
+            {entry.data.coverImage && (
+              <img
+                src={withBase(entry.data.coverImage)}
+                alt={entry.data.alt}
+                class="recipe-img"
+                loading="lazy"
+              />
+            )}
+            <div class="recipe-tag with-img">{entry.data.tag}</div>
+            <h3>{entry.data.title}</h3>
+            <p>{entry.data.summary}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="subcat-panel" id="dania">
+      <div class="recipes-grid reveal">
+        {dania.map((entry) => (
+          <div class="recipe-card">
+            {entry.data.coverImage && (
+              <img
+                src={withBase(entry.data.coverImage)}
+                alt={entry.data.alt}
+                class="recipe-img"
+                loading="lazy"
+              />
+            )}
+            <div class="recipe-tag">{entry.data.tag}</div>
+            <h3>{entry.data.title}</h3>
+            <p>{entry.data.summary}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.subcat-tab');
+    const panels = document.querySelectorAll<HTMLElement>('.subcat-panel');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.target;
+        if (target) document.getElementById(target)?.classList.add('active');
+      });
+    });
+  </script>
+</SiteLayout>

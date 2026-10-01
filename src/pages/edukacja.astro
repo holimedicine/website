@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const entries = await getCollection('edukacja');
+const items = await Promise.all(
+  entries
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
+);
+---
+
+<SiteLayout title="Edukacja — Natalia i Donat Cupiał">
+  <PageHeader
+    eyebrow="Edukacja"
+    title="Materiały, które poszerzają świadomość"
+    lead="Krótkie, przystępne wyjaśnienia tematów, o które pytają nas pacjenci. Sekcja będzie się stopniowo rozrastać."
+  />
+
+  <section class="section site-container">
+    <p class="edu-disclaimer reveal">
+      Poniższe materiały mają charakter edukacyjny i nie zastępują indywidualnej konsultacji
+      lekarskiej. Kliknij tytuł, aby rozwinąć pełną treść.
+    </p>
+    <div class="edu-accordion reveal">
+      {items.map(({ entry, Content }) => (
+        <div class="edu-item">
+          <button class="edu-item-header" type="button">
+            <span>
+              <span class="edu-item-title">{entry.data.title}</span>
+              <span class="edu-item-teaser">{entry.data.teaser}</span>
+            </span>
+            <span class="plus">+</span>
+          </button>
+          <div class="edu-item-body">
+            <div class="edu-body"><Content /></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll<HTMLButtonElement>('.edu-item-header').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.closest('.edu-item')?.classList.toggle('open');
+      });
+    });
+  </script>
+</SiteLayout>

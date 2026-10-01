@@ -1,0 +1,18 @@
+---
+import { withBase } from '../utils/url';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<header class="page-header">
+  <p class="eyebrow">{eyebrow}</p>
+  <h1>{title}</h1>
+  {lead && <p class="lead">{lead}</p>}
+  <a href={withBase('/')} class="back-link">← Wróć do strony głównej</a>
+</header>

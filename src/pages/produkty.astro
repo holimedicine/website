@@ -1,0 +1,198 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const substances = [
+  {
+    title: 'Probiotyki wieloszczepowe',
+    examples: 'Vivomixx · ProbioMax 10 Premium Dr. Max · OMNi-BiOTiC 6/10 · Nutridome Pro 10 Biotic',
+    body: 'Mieszanki wielu szczepów bakterii. Vivomixx ma najwięcej badań (IBS, WZJG, po antybiotykach); ProbioMax i Nutridome to dobry stosunek jakości do ceny.',
+  },
+  {
+    title: 'Saccharomyces boulardii',
+    examples: 'Enterol',
+    body: 'Drożdżak probiotyczny. Można go brać w trakcie antybiotyku; pomaga przy biegunkach i jest najbezpieczniejszy przy SIBO.',
+  },
+  {
+    title: 'Lactobacillus rhamnosus GG',
+    examples: 'Dicoflor · LoGGic',
+    body: 'Szybko kolonizuje jelito i tworzy warstwę ochronną. Stosowany przy biegunkach, w UC, wsparciu skóry i stresu (wpływ na receptory GABA).',
+  },
+  {
+    title: 'L. plantarum 299v',
+    examples: 'Sanprobi IBS · ACTIVLAB Sanbiotics IBS · Asecurin IBS',
+    body: 'Szczep dobrze tolerowany w IBS i SIBO; pomaga przy wzdęciach i objawach jelitowych nasilanych stresem.',
+  },
+  {
+    title: 'Probiotyk na barierę jelitową',
+    examples: 'Sanprobi Barrier',
+    body: 'Przeznaczony do uszczelniania bariery jelitowej i wsparcia odporności; dostępny w aptekach.',
+  },
+  {
+    title: 'E. coli Nissle 1917',
+    examples: 'Mutaflor',
+    body: 'Probiotyk stosowany we wrzodziejącym zapaleniu jelita grubego, przy indukcji i utrzymaniu remisji.',
+  },
+  {
+    title: 'Streptococcus salivarius K12',
+    examples: 'Entitis · Eminis',
+    body: 'Pastylki do ssania przed snem, odbudowujące miejscową florę nosogardła przy nawracających infekcjach.',
+  },
+  {
+    title: 'Maślan sodu',
+    examples: 'Health Labs Forte · Alines · Aura Herbals · Debutir Forte · Intesta MAX · Tributron',
+    body: 'Krótkołańcuchowy kwas tłuszczowy odżywiający kolonocyty. Wzmacnia barierę jelitową, zmniejsza stan zapalny, poprawia motorykę. Tributron zawiera dodatkowo probiotyki i prebiotyk.',
+  },
+  {
+    title: 'Colostrum (siara bydlęca)',
+    examples:
+      'Proton Labs Colostrum PRO · Humavit Colostrum Bovinum · ImmuBest · Osavi Colostrum 1200 mg',
+    body: 'Źródło immunoglobulin, laktoferyny i czynników wzrostu. Wspiera odporność i regenerację śluzówki. Najlepiej na czczo, wybierając preparaty o wysokiej zawartości IgG.',
+  },
+  {
+    title: 'L-glutamina',
+    examples: '5–10 g dziennie, na czczo',
+    body: 'Podstawowe „paliwo" dla enterocytów; wspiera odbudowę nabłonka jelita.',
+  },
+  {
+    title: 'Cynk',
+    examples: 'pikolinian · karnozyna · chelat',
+    body: 'Wspiera regenerację śluzówki i skórę. Powyżej 3 miesięcy ryzyko niedoboru miedzi, więc kurację warto ograniczyć w czasie.',
+  },
+  {
+    title: 'Witamina D3 + K2',
+    examples: '2000–4000 IU · cel: 40–60 ng/ml',
+    body: 'Wspiera odporność i szczelność bariery jelitowej. Wchłanianie może poprawiać L. reuteri NCIMB 3024 (Life Extension FLORASSIST Heart Health).',
+  },
+  {
+    title: 'Omega-3 (EPA + DHA)',
+    examples: 'tran · olej z kryla · suplementy DHA/EPA',
+    body: 'Działanie przeciwzapalne; typowa dawka to 1–2 g dziennie.',
+  },
+  {
+    title: 'Kurkumina z piperyną, kwercetyna',
+    examples: 'polifenole',
+    body: 'Naturalne substancje o działaniu przeciwzapalnym, uzupełniające protokół regeneracji.',
+  },
+  {
+    title: 'DGL, ślaz, zmętnik',
+    examples: 'ochrona śluzówki',
+    body: 'Lukrecja deglicyryzynowana i śluzowe ekstrakty roślinne osłaniają błonę śluzową przewodu pokarmowego.',
+  },
+  {
+    title: 'Akkermansia',
+    examples: 'dodatkowe szczepy: L. plantarum, B. longum',
+    body: 'Dodatkowe szczepy wspierające warstwę śluzu, gdy podstawowy probiotyk nie wystarcza.',
+  },
+  {
+    title: 'D-mannoza',
+    examples: 'MultiURI',
+    body: 'Utrudnia bakteriom kolonizację nabłonka pęcherza moczowego; stosowana przy nawracających ZUM razem z probiotykami.',
+  },
+  {
+    title: 'Magnez, żelazo, witamina D',
+    examples: 'do uzupełnienia',
+    body: 'Podstawowe składniki, o których dokładniejsze zalecenia dodamy wkrótce.',
+  },
+];
+
+const probioticTable = [
+  ['IBS (ogólnie)', 'ProbioMax 10 Premium · OMNi-BiOTiC 6/10', 'Preparaty wieloszczepowe poprawiające motorykę jelit.'],
+  ['IBS z biegunką', 'Sanprobi IBS · Sanbiotics IBS + Enterol', 'Dodatek S. boulardii szczególnie na początku leczenia.'],
+  ['IBS z zaparciami', 'B. lactis (ProbioMax, OMNi-BiOTiC, Lactibiane) · Aliness ProbioBalance IBS', 'Szczepy poprawiające motorykę jelit.'],
+  ['W trakcie antybiotyku', 'Enterol · Dicoflor · LoGGic', 'S. boulardii i/lub LGG.'],
+  ['Po antybiotyku', 'OMNi-BiOTiC · Enterol · Dicoflor · Sanprobi Super Formula · LoGGic', 'Kontynuować od kilku tygodni do kilku miesięcy.'],
+  ['SIBO / IMO', 'Enterol · Sanprobi IBS · Sanbiotics IBS', 'Ostrożnie z wysokimi dawkami Lactobacillus w fazie aktywnej.'],
+  ['Wrzodziejące zapalenie jelita grubego', 'Vivomixx · Mutaflor · Dicoflor · LoGGic', 'Dodatek do standardowego leczenia.'],
+  ['Choroba Leśniowskiego-Crohna', 'OMNi-BiOTiC · Sanprobi Barrier · Dicoflor · LoGGic', 'Wsparcie wspomagające, nie leczenie pierwszego rzutu.'],
+  ['Odporność ogólna', 'OMNi-BiOTiC · ProbioMax · Aliness ProbioBalance · BestBiotic · Sanprobi Barrier', 'Wysoka różnorodność szczepów.'],
+  ['Wzdęcia, gazy, niestrawność', 'Sanprobi IBS · Symbiosys Alflorex · Lactibiane · Nutridome Pro 10', 'Wysoka dawka i różnorodność.'],
+  ['Dzieci', 'Wersje dziecięce: Sanprobi · Lactibiane · ProbioMax · Dicoflor Junior', 'Zawsze sprawdź wersję dla dzieci.'],
+  ['Zakażenia układu moczowo-płciowego', 'Dopochwowo: InVag · Lactovaginal · Lakcid Intima. Doustnie: ProVag · Gynophilus UroLact · Lacibios Femina · MultiURI', 'MultiURI zawiera też D-mannozę.'],
+  ['Choroby nosogardła', 'Entitis · Eminis', 'Odbudowa miejscowej flory.'],
+  ['Eradykacja H. pylori', 'HelicoGastrin', 'L. reuteri DSM 17648 + S. boulardii CNCM I-3799.'],
+  ['Stres', 'Sanprobi Stres · Dicoflor · LoGGic', 'Gdy stres daje objawy brzuszne: Sanprobi IBS, Asecurin IBS.'],
+  ['Skóra', 'LoGGic · Dicoflor', 'Warto połączyć z laktoferyną i cynkiem.'],
+];
+
+const gutProtocol = [
+  ['Sanprobi Barrier', '2–4 kapsułki dziennie', 'Z posiłkiem', '4–8 tygodni, często 3 miesiące'],
+  ['Colostrum', '1–2 g dziennie', 'Na czczo, 30 min przed posiłkiem', '4–12 tygodni'],
+  ['Maślan sodu', '150–300 mg czystego maślanu (sprawdź etykietę)', 'Z posiłkiem', '3–6 miesięcy lub dłużej'],
+  ['L-glutamina', '5–10 g dziennie', 'Na czczo, 2 dawki', '8–12 tygodni'],
+  ['S. boulardii (Enterol)', 'Wg ulotki', 'Codziennie', '4–6 tygodni'],
+  ['Cynk', '20–30 mg jonów cynku', 'Wieczorem', '8–12 tygodni'],
+  ['Probiotyk wieloszczepowy', 'Wg ulotki', 'Codziennie', 'ok. 12 tygodni'],
+];
+---
+
+<SiteLayout title="Polecane produkty — Natalia i Donat Cupiał">
+  <PageHeader
+    eyebrow="Polecane produkty"
+    title="Rzeczy, którym ufamy"
+    lead="Przykładowe substancje i preparaty, które omawiamy z pacjentami przy zdrowiu jelit, odporności i regeneracji. Zachęcamy do własnego researchu."
+  />
+
+  <section class="section site-container">
+    <p class="prod-note reveal">
+      Materiał ma charakter informacyjny i nie zastępuje konsultacji lekarskiej. Probiotyki działają
+      szczepowo-specyficznie, a dobór preparatu i dawek warto omówić z lekarzem.
+    </p>
+
+    <h2 class="sub-title">Substancje i przykładowe preparaty</h2>
+    <div class="phil-grid reveal">
+      {substances.map((item) => (
+        <div class="phil-card">
+          <h3>{item.title}</h3>
+          <span class="prod-eg">{item.examples}</span>
+          <p>{item.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section site-container">
+    <h2 class="sub-title">Probiotyki: co na jaki problem</h2>
+    <p class="prod-lead">
+      Praktyczne zestawienie preparatów o najlepszym wsparciu naukowym dla poszczególnych problemów.
+      Nie każdy probiotyk nadaje się do przyjmowania w trakcie lub po antybiotyku.
+    </p>
+    <div class="table-wrap reveal">
+      <table class="prod-table">
+        <thead>
+          <tr><th>Problem</th><th>Przykładowe preparaty</th><th>Uwagi</th></tr>
+        </thead>
+        <tbody>
+          {probioticTable.map((row) => (
+            <tr>
+              {row.map((cell) => <td>{cell}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sub-title">Uszczelnianie jelita: przykładowy schemat</h2>
+    <p class="prod-lead">
+      Podstawą jest eliminacja tego, co szkodzi (dieta, NLPZ, alkohol, stres); sama dieta zwykle nie
+      wystarcza. Kolejność: dieta + Sanprobi Barrier, po 1–2 tygodniach maślan i glutamina, potem
+      colostrum. Intensywny protokół trwa zwykle 8–12 tygodni, a w ciężkich przypadkach 4–6 miesięcy.
+    </p>
+    <div class="table-wrap reveal">
+      <table class="prod-table">
+        <thead>
+          <tr>
+            <th>Preparat</th><th>Typowa dawka</th><th>Jak brać</th><th>Czas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gutProtocol.map((row) => (
+            <tr>
+              {row.map((cell) => <td>{cell}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</SiteLayout>

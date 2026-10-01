@@ -1,0 +1,23 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { withBase } from '../utils/url';
+---
+
+<SiteLayout title="Galeria — Natalia i Donat Cupiał">
+  <PageHeader eyebrow="Galeria" title="Z naszego gabinetu i nie tylko" />
+
+  <section class="section site-container">
+    <div class="gallery-grid reveal">
+      <div class="gallery-item">
+        <img src={withBase('/images/natalia-donat.jpg')} alt="Natalia i Donat Cupiał" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">Miejsce na kolejne zdjęcie</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">Miejsce na kolejne zdjęcie</div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
