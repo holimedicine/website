@@ -31,6 +31,47 @@ const { title, description } = Astro.props;
       });
     }
 
+    const sectionIds = ['o-nas', 'podejscie', 'zakres', 'kontakt'];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el) => el !== null);
+
+    if (sections.length > 0) {
+      const nav = document.querySelector('.nav');
+      const sectionLinks = document.querySelectorAll('[data-nav-section]');
+      let frame = 0;
+
+      const updateActiveSection = () => {
+        frame = 0;
+        const offset = (nav ? nav.clientHeight : 0) + 24;
+        let active = null;
+
+        for (const section of sections) {
+          if (section.getBoundingClientRect().top - offset <= 0) {
+            active = section.id;
+          }
+        }
+
+        if (active === 'kontakt') active = null;
+
+        sectionLinks.forEach((link) => {
+          if (link.getAttribute('data-nav-section') === active) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      const scheduleUpdate = () => {
+        if (!frame) frame = window.requestAnimationFrame(updateActiveSection);
+      };
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate, { passive: true });
+      updateActiveSection();
+    }
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealEls = document.querySelectorAll('.reveal');
     if (prefersReduced) {

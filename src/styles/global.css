@@ -17,6 +17,10 @@
 }
 
 @layer base {
+  html {
+    scroll-padding-top: 5rem;
+  }
+
   body {
     @apply bg-bg text-text-primary font-sans leading-relaxed overflow-x-hidden;
   }
@@ -61,8 +65,22 @@
   .nav-links {
     @apply ml-auto flex gap-4 text-[0.8rem] text-text-muted whitespace-nowrap;
   }
-  .nav-links a:hover {
+  .nav-links a {
+    @apply relative;
+  }
+  .nav-links a:hover,
+  .nav-links a[aria-current] {
     @apply text-text-primary;
+  }
+  .nav-links a[aria-current]::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-accent-gold);
   }
   .nav-cta {
     @apply shrink-0 rounded-full border border-accent-red px-4 py-2 text-[0.8rem] text-accent-red transition-colors whitespace-nowrap;
@@ -92,7 +110,12 @@
       @apply flex;
     }
     .nav-mobile a {
-      @apply border-b border-line py-2.5 text-text-muted;
+      @apply border-b border-line py-2.5 pl-3 text-text-muted;
+      border-left: 2px solid transparent;
+    }
+    .nav-mobile a[aria-current] {
+      @apply text-text-primary;
+      border-left-color: var(--color-accent-gold);
     }
   }
 

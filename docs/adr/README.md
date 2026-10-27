@@ -18,6 +18,7 @@ arbitrary without the surrounding context.
 | [0007](./0007-base-path-and-withbase.md)    | Project-page base path and the `withBase()` helper          | Accepted |
 | [0008](./0008-homepage-content-in-keystatic.md) | Manage homepage content as Keystatic singletons          | Accepted |
 | [0009](./0009-remove-galeria-and-opinie.md) | Remove the Galeria page and Opinie section                  | Accepted |
+| [0010](./0010-nav-active-state.md)          | Nav active state and homepage scroll-spy                    | Accepted |
 
 ## Adding a new ADR
 

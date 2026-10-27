@@ -1,27 +1,57 @@
 ---
 import { withBase } from '../utils/url';
 
-const links = [
-  { href: '/#o-nas', label: 'O nas' },
-  { href: '/#podejscie', label: 'Podejście' },
-  { href: '/#zakres', label: 'Zakres opieki' },
-  { href: '/przepisy', label: 'Przepisy' },
-  { href: '/edukacja', label: 'Edukacja' },
-  { href: '/produkty', label: 'Polecane produkty' },
-].map((link) => ({ ...link, href: withBase(link.href) }));
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const rawPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const currentPath = base && rawPath.startsWith(base) ? rawPath.slice(base.length) || '/' : rawPath;
+
+type NavLink = {
+  href: string;
+  label: string;
+  section?: string;
+  page?: string;
+  isCurrent?: boolean;
+};
+
+const links: NavLink[] = [
+  { href: '/#o-nas', label: 'O nas', section: 'o-nas' },
+  { href: '/#podejscie', label: 'Podejście', section: 'podejscie' },
+  { href: '/#zakres', label: 'Zakres opieki', section: 'zakres' },
+  { href: '/przepisy', label: 'Przepisy', page: 'przepisy' },
+  { href: '/edukacja', label: 'Edukacja', page: 'edukacja' },
+  { href: '/produkty', label: 'Polecane produkty', page: 'produkty' },
+].map((link) => ({
+  ...link,
+  href: withBase(link.href),
+  isCurrent: link.page ? currentPath === `/${link.page}` : false,
+}));
 ---
 
 <nav class="nav">
   <div class="nav-inner">
     <a href={withBase('/')} class="nav-brand">Natalia i Donat Cupiał</a>
     <div class="nav-links">
-      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      {links.map((link) => (
+        <a
+          href={link.href}
+          data-nav-section={link.section}
+          data-nav-page={link.page}
+          aria-current={link.isCurrent ? 'page' : undefined}
+        >{link.label}</a>
+      ))}
     </div>
     <a href={withBase('/#kontakt')} class="nav-cta">Umów wizytę</a>
     <button class="nav-toggle" id="navToggle" aria-label="Otwórz menu">☰</button>
   </div>
   <div class="nav-mobile" id="navMobile">
-    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    {links.map((link) => (
+      <a
+        href={link.href}
+        data-nav-section={link.section}
+        data-nav-page={link.page}
+        aria-current={link.isCurrent ? 'page' : undefined}
+      >{link.label}</a>
+    ))}
     <a href={withBase('/#kontakt')}>Umów wizytę</a>
   </div>
 </nav>
