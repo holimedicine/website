@@ -17,6 +17,7 @@ arbitrary without the surrounding context.
 | [0006](./0006-github-pages-deploy.md)       | Deploy to GitHub Pages with GitHub Actions                  | Accepted |
 | [0007](./0007-base-path-and-withbase.md)    | Project-page base path and the `withBase()` helper          | Accepted |
 | [0008](./0008-homepage-content-in-keystatic.md) | Manage homepage content as Keystatic singletons          | Accepted |
+| [0009](./0009-remove-galeria-and-opinie.md) | Remove the Galeria page and Opinie section                  | Accepted |
 
 ## Adding a new ADR
 

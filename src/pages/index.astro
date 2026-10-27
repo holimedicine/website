@@ -162,33 +162,6 @@ const zakres = zakresEntry.data;
     </div>
   </section>
 
-  <!-- OPINIE -->
-  <section class="section site-container" id="opinie">
-    <div class="section-head reveal">
-      <p class="eyebrow">Opinie</p>
-      <h2>Co mówią pacjenci</h2>
-      <p>Zostaw opinię o naszej działalności — podaj imię, nazwisko i adres e-mail.</p>
-    </div>
-    <div class="reviews-wrap reveal">
-      <form class="review-form" id="reviewForm">
-        <label for="reviewName">Imię i nazwisko</label>
-        <input type="text" id="reviewName" required />
-        <label for="reviewEmail">Adres e-mail</label>
-        <input type="email" id="reviewEmail" required />
-        <label for="reviewText">Treść opinii</label>
-        <textarea id="reviewText" required></textarea>
-        <button type="submit" class="btn-primary">Dodaj opinię</button>
-        <p class="form-note">
-          E-mail nie będzie publicznie widoczny — potrzebujemy go tylko do weryfikacji. Opinie
-          zapisują się lokalnie w tej przeglądarce.
-        </p>
-      </form>
-      <div>
-        <div class="review-list" id="reviewList"></div>
-      </div>
-    </div>
-  </section>
-
   <!-- KONTAKT -->
   <section class="section site-container" id="kontakt">
     <div class="contact-box reveal">
@@ -206,67 +179,4 @@ const zakres = zakresEntry.data;
     </div>
   </section>
 
-  <script>
-    const STORAGE_KEY = 'cupial-gabinet-opinie';
-    const reviewForm = document.getElementById('reviewForm') as HTMLFormElement | null;
-    const reviewList = document.getElementById('reviewList');
-
-    function loadReviews(): Array<{ name: string; email: string; text: string; date: string }> {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function saveReviews(reviews: unknown[]) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-    }
-
-    function escapeHtml(str: string) {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
-    }
-
-    function renderReviews() {
-      if (!reviewList) return;
-      const reviews = loadReviews();
-      if (reviews.length === 0) {
-        reviewList.innerHTML =
-          '<p class="review-empty">Na razie brak opinii — bądź pierwszą osobą, która ją doda.</p>';
-        return;
-      }
-      reviewList.innerHTML = reviews
-        .slice()
-        .reverse()
-        .map(
-          (r) => `
-          <div class="review-item">
-            <span class="review-name">${escapeHtml(r.name)}</span>
-            <span class="review-date">${escapeHtml(r.date)}</span>
-            <p>${escapeHtml(r.text)}</p>
-          </div>
-        `
-        )
-        .join('');
-    }
-
-    reviewForm?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = (document.getElementById('reviewName') as HTMLInputElement).value.trim();
-      const email = (document.getElementById('reviewEmail') as HTMLInputElement).value.trim();
-      const text = (document.getElementById('reviewText') as HTMLTextAreaElement).value.trim();
-      if (!name || !email || !text) return;
-
-      const reviews = loadReviews();
-      reviews.push({ name, email, text, date: new Date().toLocaleDateString('pl-PL') });
-      saveReviews(reviews);
-      renderReviews();
-      reviewForm.reset();
-    });
-
-    renderReviews();
-  </script>
 </SiteLayout>
