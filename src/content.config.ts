@@ -23,4 +23,55 @@ const przepisy = defineCollection({
   }),
 });
 
-export const collections = { edukacja, przepisy };
+const about = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/about' }),
+  schema: z.object({
+    eyebrow: z.string().default('O nas'),
+    heading: z.string(),
+    photo: z.string().optional(),
+    photoAlt: z.string().optional(),
+    profiles: z
+      .array(
+        z.object({
+          name: z.string(),
+          role: z.string(),
+          bio: z.string(),
+        })
+      )
+      .default([]),
+  }),
+});
+
+const podejscie = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/podejscie' }),
+  schema: z.object({
+    eyebrow: z.string().default('Filozofia pracy'),
+    heading: z.string(),
+    pillars: z
+      .array(
+        z.object({
+          title: z.string(),
+          body: z.string(),
+        })
+      )
+      .default([]),
+  }),
+});
+
+const zakres = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/zakres' }),
+  schema: z.object({
+    eyebrow: z.string().default('Zakres opieki'),
+    heading: z.string().default('W czym możemy pomóc'),
+    items: z
+      .array(
+        z.object({
+          title: z.string(),
+          body: z.string(),
+        })
+      )
+      .default([]),
+  }),
+});
+
+export const collections = { edukacja, przepisy, about, podejscie, zakres };

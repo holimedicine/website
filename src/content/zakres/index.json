@@ -1,0 +1,54 @@
+{
+  "eyebrow": "Zakres opieki",
+  "heading": "W czym możemy pomóc",
+  "items": [
+    {
+      "title": "Medycyna rodzinna",
+      "body": "Kompleksowa opieka dla pacjentów w każdym wieku, od diagnostyki po prowadzenie chorób przewlekłych."
+    },
+    {
+      "title": "Medycyna stylu życia i medycyna profilaktyczna",
+      "body": "Jako pierwsza linia leczenia i profilaktyki chorób. A w niej: optymalizacja nawyków i biohacking; normalizacja snu; dbałość o zdrowy ruch; świadome odżywianie; relacje społeczne. Ponadto: badania okresowe, plan profilaktyki dopasowany do wieku, historii rodzinnej i stylu życia."
+    },
+    {
+      "title": "Choroby metaboliczne i endokrynologiczne",
+      "body": "Diagnostyka i leczenie: cukrzycy, dyslipidemii, otyłości, insulinooporności, zespołu metabolicznego, chorób tarczycy, nadciśnienia tętniczego."
+    },
+    {
+      "title": "Wsparcie żywieniowe",
+      "body": "Podstawy dietetyki klinicznej wplecione w codzienną opiekę, dostosowane do stylu życia, poziomu aktywności fizycznej, a także istniejących schorzeń. Leczenie żywieniowe w myśl sentencji „Niech pożywienie będzie twoim lekiem, a lek pożywieniem”."
+    },
+    {
+      "title": "Diagnostyka laboratoryjna",
+      "body": "Interpretacja wyników badań w szerszym kontekście, nie tylko jako pojedyncze liczby poza normą."
+    },
+    {
+      "title": "Zdrowie psychiczne",
+      "body": "Pierwszy kontakt i wsparcie przy stresie, wypaleniu i zaburzeniach snu, z jasną ścieżką dalszej pomocy."
+    },
+    {
+      "title": "Przewlekłe stany zapalne",
+      "body": "Szukanie i usuwanie źródeł przewlekłego zapalenia w organizmie, nie tylko łagodzenie jego objawów."
+    },
+    {
+      "title": "Choroby autoimmunologiczne",
+      "body": "Diagnostyka i prowadzenie schorzeń takich jak: choroby tarczycy (Hashimoto, Graves-Basedow); reumatyczne zapalenie stawów i polimialgia reumatyczna; nieswoiste choroby zapalne jelit (WZJG, ChLC), choroby dermatologiczne (np.: łuszczyca). Ponadto leczenie chorób alergicznych i związanych z nietolerancjami pokarmowymi."
+    },
+    {
+      "title": "Choroby przewodu pokarmowego",
+      "body": "Wsparcie przy nieswoistych chorobach zapalnych jelit - WZJG, ChLC; eradykacja H.pylori; zapalenie żołądka; dysbioza bakteryjna - SIBO, IMO, SIFO, LIBO; zespół jelita drażliwego (IBS) oraz w przewlekłych dolegliwościach takich jak: zaparcia, wzdęcia, biegunki, nudności, niespecyficzne bóle brzucha."
+    },
+    {
+      "title": "Choroby narządu ruchu",
+      "body": "Diagnoza i leczenie dolegliwości układu mięśniowo-szkieletowego. Na przykład: ostre i przewlekłe bóle kręgosłupa, dyskopatie, rwa kulszowa i barkowa, zmiany zwyrodnieniowe stawów, zespoły przeciążeniowe (np. łokieć tenisisty, zespół cieśni nadgarstka, zapalenie Achillesa, zespół bolesnego barku), zablokowania stawowe oraz wady postawy. Wykorzystanie podejścia funkcjonalnego, terapii manualnej, chiropraktyki."
+    },
+    {
+      "title": "Choroby neurologiczne",
+      "body": "Profilaktyka chorób Parkinsona, Alzheimera oraz otępienia; różne rodzaje bóli głowy i migreny, neuralgie, zespoły bólowe kręgosłupa, wykorzystanie leków nootropowych oraz marihuany medycznej. Wielokierunkowa ocena bólu przewlekłego i wspólne wypracowanie planu, który realnie poprawia jakość życia."
+    },
+    {
+      "title": "Edukacja zdrowotna",
+      "body": "Przystępna edukacja pomagająca pacjentom rozumieć własne zdrowie oraz szerzyć świadomość w rodzinnym gronie."
+    }
+  ]
+}

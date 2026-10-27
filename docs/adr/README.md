@@ -16,6 +16,7 @@ arbitrary without the surrounding context.
 | [0005](./0005-keystatic-dev-only.md)        | Keystatic runs in dev only; production build is static      | Accepted |
 | [0006](./0006-github-pages-deploy.md)       | Deploy to GitHub Pages with GitHub Actions                  | Accepted |
 | [0007](./0007-base-path-and-withbase.md)    | Project-page base path and the `withBase()` helper          | Accepted |
+| [0008](./0008-homepage-content-in-keystatic.md) | Manage homepage content as Keystatic singletons          | Accepted |
 
 ## Adding a new ADR
 
