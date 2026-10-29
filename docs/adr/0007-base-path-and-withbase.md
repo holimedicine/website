@@ -41,9 +41,8 @@ export function withBase(path: string): string {
 }
 ```
 
-Every root-relative link/asset goes through it: `Nav.astro`, `PageHeader.astro`,
-`Layout.astro` (favicons), `index.astro`, and recipe `coverImage` in
-`przepisy.astro`.
+Every root-relative link/asset goes through it: `Nav.astro`, `Layout.astro`
+(favicons), `index.astro`, and recipe `coverImage` in `przepisy.astro`.
 
 ## Consequences
 

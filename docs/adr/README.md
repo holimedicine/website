@@ -19,6 +19,7 @@ arbitrary without the surrounding context.
 | [0008](./0008-homepage-content-in-keystatic.md) | Manage homepage content as Keystatic singletons          | Accepted |
 | [0009](./0009-remove-galeria-and-opinie.md) | Remove the Galeria page and Opinie section                  | Accepted |
 | [0010](./0010-nav-active-state.md)          | Nav active state and homepage scroll-spy                    | Accepted |
+| [0011](./0011-remove-subpage-back-link.md)  | Remove the subpage "back to homepage" link                  | Accepted |
 
 ## Adding a new ADR
 

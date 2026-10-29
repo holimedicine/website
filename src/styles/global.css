@@ -168,12 +168,6 @@
   .page-header .lead {
     @apply mt-[18px] max-w-[560px] text-[1.02rem];
   }
-  .back-link {
-    @apply mt-7 inline-flex items-center gap-1.5 text-[0.85rem] text-text-muted;
-  }
-  .back-link:hover {
-    @apply text-accent-gold;
-  }
 
   /* SECTION generic */
   .section {
