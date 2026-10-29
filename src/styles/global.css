@@ -95,9 +95,13 @@
     @apply hidden;
   }
 
-  /* Below 1300px the full link row no longer fits, so switch to a hamburger. */
-  @media (max-width: 1300px) {
+  /* The full row (brand + 6 links + CTA) needs ~823px, so switch to a
+     hamburger at 900px and keep the CTA in the mobile menu. */
+  @media (max-width: 900px) {
     .nav-links {
+      @apply hidden;
+    }
+    .nav-cta {
       @apply hidden;
     }
     .nav-toggle {

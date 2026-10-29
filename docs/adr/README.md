@@ -20,6 +20,7 @@ arbitrary without the surrounding context.
 | [0009](./0009-remove-galeria-and-opinie.md) | Remove the Galeria page and Opinie section                  | Accepted |
 | [0010](./0010-nav-active-state.md)          | Nav active state and homepage scroll-spy                    | Accepted |
 | [0011](./0011-remove-subpage-back-link.md)  | Remove the subpage "back to homepage" link                  | Accepted |
+| [0012](./0012-nav-responsive-breakpoint.md) | Responsive nav breakpoint and mobile CTA                    | Accepted |
 
 ## Adding a new ADR
 
