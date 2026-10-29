@@ -60,7 +60,18 @@ change as the code they describe:
 - Use the next number, add a row to the index, and keep it short: Context /
   Decision / Consequences, including gotchas.
 
-Consult [`GLOSSARY.md`](./GLOSSARY.md) for domain and technical terminology.
+### Maintaining the glossary
+
+[`GLOSSARY.md`](./GLOSSARY.md) defines domain and project-specific technical
+terms. Update it in the same change:
+
+- Add or update an entry when you introduce, rename, or repurpose a term used in
+  code, content, or docs (collection, singleton, page section, helper, …).
+- Keep definitions short and point to the canonical file or component.
+- Skip generic framework vocabulary unless the project gives it a specific
+  meaning.
+
+Consult it before naming new files, fields, components, or content sections.
 
 ## Skills
 
