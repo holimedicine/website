@@ -74,4 +74,21 @@ const zakres = defineCollection({
   }),
 });
 
-export const collections = { edukacja, przepisy, about, podejscie, zakres };
+const contact = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/contact' }),
+  schema: z.object({
+    heading: z.string().default('Porozmawiajmy o Twoim zdrowiu'),
+    lead: z
+      .string()
+      .default('Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.'),
+    phone: z.string().default('+48 000 000 000'),
+    email: z.string().default('dscupial@gmail.com'),
+    address: z.string().default('ul. Paderewskiego 25, 42-400 Zawiercie'),
+    primaryCtaLabel: z.string().default('Napisz e-mail'),
+    primaryCtaHref: z.string().default('mailto:kontakt@holimedicine.eu.org'),
+    secondaryCtaLabel: z.string().default('Zadzwoń'),
+    secondaryCtaHref: z.string().default('tel:+48000000000'),
+  }),
+});
+
+export const collections = { edukacja, przepisy, about, podejscie, zakres, contact };

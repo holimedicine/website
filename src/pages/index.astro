@@ -6,8 +6,9 @@ import { withBase } from '../utils/url';
 const aboutEntry = await getEntry('about', 'index');
 const podejscieEntry = await getEntry('podejscie', 'index');
 const zakresEntry = await getEntry('zakres', 'index');
+const contactEntry = await getEntry('contact', 'index');
 
-if (!aboutEntry || !podejscieEntry || !zakresEntry) {
+if (!aboutEntry || !podejscieEntry || !zakresEntry || !contactEntry) {
   throw new Error('Brak treści strony głównej w CMS.');
 }
 
@@ -17,6 +18,7 @@ const { Content: ApproachIntro } = await render(podejscieEntry);
 const about = aboutEntry.data;
 const podejscie = podejscieEntry.data;
 const zakres = zakresEntry.data;
+const contact = contactEntry.data;
 ---
 
 <SiteLayout
@@ -165,16 +167,16 @@ const zakres = zakresEntry.data;
   <!-- KONTAKT -->
   <section class="section site-container" id="kontakt">
     <div class="contact-box reveal">
-      <h2>Porozmawiajmy o Twoim zdrowiu</h2>
-      <p>Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.</p>
+      <h2>{contact.heading}</h2>
+      <p>{contact.lead}</p>
       <div class="contact-meta">
-        <div><strong>Telefon</strong>+48 000 000 000</div>
-        <div><strong>E-mail</strong>dscupial@gmail.com</div>
-        <div><strong>Gabinet</strong>ul. Paderewskiego 25, 42-400 Zawiercie</div>
+        <div><strong>Telefon</strong>{contact.phone}</div>
+        <div><strong>E-mail</strong>{contact.email}</div>
+        <div><strong>Gabinet</strong>{contact.address}</div>
       </div>
       <div class="hero-actions justify-center mt-8">
-        <a href="mailto:kontakt@holimedicine.eu.org" class="btn-primary">Napisz e-mail</a>
-        <a href="tel:+48000000000" class="btn-secondary">Zadzwoń</a>
+        <a href={contact.primaryCtaHref} class="btn-primary">{contact.primaryCtaLabel}</a>
+        <a href={contact.secondaryCtaHref} class="btn-secondary">{contact.secondaryCtaLabel}</a>
       </div>
     </div>
   </section>

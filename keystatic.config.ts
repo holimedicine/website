@@ -8,7 +8,7 @@ export default config({
   ui: {
     brand: { name: 'Holimedicine' },
     navigation: {
-      'Strona główna': ['about', 'podejscie', 'zakres'],
+      'Strona główna': ['about', 'podejscie', 'zakres', 'contact'],
       Moduły: ['edukacja', 'przepisy'],
     },
   },
@@ -123,6 +123,52 @@ export default config({
             itemLabel: (props) => props.fields.title.value,
           }
         ),
+      },
+    }),
+    contact: singleton({
+      label: 'Kontakt',
+      path: 'src/content/contact/',
+      format: { data: 'json' },
+      schema: {
+        heading: fields.text({
+          label: 'Nagłówek',
+          defaultValue: 'Porozmawiajmy o Twoim zdrowiu',
+        }),
+        lead: fields.text({
+          label: 'Opis',
+          multiline: true,
+          defaultValue:
+            'Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.',
+        }),
+        phone: fields.text({
+          label: 'Telefon',
+          defaultValue: '+48 000 000 000',
+        }),
+        email: fields.text({
+          label: 'E-mail',
+          defaultValue: 'dscupial@gmail.com',
+        }),
+        address: fields.text({
+          label: 'Adres gabinetu',
+          multiline: true,
+          defaultValue: 'ul. Paderewskiego 25, 42-400 Zawiercie',
+        }),
+        primaryCtaLabel: fields.text({
+          label: 'Etykieta przycisku e-mail',
+          defaultValue: 'Napisz e-mail',
+        }),
+        primaryCtaHref: fields.text({
+          label: 'Link przycisku e-mail',
+          defaultValue: 'mailto:kontakt@holimedicine.eu.org',
+        }),
+        secondaryCtaLabel: fields.text({
+          label: 'Etykieta przycisku telefonu',
+          defaultValue: 'Zadzwoń',
+        }),
+        secondaryCtaHref: fields.text({
+          label: 'Link przycisku telefonu',
+          defaultValue: 'tel:+48000000000',
+        }),
       },
     }),
   },
