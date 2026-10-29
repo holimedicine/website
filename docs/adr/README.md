@@ -5,6 +5,9 @@ the site from hand-written static HTML to an Astro + Keystatic project. Read the
 relevant ADR **before** changing an area it covers — several decisions look
 arbitrary without the surrounding context.
 
+This file is the canonical ADR process; [`AGENTS.md`](../../AGENTS.md) points here
+rather than duplicating the rules.
+
 ## Index
 
 | #                                               | Title                                                  | Status   | Date                            |
