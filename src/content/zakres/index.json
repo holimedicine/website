@@ -3,10 +3,6 @@
   "heading": "W czym możemy pomóc",
   "items": [
     {
-      "title": "Medycyna rodzinna",
-      "body": "Kompleksowa opieka dla pacjentów w każdym wieku, od diagnostyki po prowadzenie chorób przewlekłych."
-    },
-    {
       "title": "Medycyna stylu życia i medycyna profilaktyczna",
       "body": "Jako pierwsza linia leczenia i profilaktyki chorób. A w niej: optymalizacja nawyków i biohacking; normalizacja snu; dbałość o zdrowy ruch; świadome odżywianie; relacje społeczne. Ponadto: badania okresowe, plan profilaktyki dopasowany do wieku, historii rodzinnej i stylu życia."
     },
@@ -21,6 +17,10 @@
     {
       "title": "Diagnostyka laboratoryjna",
       "body": "Interpretacja wyników badań w szerszym kontekście, nie tylko jako pojedyncze liczby poza normą."
+    },
+    {
+      "title": "Medycyna rodzinna",
+      "body": "Kompleksowa opieka dla pacjentów w każdym wieku, od diagnostyki po prowadzenie chorób przewlekłych."
     },
     {
       "title": "Zdrowie psychiczne",
