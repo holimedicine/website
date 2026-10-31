@@ -27,6 +27,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **Keystatic** | Git-based CMS used to edit content; the admin runs only in dev at `/keystatic/`. |
 | **GitHub storage** | Keystatic storage mode that reads and writes content by committing to `holimedicine/website`. |
 | **MDX** | Markdown + JSX format used for article, recipe, and some singleton bodies. |
+| **local launcher** | `Start Website.command` — macOS double-click script that runs `git pull` and `npm run dev` for content editors. |
 | **Tailwind CSS v4** | Styling system used via PostCSS; the theme lives in `src/styles/global.css`. |
 | **PostCSS** | CSS pipeline that runs the `@tailwindcss/postcss` plugin (`postcss.config.mjs`). |
 | **base path** | Production URL prefix `/website/`; dev uses `/`. See ADR 0007. |

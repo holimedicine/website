@@ -26,6 +26,35 @@ Both are editable through the Keystatic admin in dev (requires a GitHub App; see
 `.env.example`). Recipe images live at
 `public/images/przepisy/<slug>/coverImage.jpg`.
 
+## Run locally
+
+### macOS: double-click
+
+1. In Finder, open the project folder.
+2. Double-click `Start Website.command`.
+3. Open http://localhost:4321/ for the site and
+   http://localhost:4321/keystatic/ for the content editor.
+4. Close the Terminal window to stop the site.
+
+The launcher pulls the latest content, installs dependencies if needed, and
+starts the dev server. If macOS blocks it, right-click the file and choose
+**Open**. If it opens in a text editor, run
+`chmod +x "Start Website.command"` once.
+
+### Terminal
+
+Open a terminal in the project folder and run:
+
+```bash
+git pull && npm run dev
+```
+
+First time only: install Node.js 22.12+ and run `npm install`; the Keystatic
+admin also needs the GitHub App credentials in `.env` (see `.env.example`).
+
+Content saved in Keystatic is committed to GitHub and deployed automatically.
+Run `git pull` to bring those commits into the local copy.
+
 ## Commands
 
 | Command                            | Action                                                              |
