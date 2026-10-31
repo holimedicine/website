@@ -33,3 +33,6 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **withBase()** | Utility (`src/utils/url.ts`) that prepends the base path to root-relative URLs. MUST be used for all links/assets. |
 | **KEYSTATIC_DISABLED** | Env var set by `npm run build`/`preview` to exclude CMS routes from the static build. |
 | **static build** | `npm run build` output in `dist/`, deployed to GitHub Pages; no server runtime. |
+| **check-dist** | Post-build validation (`scripts/check-dist.mjs`) that fails on base-path leaks or missing local links/assets in `dist/`. |
+| **E2E test** | Playwright test in `tests/e2e/` run against the production build under `/website/`. |
+| **content-only commit** | Commit touching only `src/content/**` and `public/images/**`; pre-commit and CI run `build:site` but skip E2E. See ADR 0013. |

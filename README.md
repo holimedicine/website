@@ -28,13 +28,31 @@ Both are editable through the Keystatic admin in dev (requires a GitHub App; see
 
 ## Commands
 
-| Command             | Action                                                        |
-| ------------------- | ------------------------------------------------------------- |
-| `npm install`       | Install dependencies                                          |
-| `npm run dev`       | Dev server at `localhost:4321` (admin at `/keystatic/`)       |
-| `npm run build`     | Static production build to `./dist/`                          |
-| `npm run preview`   | Preview the build at `localhost:4322/website/`                |
-| `npm run typecheck` | Type-check with `tsc`                                         |
+| Command                            | Action                                                              |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| `npm install`                      | Install dependencies                                                |
+| `npx playwright install chromium`  | Install the browser used by E2E tests (once per machine)            |
+| `npm run dev`                      | Dev server at `localhost:4321` (admin at `/keystatic/`)             |
+| `npm run build`                    | Build, validate links/assets, and run E2E tests                     |
+| `npm run build:site`               | Build and validate links/assets only                                |
+| `npm run test:e2e`                 | Build, validate links/assets, and run E2E tests                     |
+| `npm run test:e2e:ui`              | Open the Playwright UI                                              |
+| `npm run preview`                  | Preview the build at `localhost:4322/website/`                      |
+| `npm run typecheck`                | Type-check with `tsc`                                               |
+| `npm run verify`                   | Typecheck, build, validate, and run E2E tests                       |
+
+## Testing
+
+- E2E tests live in `tests/e2e/` and run with Playwright against the production
+  build under `/website/`.
+- `npm run build` always runs `scripts/check-dist.mjs` (link/asset validation)
+  and the full E2E suite.
+- **Content-only commits** (only `src/content/**` or `public/images/**`) run
+  `npm run build:site` and skip E2E. Keystatic commits are created through the
+  GitHub API, so the local pre-commit hook does not run for them; the same path
+  filter is applied in CI.
+- The pre-commit hook uses Husky. Use `HUSKY=0 git commit ...` only as an
+  emergency bypass; CI will still test the push.
 
 ## Deployment
 

@@ -7,9 +7,15 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "KEYSTATIC_DISABLED=1 astro build",
+    "build": "npm run build:site && npm run test:e2e:built",
+    "build:site": "KEYSTATIC_DISABLED=1 astro build && node scripts/check-dist.mjs",
     "preview": "KEYSTATIC_DISABLED=1 astro preview",
+    "test:e2e": "npm run build:site && npm run test:e2e:built",
+    "test:e2e:built": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run build",
+    "prepare": "husky",
     "astro": "astro"
   },
   "dependencies": {
@@ -30,7 +36,9 @@
     "esbuild": true
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.3",
+    "husky": "^9.1.7",
     "typescript": "^7.0.2"
   }
 }

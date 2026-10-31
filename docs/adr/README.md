@@ -24,6 +24,7 @@ rather than duplicating the rules.
 | [0010](./0010-nav-active-state.md)              | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27                      |
 | [0011](./0011-remove-subpage-back-link.md)      | Remove the subpage "back to homepage" link             | Accepted | 2026-10-29                      |
 | [0012](./0012-nav-responsive-breakpoint.md)     | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29                      |
+| [0013](./0013-e2e-tests-with-playwright.md)     | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31                      |
 
 ## When to add an ADR
 

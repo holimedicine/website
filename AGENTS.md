@@ -18,12 +18,17 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Commands
 
-| Command             | What it does                                                              |
-| ------------------- | ------------------------------------------------------------------------- |
-| `npm run dev`       | Dev server at `/` (Keystatic admin at `/keystatic/`)                      |
-| `npm run build`     | Static production build (`KEYSTATIC_DISABLED=1`) → `dist/`                 |
-| `npm run preview`   | Preview the production build at `http://localhost:4322/website/`           |
-| `npm run typecheck` | `tsc --noEmit`                                                            |
+| Command                           | What it does                                                       |
+| --------------------------------- | ------------------------------------------------------------------ |
+| `npm run dev`                     | Dev server at `/` (Keystatic admin at `/keystatic/`)               |
+| `npm run build`                   | Build, validate links/assets, and run E2E tests                    |
+| `npm run build:site`              | Build and validate links/assets only                               |
+| `npm run test:e2e`                | Build, validate links/assets, and run E2E tests                    |
+| `npm run test:e2e:ui`             | Open the Playwright UI                                             |
+| `npm run preview`                 | Preview the production build at `http://localhost:4322/website/`   |
+| `npm run typecheck`               | `tsc --noEmit`                                                     |
+| `npm run verify`                  | Typecheck + build + link/asset validation + E2E                    |
+| `npx playwright install chromium` | Install the browser used by E2E tests (once per machine)           |
 
 ## Key facts & gotchas
 
@@ -36,6 +41,11 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
   link/asset must be wrapped with `withBase()` from `src/utils/url.ts`.
 - **Content fields:** when changing a collection, keep `keystatic.config.ts` and
   `src/content.config.ts` in sync.
+- **Builds are test-gated:** `npm run build` runs `scripts/check-dist.mjs` and
+  the Playwright E2E suite. Content-only commits (only `src/content/**` or
+  `public/images/**`) run `npm run build:site` and skip E2E; see ADR 0013.
+- **E2E setup:** run `npx playwright install chromium` once before the first
+  build/test. Tests run against the production build at `/website/`.
 - **Never commit `dist/`** (gitignored). Deployment is handled by GitHub Actions.
 
 ## Architecture decisions
