@@ -9,7 +9,9 @@ const { eyebrow, title, lead } = Astro.props;
 ---
 
 <header class="page-header">
-  <p class="eyebrow">{eyebrow}</p>
-  <h1>{title}</h1>
-  {lead && <p class="lead">{lead}</p>}
+  <div class="site-container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+  </div>
 </header>

@@ -164,7 +164,7 @@
 
   /* PAGE HEADER (subpages) */
   .page-header {
-    @apply relative overflow-hidden border-b border-line px-6 pt-[70px] pb-14;
+    @apply relative overflow-hidden border-b border-line pt-[70px] pb-14;
   }
   .page-header h1 {
     @apply mt-3.5 max-w-[720px] text-[clamp(2rem,4vw,2.8rem)];
