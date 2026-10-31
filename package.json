@@ -13,7 +13,7 @@
     "test:e2e": "npm run build:site && npm run test:e2e:built",
     "test:e2e:built": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro sync && tsc --noEmit",
     "verify": "npm run typecheck && npm run build",
     "prepare": "husky",
     "astro": "astro"

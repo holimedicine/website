@@ -38,7 +38,7 @@ Both are editable through the Keystatic admin in dev (requires a GitHub App; see
 | `npm run test:e2e`                 | Build, validate links/assets, and run E2E tests                     |
 | `npm run test:e2e:ui`              | Open the Playwright UI                                              |
 | `npm run preview`                  | Preview the build at `localhost:4322/website/`                      |
-| `npm run typecheck`                | Type-check with `tsc`                                               |
+| `npm run typecheck`                | Generate Astro types and type-check with `tsc`                      |
 | `npm run verify`                   | Typecheck, build, validate, and run E2E tests                       |
 
 ## Testing

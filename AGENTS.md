@@ -26,7 +26,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 | `npm run test:e2e`                | Build, validate links/assets, and run E2E tests                    |
 | `npm run test:e2e:ui`             | Open the Playwright UI                                             |
 | `npm run preview`                 | Preview the production build at `http://localhost:4322/website/`   |
-| `npm run typecheck`               | `tsc --noEmit`                                                     |
+| `npm run typecheck`               | Generate Astro types (`astro sync`) and run `tsc --noEmit`         |
 | `npm run verify`                  | Typecheck + build + link/asset validation + E2E                    |
 | `npx playwright install chromium` | Install the browser used by E2E tests (once per machine)           |
 
