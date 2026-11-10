@@ -11,6 +11,12 @@ export type ContentEntry = {
   coverImage?: string;
 };
 
+export type CategoryEntry = {
+  slug: string;
+  title: string;
+  order: number;
+};
+
 type Frontmatter = Record<string, string | number | undefined>;
 
 function parseFrontmatter(source: string): Frontmatter {
@@ -60,6 +66,21 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
     .sort((a, b) => a.order - b.order);
 }
 
-export function listByCategory(category: string): ContentEntry[] {
-  return listEntries('przepisy').filter((entry) => entry.category === category);
+export function listCategories(): CategoryEntry[] {
+  const directory = path.join(CONTENT_ROOT, 'kategorie-przepisow');
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => {
+      const data = JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')) as {
+        title?: string;
+        order?: number;
+      };
+      return {
+        slug: file.slice(0, -'.json'.length),
+        title: String(data.title ?? ''),
+        order: Number(data.order ?? 0),
+      };
+    })
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));
 }

@@ -10,11 +10,19 @@ const edukacja = defineCollection({
   }),
 });
 
+const kategoriePrzepisow = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/kategorie-przepisow' }),
+  schema: z.object({
+    title: z.string(),
+    order: z.number().default(0),
+  }),
+});
+
 const przepisy = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/przepisy' }),
   schema: z.object({
     title: z.string(),
-    category: z.enum(['na-wynos', 'dania']).default('dania'),
+    category: z.string(),
     tag: z.string().optional(),
     summary: z.string().optional(),
     coverImage: z.string().optional(),
@@ -91,4 +99,12 @@ const contact = defineCollection({
   }),
 });
 
-export const collections = { edukacja, przepisy, about, podejscie, zakres, contact };
+export const collections = {
+  edukacja,
+  kategoriePrzepisow,
+  przepisy,
+  about,
+  podejscie,
+  zakres,
+  contact,
+};

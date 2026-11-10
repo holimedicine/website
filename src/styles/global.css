@@ -284,6 +284,9 @@
   .recipe-tag.with-img {
     @apply pt-4;
   }
+  .recipe-empty {
+    @apply m-0 text-[0.88rem] text-text-muted;
+  }
   @media (max-width: 760px) {
     .recipes-grid {
       @apply grid-cols-1;

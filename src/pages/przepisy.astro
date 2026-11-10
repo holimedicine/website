@@ -5,8 +5,24 @@ import PageHeader from '../components/PageHeader.astro';
 import { withBase } from '../utils/url';
 
 const entries = (await getCollection('przepisy')).sort((a, b) => a.data.order - b.data.order);
-const naWynos = entries.filter((entry) => entry.data.category === 'na-wynos');
-const dania = entries.filter((entry) => entry.data.category === 'dania');
+const categories = (await getCollection('kategoriePrzepisow')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
+);
+
+const categoryIds = new Set(categories.map((category) => category.id));
+const orphaned = entries.filter((entry) => !categoryIds.has(entry.data.category));
+if (orphaned.length > 0) {
+  throw new Error(
+    `Przepisy z nieistniejącą kategorią: ${orphaned
+      .map((entry) => `${entry.id} (${entry.data.category})`)
+      .join(', ')}`
+  );
+}
+
+const groups = categories.map((category) => ({
+  category,
+  entries: entries.filter((entry) => entry.data.category === category.id),
+}));
 ---
 
 <SiteLayout title="Przepisy — Natalia i Donat Cupiał">
@@ -18,49 +34,44 @@ const dania = entries.filter((entry) => entry.data.category === 'dania');
 
   <section class="section site-container">
     <div class="subcat-tabs">
-      <button class="subcat-tab active" data-target="na-wynos">Na wynos</button>
-      <button class="subcat-tab" data-target="dania">Dania</button>
+      {groups.map(({ category }, index) => (
+        <button
+          type="button"
+          class:list={['subcat-tab', { active: index === 0 }]}
+          data-target={category.id}
+        >
+          {category.data.title}
+        </button>
+      ))}
     </div>
 
-    <div class="subcat-panel active" id="na-wynos">
-      <div class="recipes-grid reveal">
-        {naWynos.map((entry) => (
-          <div class="recipe-card">
-            {entry.data.coverImage && (
-              <img
-                src={withBase(entry.data.coverImage)}
-                alt={entry.data.alt}
-                class="recipe-img"
-                loading="lazy"
-              />
-            )}
-            <div class="recipe-tag with-img">{entry.data.tag}</div>
-            <h3>{entry.data.title}</h3>
-            <p>{entry.data.summary}</p>
+    {groups.map(({ category, entries }, index) => (
+      <div class:list={['subcat-panel', { active: index === 0 }]} id={category.id}>
+        {entries.length === 0 ? (
+          <p class="recipe-empty">Brak przepisów w tej kategorii.</p>
+        ) : (
+          <div class="recipes-grid reveal">
+            {entries.map((entry) => (
+              <div class="recipe-card">
+                {entry.data.coverImage && (
+                  <img
+                    src={withBase(entry.data.coverImage)}
+                    alt={entry.data.alt}
+                    class="recipe-img"
+                    loading="lazy"
+                  />
+                )}
+                <div class:list={['recipe-tag', { 'with-img': Boolean(entry.data.coverImage) }]}>
+                  {entry.data.tag}
+                </div>
+                <h3>{entry.data.title}</h3>
+                <p>{entry.data.summary}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
-    </div>
-
-    <div class="subcat-panel" id="dania">
-      <div class="recipes-grid reveal">
-        {dania.map((entry) => (
-          <div class="recipe-card">
-            {entry.data.coverImage && (
-              <img
-                src={withBase(entry.data.coverImage)}
-                alt={entry.data.alt}
-                class="recipe-img"
-                loading="lazy"
-              />
-            )}
-            <div class="recipe-tag">{entry.data.tag}</div>
-            <h3>{entry.data.title}</h3>
-            <p>{entry.data.summary}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    ))}
   </section>
 
   <script>

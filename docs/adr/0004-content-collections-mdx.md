@@ -2,6 +2,8 @@
 
 - Status: Accepted
 - Date: 2026-10-01
+- Amended: 2026-11-10 — recipe category is now a relationship to the
+  `kategoriePrzepisow` collection; see ADR 0014.
 
 ## Context
 
@@ -23,8 +25,9 @@ collections**, one file per entry.
 
 `edukacja` — `title` (slug), `teaser`, `order` (integer), `content` (MDX body).
 
-`przepisy` — `title` (slug), `category` (select: `na-wynos` | `dania`), `tag`,
-`summary`, `coverImage` (image), `alt`, `order`, `content` (MDX body, optional).
+`przepisy` — `title` (slug), `category` (relationship to `kategoriePrzepisow`),
+`tag`, `summary`, `coverImage` (image), `alt`, `order`, `content` (MDX body,
+optional).
 
 ### Images
 

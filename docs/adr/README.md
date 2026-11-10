@@ -14,8 +14,8 @@ rather than duplicating the rules.
 | ----------------------------------------------- | ------------------------------------------------------ | -------- | ------------------------------- |
 | [0001](./0001-migrate-to-astro.md)              | Migrate the static site to Astro                       | Accepted | 2026-10-01                      |
 | [0002](./0002-tailwind-v4-via-postcss.md)       | Styling with Tailwind CSS v4 via PostCSS               | Accepted | 2026-10-01                      |
-| [0003](./0003-keystatic-cms.md)                 | Use Keystatic as the CMS with GitHub storage           | Accepted | 2026-10-01                      |
-| [0004](./0004-content-collections-mdx.md)       | Manage edukacja/przepisy as MDX content collections    | Accepted | 2026-10-01                      |
+| [0003](./0003-keystatic-cms.md)                 | Use Keystatic as the CMS with GitHub storage           | Accepted | 2026-10-01 (amended 2026-11-10) |
+| [0004](./0004-content-collections-mdx.md)       | Manage edukacja/przepisy as MDX content collections    | Accepted | 2026-10-01 (amended 2026-11-10) |
 | [0005](./0005-keystatic-dev-only.md)            | Keystatic runs in dev only; production build is static | Accepted | 2026-10-01                      |
 | [0006](./0006-github-pages-deploy.md)           | Deploy to GitHub Pages with GitHub Actions             | Accepted | 2026-10-01                      |
 | [0007](./0007-base-path-and-withbase.md)        | Project-page base path and the `withBase()` helper     | Accepted | 2026-10-01                      |
@@ -25,6 +25,7 @@ rather than duplicating the rules.
 | [0011](./0011-remove-subpage-back-link.md)      | Remove the subpage "back to homepage" link             | Accepted | 2026-10-29                      |
 | [0012](./0012-nav-responsive-breakpoint.md)     | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29                      |
 | [0013](./0013-e2e-tests-with-playwright.md)     | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31                      |
+| [0014](./0014-configurable-recipe-categories.md) | Configurable recipe categories                        | Accepted | 2026-11-10                      |
 
 ## When to add an ADR
 

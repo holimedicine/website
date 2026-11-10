@@ -9,7 +9,7 @@ export default config({
     brand: { name: 'Holimedicine' },
     navigation: {
       'Strona główna': ['about', 'podejscie', 'zakres', 'contact'],
-      Moduły: ['edukacja', 'przepisy'],
+      Moduły: ['edukacja', 'przepisy', 'kategoriePrzepisow'],
     },
   },
   singletons: {
@@ -199,6 +199,32 @@ export default config({
         }),
       },
     }),
+    kategoriePrzepisow: collection({
+      label: 'Kategorie przepisów',
+      slugField: 'title',
+      path: 'src/content/kategorie-przepisow/*',
+      format: { data: 'json' },
+      columns: ['title', 'order'],
+      schema: {
+        title: fields.slug({
+          name: { label: 'Nazwa', validation: { isRequired: true } },
+          slug: {
+            label: 'Identyfikator (slug)',
+            validation: {
+              pattern: {
+                regex: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+                message: 'Używaj małych liter, cyfr i myślników.',
+              },
+            },
+          },
+        }),
+        order: fields.integer({
+          label: 'Kolejność',
+          description: 'Im mniejsza liczba, tym wcześniej pojawia się zakładka.',
+          defaultValue: 0,
+        }),
+      },
+    }),
     przepisy: collection({
       label: 'Przepisy',
       slugField: 'title',
@@ -210,17 +236,14 @@ export default config({
         title: fields.slug({
           name: { label: 'Tytuł', validation: { isRequired: true } },
         }),
-        category: fields.select({
+        category: fields.relationship({
           label: 'Kategoria',
-          options: [
-            { label: 'Na wynos', value: 'na-wynos' },
-            { label: 'Dania', value: 'dania' },
-          ],
-          defaultValue: 'dania',
+          collection: 'kategoriePrzepisow',
+          validation: { isRequired: true },
         }),
         tag: fields.text({
           label: 'Tag',
-          description: 'np. „Na wynos · niskowęglowodanowe”',
+          description: 'np. „niskowęglowodanowe”',
         }),
         summary: fields.text({
           label: 'Krótki opis',

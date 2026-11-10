@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-10-01
+- Amended: 2026-11-10 — added the `kategoriePrzepisow` collection; see ADR 0014.
 
 ## Context
 
@@ -14,7 +15,8 @@ write files in the repository.
 Use **Keystatic** with **GitHub storage**.
 
 - Config: `keystatic.config.ts`, `storage: { kind: 'github', repo: 'holimedicine/website' }`.
-- Collections: `edukacja` and `przepisy` (see ADR 0004 for the fields).
+- Collections: `edukacja`, `przepisy`, and `kategoriePrzepisow` (see ADR 0004
+  and ADR 0014 for the fields).
 - Admin UI served by `@keystatic/astro` at `/keystatic/`.
 - Authentication is a GitHub App. Required env vars (see `.env.example`):
   - `KEYSTATIC_GITHUB_CLIENT_ID`

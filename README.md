@@ -17,12 +17,14 @@ Live: https://holimedicine.github.io/website/
 
 ## Content
 
-Two collections, one MDX file per entry:
+Three collections:
 
 - `src/content/edukacja/*.mdx` — educational articles.
-- `src/content/przepisy/*.mdx` — recipes.
+- `src/content/przepisy/*.mdx` — recipes, each referencing a category slug.
+- `src/content/kategorie-przepisow/*.json` — recipe categories (name + order),
+  rendered as tabs on `/przepisy/`.
 
-Both are editable through the Keystatic admin in dev (requires a GitHub App; see
+All are editable through the Keystatic admin in dev (requires a GitHub App; see
 `.env.example`). Recipe images live at
 `public/images/przepisy/<slug>/coverImage.jpg`.
 
