@@ -41,10 +41,13 @@ function parseFrontmatter(source: string): Frontmatter {
     let value = line.slice(separator + 1).trim();
     if (!key) continue;
 
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
+    if (value.startsWith('"') && value.endsWith('"')) {
+      try {
+        value = JSON.parse(value) as string;
+      } catch {
+        value = value.slice(1, -1);
+      }
+    } else if (value.startsWith("'") && value.endsWith("'")) {
       value = value.slice(1, -1);
     }
 
@@ -93,6 +96,90 @@ export function listCategories(): CategoryEntry[] {
         title: String(data.title ?? ''),
         order: Number(data.order ?? 0),
         recipes,
+      };
+    })
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));
+}
+
+export type ProductEntry = {
+  file: string;
+  slug: string;
+  title: string;
+  examples?: string;
+  summary?: string;
+  hasContent: boolean;
+};
+
+export function listProducts(): ProductEntry[] {
+  const directory = path.join(CONTENT_ROOT, 'produkty');
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
+    .map((file) => {
+      const source = fs.readFileSync(path.join(directory, file), 'utf8');
+      const data = parseFrontmatter(source);
+      return {
+        file,
+        slug: file.replace(/\.(md|mdx)$/, ''),
+        title: String(data.title ?? ''),
+        examples: data.examples ? String(data.examples) : undefined,
+        summary: data.summary ? String(data.summary) : undefined,
+        hasContent: hasBody(source),
+      };
+    });
+}
+
+export type ProductSection = {
+  slug: string;
+  title: string;
+  description?: string;
+  order: number;
+  display: 'cards' | 'table';
+  items: string[];
+  columns: string[];
+  rows: string[][];
+};
+
+export function listProductSections(): ProductSection[] {
+  const directory = path.join(CONTENT_ROOT, 'sekcje-produktow');
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => {
+      const data = JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')) as {
+        title?: string;
+        description?: string;
+        order?: number;
+        display?: string;
+        items?: unknown;
+        columns?: unknown;
+        rows?: unknown;
+      };
+      const items = Array.isArray(data.items)
+        ? data.items.filter((slug): slug is string => typeof slug === 'string')
+        : [];
+      const columns = Array.isArray(data.columns)
+        ? data.columns.filter((column): column is string => typeof column === 'string')
+        : [];
+      const rows = Array.isArray(data.rows)
+        ? data.rows.map((row) => {
+            const cells =
+              row && typeof row === 'object' && 'cells' in row
+                ? (row as { cells?: unknown }).cells
+                : undefined;
+            return Array.isArray(cells) ? cells.map((cell) => String(cell)) : [];
+          })
+        : [];
+
+      return {
+        slug: file.slice(0, -'.json'.length),
+        title: String(data.title ?? ''),
+        description: data.description ? String(data.description) : undefined,
+        order: Number(data.order ?? 0),
+        display: data.display === 'table' ? ('table' as const) : ('cards' as const),
+        items,
+        columns,
+        rows,
       };
     })
     .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));

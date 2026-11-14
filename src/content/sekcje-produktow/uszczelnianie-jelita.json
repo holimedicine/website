@@ -1,0 +1,70 @@
+{
+  "title": "Uszczelnianie jelita: przykładowy schemat",
+  "description": "Podstawą jest eliminacja tego, co szkodzi (dieta, NLPZ, alkohol, stres); sama dieta zwykle nie wystarcza. Kolejność: dieta + Sanprobi Barrier, po 1–2 tygodniach maślan i glutamina, potem colostrum. Intensywny protokół trwa zwykle 8–12 tygodni, a w ciężkich przypadkach 4–6 miesięcy.",
+  "order": 3,
+  "display": "table",
+  "columns": [
+    "Preparat",
+    "Typowa dawka",
+    "Jak brać",
+    "Czas"
+  ],
+  "rows": [
+    {
+      "cells": [
+        "Sanprobi Barrier",
+        "2–4 kapsułki dziennie",
+        "Z posiłkiem",
+        "4–8 tygodni, często 3 miesiące"
+      ]
+    },
+    {
+      "cells": [
+        "Colostrum",
+        "1–2 g dziennie",
+        "Na czczo, 30 min przed posiłkiem",
+        "4–12 tygodni"
+      ]
+    },
+    {
+      "cells": [
+        "Maślan sodu",
+        "150–300 mg czystego maślanu (sprawdź etykietę)",
+        "Z posiłkiem",
+        "3–6 miesięcy lub dłużej"
+      ]
+    },
+    {
+      "cells": [
+        "L-glutamina",
+        "5–10 g dziennie",
+        "Na czczo, 2 dawki",
+        "8–12 tygodni"
+      ]
+    },
+    {
+      "cells": [
+        "S. boulardii (Enterol)",
+        "Wg ulotki",
+        "Codziennie",
+        "4–6 tygodni"
+      ]
+    },
+    {
+      "cells": [
+        "Cynk",
+        "20–30 mg jonów cynku",
+        "Wieczorem",
+        "8–12 tygodni"
+      ]
+    },
+    {
+      "cells": [
+        "Probiotyk wieloszczepowy",
+        "Wg ulotki",
+        "Codziennie",
+        "ok. 12 tygodni"
+      ]
+    }
+  ]
+}

@@ -9,7 +9,7 @@ export default config({
     brand: { name: 'Holimedicine' },
     navigation: {
       'Strona główna': ['about', 'podejscie', 'zakres', 'contact'],
-      Moduły: ['edukacja', 'przepisy', 'kategoriePrzepisow'],
+      Moduły: ['edukacja', 'przepisy', 'kategoriePrzepisow', 'produkty', 'sekcjeProduktow'],
     },
   },
   singletons: {
@@ -269,6 +269,124 @@ export default config({
         content: fields.mdx({
           label: 'Pełny przepis (opcjonalnie)',
         }),
+      },
+    }),
+    produkty: collection({
+      label: 'Polecane produkty',
+      slugField: 'title',
+      path: 'src/content/produkty/*',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      columns: ['title', 'examples'],
+      schema: {
+        title: fields.slug({
+          name: { label: 'Nazwa', validation: { isRequired: true } },
+        }),
+        examples: fields.text({
+          label: 'Przykładowe preparaty',
+          description: 'Krótka lista preparatów lub dawek widoczna na kafelku.',
+        }),
+        summary: fields.text({
+          label: 'Krótki opis',
+          description: 'Opis widoczny na kafelku.',
+          multiline: true,
+        }),
+        image: fields.image({
+          label: 'Zdjęcie, grafika lub ikona (opcjonalnie)',
+          directory: 'public/images/produkty',
+          publicPath: '/images/produkty/',
+        }),
+        imageAlt: fields.text({
+          label: 'Opis zdjęcia (alt)',
+        }),
+        link: fields.url({
+          label: 'Link do sklepu lub źródła (opcjonalnie)',
+        }),
+        linkLabel: fields.text({
+          label: 'Etykieta linku',
+          defaultValue: 'Zobacz produkt',
+        }),
+        details: fields.array(
+          fields.object({
+            label: fields.text({
+              label: 'Etykieta',
+              validation: { isRequired: true },
+            }),
+            value: fields.text({
+              label: 'Wartość',
+              multiline: true,
+            }),
+          }),
+          {
+            label: 'Dodatkowe informacje',
+            description: 'Np. dawka, sposób przyjmowania, czas kuracji.',
+            itemLabel: (props) => props.fields.label.value,
+          }
+        ),
+        content: fields.mdx({
+          label: 'Pełny opis',
+        }),
+      },
+    }),
+    sekcjeProduktow: collection({
+      label: 'Sekcje polecanych produktów',
+      slugField: 'title',
+      path: 'src/content/sekcje-produktow/*',
+      format: { data: 'json' },
+      columns: ['title', 'order', 'display'],
+      schema: {
+        title: fields.slug({
+          name: { label: 'Nagłówek sekcji', validation: { isRequired: true } },
+        }),
+        description: fields.text({
+          label: 'Wstęp',
+          description: 'Opcjonalny tekst pod nagłówkiem sekcji.',
+          multiline: true,
+        }),
+        order: fields.integer({
+          label: 'Kolejność',
+          description: 'Im mniejsza liczba, tym wcześniej pojawia się sekcja.',
+          defaultValue: 0,
+        }),
+        display: fields.select({
+          label: 'Wygląd',
+          options: [
+            { label: 'Kafelki', value: 'cards' },
+            { label: 'Tabela', value: 'table' },
+          ],
+          defaultValue: 'cards',
+        }),
+        items: fields.array(
+          fields.relationship({
+            label: 'Produkt',
+            collection: 'produkty',
+            validation: { isRequired: true },
+          }),
+          {
+            label: 'Kafelki',
+            description:
+              'Kolejność na stronie. Przeciągnij, aby zmienić kolejność; lista pokazuje slugi produktów. Wypełnij dla sekcji typu „Kafelki”.',
+            itemLabel: (props) => props.value ?? 'Wybierz produkt',
+          }
+        ),
+        columns: fields.array(fields.text({ label: 'Kolumna' }), {
+          label: 'Kolumny tabeli',
+          description: 'Nagłówki kolumn w kolejności. Wypełnij dla sekcji typu „Tabela”.',
+          itemLabel: (props) => props.value ?? 'Kolumna',
+        }),
+        rows: fields.array(
+          fields.object({
+            cells: fields.array(fields.text({ label: 'Wartość' }), {
+              label: 'Komórki',
+              description: 'Wartości w kolejności kolumn.',
+            }),
+          }),
+          {
+            label: 'Wiersze tabeli',
+            description: 'Wypełnij dla sekcji typu „Tabela”.',
+            itemLabel: (props) => props.fields.cells.elements[0]?.value ?? 'Wiersz',
+          }
+        ),
       },
     }),
   },

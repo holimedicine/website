@@ -314,7 +314,8 @@
 
   /* PRZEPIS / EDUKACJA — POPUP */
   .recipe-modal,
-  .edu-modal {
+  .edu-modal,
+  .prod-modal {
     @apply m-auto border border-line bg-bg-card text-text-primary;
     width: min(760px, calc(100% - 2rem));
     max-height: 90vh;
@@ -323,18 +324,21 @@
     overflow: hidden;
   }
   .recipe-modal::backdrop,
-  .edu-modal::backdrop {
+  .edu-modal::backdrop,
+  .prod-modal::backdrop {
     background: rgba(9, 5, 5, 0.78);
     backdrop-filter: blur(4px);
   }
   .recipe-modal-scroll,
-  .edu-modal-scroll {
+  .edu-modal-scroll,
+  .prod-modal-scroll {
     max-height: 90vh;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
   .recipe-modal-close,
-  .edu-modal-close {
+  .edu-modal-close,
+  .prod-modal-close {
     @apply absolute right-4 top-4 z-20 grid cursor-pointer place-items-center rounded-full border border-line text-text-primary;
     width: 2.5rem;
     height: 2.5rem;
@@ -344,51 +348,79 @@
     line-height: 1;
   }
   .recipe-modal-close:hover,
-  .edu-modal-close:hover {
+  .edu-modal-close:hover,
+  .prod-modal-close:hover {
     @apply border-accent-gold;
   }
-  .recipe-modal-img {
+  .recipe-modal-img,
+  .prod-modal-img {
     @apply block aspect-[16/9] w-full object-cover;
   }
   .recipe-modal-body,
-  .edu-modal-body {
+  .edu-modal-body,
+  .prod-modal-body {
     @apply px-[26px] pb-[30px] pt-[22px];
   }
   .recipe-modal-tag {
     @apply m-0 pr-14 text-[0.7rem] uppercase tracking-[0.08em] text-accent-red;
   }
   .recipe-modal-body h2,
-  .edu-modal-body h2 {
+  .edu-modal-body h2,
+  .prod-modal-body h2 {
     @apply mt-2 pr-14 text-[1.5rem] leading-tight;
   }
   .recipe-modal-summary,
-  .edu-modal-summary {
+  .edu-modal-summary,
+  .prod-modal-summary {
     @apply mb-5 mt-3 text-[0.95rem] text-text-muted;
   }
   .recipe-modal-content,
-  .edu-modal-content {
+  .edu-modal-content,
+  .prod-modal-content {
     @apply border-t border-line pt-5;
   }
   .recipe-modal-empty,
   .edu-modal-empty {
     @apply m-0 rounded-xl border border-line px-4 py-3 text-[0.88rem] text-text-muted;
   }
+  .prod-modal-eg {
+    @apply m-0 mt-2 pr-14 text-[0.78rem] leading-normal text-accent-red;
+  }
+  .prod-modal-details {
+    @apply my-5 grid gap-3 rounded-xl border border-line px-4 py-3 text-[0.88rem];
+  }
+  .prod-modal-details div {
+    @apply grid gap-1;
+  }
+  .prod-modal-details dt {
+    @apply text-[0.72rem] uppercase tracking-[0.08em] text-accent-gold;
+  }
+  .prod-modal-details dd {
+    @apply m-0 text-text-muted;
+  }
+  .prod-modal-link {
+    @apply mt-6 inline-flex;
+  }
   body:has(dialog.recipe-modal[open]),
-  body:has(dialog.edu-modal[open]) {
+  body:has(dialog.edu-modal[open]),
+  body:has(dialog.prod-modal[open]) {
     overflow: hidden;
   }
   @media (max-width: 520px) {
     .recipe-modal,
-    .edu-modal {
+    .edu-modal,
+    .prod-modal {
       width: calc(100% - 1rem);
       max-height: 94vh;
     }
     .recipe-modal-scroll,
-    .edu-modal-scroll {
+    .edu-modal-scroll,
+    .prod-modal-scroll {
       max-height: 94vh;
     }
     .recipe-modal-body,
-    .edu-modal-body {
+    .edu-modal-body,
+    .prod-modal-body {
       @apply px-5 pb-6 pt-5;
     }
   }
@@ -542,11 +574,71 @@
   }
 
   /* POLECANE PRODUKTY */
+  .prod-section {
+    @apply mb-12;
+  }
+  .prod-section:last-child {
+    @apply mb-0;
+  }
+  .prod-section .table-wrap {
+    @apply mb-0;
+  }
   .prod-eg {
     @apply mb-2.5 block text-[0.78rem] leading-normal text-accent-red;
   }
   .prod-note {
     @apply mb-10 rounded-xl border border-line px-5 py-4 text-[0.82rem] text-text-muted;
+  }
+  .prod-grid {
+    @apply grid grid-cols-3 gap-6;
+  }
+  .prod-card {
+    @apply relative flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-card transition duration-300;
+  }
+  .prod-card:hover,
+  .prod-card:focus-within {
+    @apply border-accent-red-soft;
+    transform: translateY(-2px);
+  }
+  .prod-card-img {
+    @apply block aspect-[4/3] w-full object-cover;
+  }
+  .prod-card-body {
+    @apply flex flex-1 flex-col px-[22px] py-6;
+  }
+  .prod-card h3 {
+    @apply m-0 pr-2 text-[1.05rem];
+  }
+  .prod-card p {
+    @apply mb-5 mt-2.5 text-[0.88rem] text-text-muted;
+  }
+  .prod-card .prod-eg {
+    @apply mb-0 mt-2.5;
+  }
+  .prod-card-more {
+    @apply mt-auto text-[0.75rem] uppercase tracking-[0.08em] text-accent-gold;
+  }
+  .prod-card-open {
+    @apply absolute inset-0 z-10 cursor-pointer border-none bg-transparent p-0;
+  }
+  .prod-card-open:focus-visible {
+    outline-offset: -3px;
+  }
+  .prod-empty {
+    @apply m-0 text-[0.88rem] text-text-muted;
+  }
+  @media (max-width: 760px) {
+    .prod-grid {
+      @apply grid-cols-1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prod-card,
+    .prod-card:hover,
+    .prod-card:focus-within {
+      @apply transition-none;
+      transform: none;
+    }
   }
   .table-wrap {
     @apply mb-12 overflow-x-auto rounded-2xl border border-line;

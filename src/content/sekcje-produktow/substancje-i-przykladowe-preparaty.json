@@ -1,0 +1,25 @@
+{
+  "title": "Substancje i przykładowe preparaty",
+  "order": 1,
+  "display": "cards",
+  "items": [
+    "probiotyki-wieloszczepowe",
+    "saccharomyces-boulardii",
+    "lactobacillus-rhamnosus-gg",
+    "l-plantarum-299v",
+    "probiotyk-na-bariere-jelitowa",
+    "e-coli-nissle-1917",
+    "streptococcus-salivarius-k12",
+    "maslan-sodu",
+    "colostrum-siara-bydleca",
+    "l-glutamina",
+    "cynk",
+    "witamina-d3-k2",
+    "omega-3-epa-dha",
+    "kurkumina-z-piperyna-kwercetyna",
+    "dgl-slaz-zmetnik",
+    "akkermansia",
+    "d-mannoza",
+    "magnez-zelazo-witamina-d"
+  ]
+}

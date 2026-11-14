@@ -1,0 +1,24 @@
+{
+  "title": "Probiotyki: co na jaki problem",
+  "description": "Praktyczne zestawienie preparatów o najlepszym wsparciu naukowym dla poszczególnych problemów. Nie każdy probiotyk nadaje się do przyjmowania w trakcie lub po antybiotyku.",
+  "order": 2,
+  "display": "cards",
+  "items": [
+    "ibs-ogolnie",
+    "ibs-z-biegunka",
+    "ibs-z-zaparciami",
+    "w-trakcie-antybiotyku",
+    "po-antybiotyku",
+    "sibo-imo",
+    "wrzodziejace-zapalenie-jelita-grubego",
+    "choroba-lesniowskiego-crohna",
+    "odpornosc-ogolna",
+    "wzdecia-gazy-niestrawnosc",
+    "dzieci",
+    "zakazenia-ukladu-moczowo-plciowego",
+    "choroby-nosogardla",
+    "eradykacja-h-pylori",
+    "stres",
+    "skora"
+  ]
+}

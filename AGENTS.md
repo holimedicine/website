@@ -3,9 +3,11 @@
 Astro (static) + Tailwind CSS v4 + Keystatic CMS, deployed to GitHub Pages at
 `https://holimedicine.github.io/website/`.
 
-Content for **edukacja** (articles) and **przepisy** (recipes) is managed as MDX
-content collections, and **kategorie przepisów** (recipe tabs and per-category
-ordering) as a JSON collection — all editable through the Keystatic admin.
+Content for **edukacja** (articles), **przepisy** (recipes), and **polecane
+produkty** (product cards) is managed as MDX content collections; **kategorie
+przepisów** (recipe tabs and per-category ordering) and **sekcje polecanych
+produktów** (product page sections, card lists, and tables) are JSON
+collections — all editable through the Keystatic admin.
 
 ## Development
 

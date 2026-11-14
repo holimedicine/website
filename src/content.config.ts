@@ -30,6 +30,46 @@ const przepisy = defineCollection({
   }),
 });
 
+const produkty = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/produkty' }),
+  schema: z.object({
+    title: z.string(),
+    examples: z.string().optional(),
+    summary: z.string().optional(),
+    image: z.string().nullish(),
+    imageAlt: z.string().optional(),
+    link: z.string().nullish(),
+    linkLabel: z.string().default('Zobacz produkt'),
+    details: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+        })
+      )
+      .default([]),
+  }),
+});
+
+const sekcjeProduktow = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/sekcje-produktow' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    order: z.number().default(0),
+    display: z.enum(['cards', 'table']).default('cards'),
+    items: z.array(z.string()).default([]),
+    columns: z.array(z.string()).default([]),
+    rows: z
+      .array(
+        z.object({
+          cells: z.array(z.string()).default([]),
+        })
+      )
+      .default([]),
+  }),
+});
+
 const about = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/about' }),
   schema: z.object({
@@ -102,6 +142,8 @@ export const collections = {
   edukacja,
   kategoriePrzepisow,
   przepisy,
+  produkty,
+  sekcjeProduktow,
   about,
   podejscie,
   zakres,

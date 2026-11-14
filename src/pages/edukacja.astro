@@ -2,30 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { slugify } from '../utils/slug';
 
 const entries = (await getCollection('edukacja')).sort((a, b) => a.data.order - b.data.order);
-
-const PL_DIACRITICS: Record<string, string> = {
-  ą: 'a',
-  ć: 'c',
-  ę: 'e',
-  ł: 'l',
-  ń: 'n',
-  ó: 'o',
-  ś: 's',
-  ź: 'z',
-  ż: 'z',
-};
-
-// Content entry IDs come from file names and may contain spaces or Polish
-// characters, which are invalid in HTML IDs and URLs. Derive a stable slug for
-// dialog IDs and deep links instead.
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[ąćęłńóśźż]/g, (char) => PL_DIACRITICS[char] ?? char)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const articles = await Promise.all(
   entries.map(async (entry) => ({
@@ -98,76 +77,12 @@ const articles = await Promise.all(
   ))}
 
   <script>
-    const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog.edu-modal');
+    import { initModalGroup } from '../scripts/modals';
 
-    const closeDialog = (dialog: HTMLDialogElement) => {
-      if (dialog.open) dialog.close();
-    };
-
-    const openDialog = (dialog: HTMLDialogElement) => {
-      dialogs.forEach((other) => {
-        if (other !== dialog) closeDialog(other);
-      });
-
-      if (!dialog.open) dialog.showModal();
-    };
-
-    const dialogFromHash = () => {
-      const id = window.location.hash.slice(1);
-      if (!id) return null;
-
-      const element = document.getElementById(id);
-      return element instanceof HTMLDialogElement && element.classList.contains('edu-modal')
-        ? element
-        : null;
-    };
-
-    const syncWithHash = () => {
-      const target = dialogFromHash();
-      if (target) {
-        openDialog(target);
-        return;
-      }
-      dialogs.forEach(closeDialog);
-    };
-
-    document.querySelectorAll<HTMLButtonElement>('.edu-card-open').forEach((button) => {
-      button.addEventListener('click', () => {
-        const dialogId = button.dataset.dialog;
-        const dialog = dialogId ? document.getElementById(dialogId) : null;
-        if (!(dialog instanceof HTMLDialogElement)) return;
-
-        openDialog(dialog);
-        if (window.location.hash !== `#${dialog.id}`) {
-          window.history.pushState(null, '', `#${dialog.id}`);
-        }
-      });
+    initModalGroup({
+      dialogSelector: 'dialog.edu-modal',
+      triggerSelector: '.edu-card-open',
+      getDialogId: (button) => button.dataset.dialog,
     });
-
-    document.querySelectorAll<HTMLButtonElement>('[data-close-dialog]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const dialog = button.closest('dialog');
-        if (dialog instanceof HTMLDialogElement) closeDialog(dialog);
-      });
-    });
-
-    dialogs.forEach((dialog) => {
-      dialog.addEventListener('click', (event) => {
-        if (event.target === dialog) closeDialog(dialog);
-      });
-
-      dialog.addEventListener('close', () => {
-        if (window.location.hash === `#${dialog.id}`) {
-          window.history.replaceState(
-            null,
-            '',
-            `${window.location.pathname}${window.location.search}`
-          );
-        }
-      });
-    });
-
-    window.addEventListener('hashchange', syncWithHash);
-    syncWithHash();
   </script>
 </SiteLayout>

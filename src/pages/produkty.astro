@@ -1,129 +1,65 @@
 ---
+import { getCollection, render } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { withBase } from '../utils/url';
+import { slugify } from '../utils/slug';
 
-const substances = [
-  {
-    title: 'Probiotyki wieloszczepowe',
-    examples: 'Vivomixx · ProbioMax 10 Premium Dr. Max · OMNi-BiOTiC 6/10 · Nutridome Pro 10 Biotic',
-    body: 'Mieszanki wielu szczepów bakterii. Vivomixx ma najwięcej badań (IBS, WZJG, po antybiotykach); ProbioMax i Nutridome to dobry stosunek jakości do ceny.',
-  },
-  {
-    title: 'Saccharomyces boulardii',
-    examples: 'Enterol',
-    body: 'Drożdżak probiotyczny. Można go brać w trakcie antybiotyku; pomaga przy biegunkach i jest najbezpieczniejszy przy SIBO.',
-  },
-  {
-    title: 'Lactobacillus rhamnosus GG',
-    examples: 'Dicoflor · LoGGic',
-    body: 'Szybko kolonizuje jelito i tworzy warstwę ochronną. Stosowany przy biegunkach, w UC, wsparciu skóry i stresu (wpływ na receptory GABA).',
-  },
-  {
-    title: 'L. plantarum 299v',
-    examples: 'Sanprobi IBS · ACTIVLAB Sanbiotics IBS · Asecurin IBS',
-    body: 'Szczep dobrze tolerowany w IBS i SIBO; pomaga przy wzdęciach i objawach jelitowych nasilanych stresem.',
-  },
-  {
-    title: 'Probiotyk na barierę jelitową',
-    examples: 'Sanprobi Barrier',
-    body: 'Przeznaczony do uszczelniania bariery jelitowej i wsparcia odporności; dostępny w aptekach.',
-  },
-  {
-    title: 'E. coli Nissle 1917',
-    examples: 'Mutaflor',
-    body: 'Probiotyk stosowany we wrzodziejącym zapaleniu jelita grubego, przy indukcji i utrzymaniu remisji.',
-  },
-  {
-    title: 'Streptococcus salivarius K12',
-    examples: 'Entitis · Eminis',
-    body: 'Pastylki do ssania przed snem, odbudowujące miejscową florę nosogardła przy nawracających infekcjach.',
-  },
-  {
-    title: 'Maślan sodu',
-    examples: 'Health Labs Forte · Alines · Aura Herbals · Debutir Forte · Intesta MAX · Tributron',
-    body: 'Krótkołańcuchowy kwas tłuszczowy odżywiający kolonocyty. Wzmacnia barierę jelitową, zmniejsza stan zapalny, poprawia motorykę. Tributron zawiera dodatkowo probiotyki i prebiotyk.',
-  },
-  {
-    title: 'Colostrum (siara bydlęca)',
-    examples:
-      'Proton Labs Colostrum PRO · Humavit Colostrum Bovinum · ImmuBest · Osavi Colostrum 1200 mg',
-    body: 'Źródło immunoglobulin, laktoferyny i czynników wzrostu. Wspiera odporność i regenerację śluzówki. Najlepiej na czczo, wybierając preparaty o wysokiej zawartości IgG.',
-  },
-  {
-    title: 'L-glutamina',
-    examples: '5–10 g dziennie, na czczo',
-    body: 'Podstawowe „paliwo" dla enterocytów; wspiera odbudowę nabłonka jelita.',
-  },
-  {
-    title: 'Cynk',
-    examples: 'pikolinian · karnozyna · chelat',
-    body: 'Wspiera regenerację śluzówki i skórę. Powyżej 3 miesięcy ryzyko niedoboru miedzi, więc kurację warto ograniczyć w czasie.',
-  },
-  {
-    title: 'Witamina D3 + K2',
-    examples: '2000–4000 IU · cel: 40–60 ng/ml',
-    body: 'Wspiera odporność i szczelność bariery jelitowej. Wchłanianie może poprawiać L. reuteri NCIMB 3024 (Life Extension FLORASSIST Heart Health).',
-  },
-  {
-    title: 'Omega-3 (EPA + DHA)',
-    examples: 'tran · olej z kryla · suplementy DHA/EPA',
-    body: 'Działanie przeciwzapalne; typowa dawka to 1–2 g dziennie.',
-  },
-  {
-    title: 'Kurkumina z piperyną, kwercetyna',
-    examples: 'polifenole',
-    body: 'Naturalne substancje o działaniu przeciwzapalnym, uzupełniające protokół regeneracji.',
-  },
-  {
-    title: 'DGL, ślaz, zmętnik',
-    examples: 'ochrona śluzówki',
-    body: 'Lukrecja deglicyryzynowana i śluzowe ekstrakty roślinne osłaniają błonę śluzową przewodu pokarmowego.',
-  },
-  {
-    title: 'Akkermansia',
-    examples: 'dodatkowe szczepy: L. plantarum, B. longum',
-    body: 'Dodatkowe szczepy wspierające warstwę śluzu, gdy podstawowy probiotyk nie wystarcza.',
-  },
-  {
-    title: 'D-mannoza',
-    examples: 'MultiURI',
-    body: 'Utrudnia bakteriom kolonizację nabłonka pęcherza moczowego; stosowana przy nawracających ZUM razem z probiotykami.',
-  },
-  {
-    title: 'Magnez, żelazo, witamina D',
-    examples: 'do uzupełnienia',
-    body: 'Podstawowe składniki, o których dokładniejsze zalecenia dodamy wkrótce.',
-  },
-];
+const products = await getCollection('produkty');
+const sections = (await getCollection('sekcjeProduktow')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
+);
 
-const probioticTable = [
-  ['IBS (ogólnie)', 'ProbioMax 10 Premium · OMNi-BiOTiC 6/10', 'Preparaty wieloszczepowe poprawiające motorykę jelit.'],
-  ['IBS z biegunką', 'Sanprobi IBS · Sanbiotics IBS + Enterol', 'Dodatek S. boulardii szczególnie na początku leczenia.'],
-  ['IBS z zaparciami', 'B. lactis (ProbioMax, OMNi-BiOTiC, Lactibiane) · Aliness ProbioBalance IBS', 'Szczepy poprawiające motorykę jelit.'],
-  ['W trakcie antybiotyku', 'Enterol · Dicoflor · LoGGic', 'S. boulardii i/lub LGG.'],
-  ['Po antybiotyku', 'OMNi-BiOTiC · Enterol · Dicoflor · Sanprobi Super Formula · LoGGic', 'Kontynuować od kilku tygodni do kilku miesięcy.'],
-  ['SIBO / IMO', 'Enterol · Sanprobi IBS · Sanbiotics IBS', 'Ostrożnie z wysokimi dawkami Lactobacillus w fazie aktywnej.'],
-  ['Wrzodziejące zapalenie jelita grubego', 'Vivomixx · Mutaflor · Dicoflor · LoGGic', 'Dodatek do standardowego leczenia.'],
-  ['Choroba Leśniowskiego-Crohna', 'OMNi-BiOTiC · Sanprobi Barrier · Dicoflor · LoGGic', 'Wsparcie wspomagające, nie leczenie pierwszego rzutu.'],
-  ['Odporność ogólna', 'OMNi-BiOTiC · ProbioMax · Aliness ProbioBalance · BestBiotic · Sanprobi Barrier', 'Wysoka różnorodność szczepów.'],
-  ['Wzdęcia, gazy, niestrawność', 'Sanprobi IBS · Symbiosys Alflorex · Lactibiane · Nutridome Pro 10', 'Wysoka dawka i różnorodność.'],
-  ['Dzieci', 'Wersje dziecięce: Sanprobi · Lactibiane · ProbioMax · Dicoflor Junior', 'Zawsze sprawdź wersję dla dzieci.'],
-  ['Zakażenia układu moczowo-płciowego', 'Dopochwowo: InVag · Lactovaginal · Lakcid Intima. Doustnie: ProVag · Gynophilus UroLact · Lacibios Femina · MultiURI', 'MultiURI zawiera też D-mannozę.'],
-  ['Choroby nosogardła', 'Entitis · Eminis', 'Odbudowa miejscowej flory.'],
-  ['Eradykacja H. pylori', 'HelicoGastrin', 'L. reuteri DSM 17648 + S. boulardii CNCM I-3799.'],
-  ['Stres', 'Sanprobi Stres · Dicoflor · LoGGic', 'Gdy stres daje objawy brzuszne: Sanprobi IBS, Asecurin IBS.'],
-  ['Skóra', 'LoGGic · Dicoflor', 'Warto połączyć z laktoferyną i cynkiem.'],
-];
+type ProductEntry = (typeof products)[number];
 
-const gutProtocol = [
-  ['Sanprobi Barrier', '2–4 kapsułki dziennie', 'Z posiłkiem', '4–8 tygodni, często 3 miesiące'],
-  ['Colostrum', '1–2 g dziennie', 'Na czczo, 30 min przed posiłkiem', '4–12 tygodni'],
-  ['Maślan sodu', '150–300 mg czystego maślanu (sprawdź etykietę)', 'Z posiłkiem', '3–6 miesięcy lub dłużej'],
-  ['L-glutamina', '5–10 g dziennie', 'Na czczo, 2 dawki', '8–12 tygodni'],
-  ['S. boulardii (Enterol)', 'Wg ulotki', 'Codziennie', '4–6 tygodni'],
-  ['Cynk', '20–30 mg jonów cynku', 'Wieczorem', '8–12 tygodni'],
-  ['Probiotyk wieloszczepowy', 'Wg ulotki', 'Codziennie', 'ok. 12 tygodni'],
-];
+const productsById = new Map(products.map((entry) => [entry.id, entry]));
+const problems: string[] = [];
+const entriesBySection = new Map<string, ProductEntry[]>();
+
+for (const section of sections) {
+  if (section.data.display !== 'cards') continue;
+
+  const seen = new Set<string>();
+  const entries: ProductEntry[] = [];
+
+  for (const slug of section.data.items) {
+    if (seen.has(slug)) {
+      problems.push(`„${slug}” występuje więcej niż raz w sekcji „${section.data.title}”.`);
+      continue;
+    }
+    seen.add(slug);
+
+    const entry = productsById.get(slug);
+    if (!entry) {
+      problems.push(`Sekcja „${section.data.title}” wskazuje nieistniejący produkt „${slug}”.`);
+      continue;
+    }
+
+    entries.push(entry);
+  }
+
+  entriesBySection.set(section.id, entries);
+}
+
+if (problems.length > 0) {
+  throw new Error(`Problemy z sekcjami polecanych produktów:\n- ${problems.join('\n- ')}`);
+}
+
+// A product can appear in several sections, so render one dialog per unique
+// product instead of once per card.
+const displayedProducts = new Map<string, ProductEntry>();
+for (const entries of entriesBySection.values()) {
+  for (const entry of entries) displayedProducts.set(entry.id, entry);
+}
+
+const productDialogs = await Promise.all(
+  Array.from(displayedProducts.values()).map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+    hasContent: Boolean(entry.body?.trim()),
+    dialogId: `produkt-${slugify(entry.id)}`,
+  }))
+);
 ---
 
 <SiteLayout title="Polecane produkty — Natalia i Donat Cupiał">
@@ -139,60 +75,147 @@ const gutProtocol = [
       szczepowo-specyficznie, a dobór preparatu i dawek warto omówić z lekarzem.
     </p>
 
-    <h2 class="sub-title">Substancje i przykładowe preparaty</h2>
-    <div class="phil-grid reveal">
-      {substances.map((item) => (
-        <div class="phil-card">
-          <h3>{item.title}</h3>
-          <span class="prod-eg">{item.examples}</span>
-          <p>{item.body}</p>
+    {sections.map((section) => {
+      const entries = entriesBySection.get(section.id) ?? [];
+
+      return (
+        <div
+          class="prod-section"
+          data-section={section.id}
+          data-display={section.data.display}
+        >
+          <h2 class="sub-title">{section.data.title}</h2>
+          {section.data.description && <p class="prod-lead">{section.data.description}</p>}
+
+          {section.data.display === 'cards' ? (
+            entries.length === 0 ? (
+              <p class="prod-empty">Brak produktów w tej sekcji.</p>
+            ) : (
+              <div class="prod-grid reveal">
+                {entries.map((entry) => (
+                  <article class="prod-card">
+                    {entry.data.image && (
+                      <img
+                        src={withBase(entry.data.image)}
+                        alt={entry.data.imageAlt ?? ''}
+                        class="prod-card-img"
+                        loading="lazy"
+                      />
+                    )}
+                    <div class="prod-card-body">
+                      <h3>{entry.data.title}</h3>
+                      {entry.data.examples && (
+                        <span class="prod-eg">{entry.data.examples}</span>
+                      )}
+                      {entry.data.summary && <p>{entry.data.summary}</p>}
+                      <span class="prod-card-more" aria-hidden="true">
+                        Zobacz więcej →
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      class="prod-card-open"
+                      aria-haspopup="dialog"
+                      aria-controls={`produkt-${slugify(entry.id)}`}
+                      aria-label={`Otwórz szczegóły: ${entry.data.title}`}
+                      data-dialog={`produkt-${slugify(entry.id)}`}
+                    />
+                  </article>
+                ))}
+              </div>
+            )
+          ) : (
+            <div class="table-wrap reveal">
+              <table class="prod-table">
+                <thead>
+                  <tr>
+                    {section.data.columns.map((column) => (
+                      <th>{column}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.data.rows.map((row) => (
+                    <tr>
+                      {row.cells.map((cell) => (
+                        <td>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
-      ))}
-    </div>
+      );
+    })}
   </section>
 
-  <section class="section site-container">
-    <h2 class="sub-title">Probiotyki: co na jaki problem</h2>
-    <p class="prod-lead">
-      Praktyczne zestawienie preparatów o najlepszym wsparciu naukowym dla poszczególnych problemów.
-      Nie każdy probiotyk nadaje się do przyjmowania w trakcie lub po antybiotyku.
-    </p>
-    <div class="table-wrap reveal">
-      <table class="prod-table">
-        <thead>
-          <tr><th>Problem</th><th>Przykładowe preparaty</th><th>Uwagi</th></tr>
-        </thead>
-        <tbody>
-          {probioticTable.map((row) => (
-            <tr>
-              {row.map((cell) => <td>{cell}</td>)}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+  {productDialogs.map(({ entry, Content, hasContent, dialogId }) => (
+    <dialog class="prod-modal" id={dialogId} aria-labelledby={`${dialogId}-title`}>
+      <button
+        type="button"
+        class="prod-modal-close"
+        aria-label="Zamknij szczegóły produktu"
+        data-close-dialog
+      >
+        <span aria-hidden="true">×</span>
+      </button>
 
-    <h2 class="sub-title">Uszczelnianie jelita: przykładowy schemat</h2>
-    <p class="prod-lead">
-      Podstawą jest eliminacja tego, co szkodzi (dieta, NLPZ, alkohol, stres); sama dieta zwykle nie
-      wystarcza. Kolejność: dieta + Sanprobi Barrier, po 1–2 tygodniach maślan i glutamina, potem
-      colostrum. Intensywny protokół trwa zwykle 8–12 tygodni, a w ciężkich przypadkach 4–6 miesięcy.
-    </p>
-    <div class="table-wrap reveal">
-      <table class="prod-table">
-        <thead>
-          <tr>
-            <th>Preparat</th><th>Typowa dawka</th><th>Jak brać</th><th>Czas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {gutProtocol.map((row) => (
-            <tr>
-              {row.map((cell) => <td>{cell}</td>)}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
+      <div class="prod-modal-scroll">
+        {entry.data.image && (
+          <img
+            src={withBase(entry.data.image)}
+            alt={entry.data.imageAlt ?? ''}
+            class="prod-modal-img"
+            loading="lazy"
+          />
+        )}
+
+        <div class="prod-modal-body">
+          <h2 id={`${dialogId}-title`}>{entry.data.title}</h2>
+          {entry.data.examples && <p class="prod-modal-eg">{entry.data.examples}</p>}
+          {entry.data.summary && <p class="prod-modal-summary">{entry.data.summary}</p>}
+
+          {entry.data.details.length > 0 && (
+            <dl class="prod-modal-details">
+              {entry.data.details.map((detail) => (
+                <div>
+                  <dt>{detail.label}</dt>
+                  <dd>{detail.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {hasContent && (
+            <div class="prod-modal-content rich-text">
+              <Content />
+            </div>
+          )}
+
+          {entry.data.link && (
+            <a
+              class="btn-primary prod-modal-link"
+              href={entry.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {entry.data.linkLabel}
+            </a>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
+
+  <script>
+    import { initModalGroup } from '../scripts/modals';
+
+    initModalGroup({
+      dialogSelector: 'dialog.prod-modal',
+      triggerSelector: '.prod-card-open',
+      getDialogId: (button) => button.dataset.dialog,
+    });
+  </script>
 </SiteLayout>

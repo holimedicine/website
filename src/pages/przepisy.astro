@@ -158,9 +158,10 @@ const recipeDialogs = await Promise.all(
   ))}
 
   <script>
+    import { initModalGroup } from '../scripts/modals';
+
     const tabs = document.querySelectorAll<HTMLButtonElement>('.subcat-tab');
     const panels = document.querySelectorAll<HTMLElement>('.subcat-panel');
-    const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog.recipe-modal');
 
     // Remember which category a dialog belongs to, so opening a deep link can
     // also reveal the right tab behind the modal.
@@ -185,77 +186,14 @@ const recipeDialogs = await Promise.all(
       });
     });
 
-    const closeDialog = (dialog: HTMLDialogElement) => {
-      if (dialog.open) dialog.close();
-    };
-
-    const openDialog = (dialog: HTMLDialogElement) => {
-      dialogs.forEach((other) => {
-        if (other !== dialog) closeDialog(other);
-      });
-
-      const categoryId = categoryByDialog.get(dialog.id);
-      if (categoryId) activateTab(categoryId);
-
-      if (!dialog.open) dialog.showModal();
-    };
-
-    const dialogFromHash = () => {
-      const id = window.location.hash.slice(1);
-      if (!id) return null;
-
-      const element = document.getElementById(id);
-      return element instanceof HTMLDialogElement && element.classList.contains('recipe-modal')
-        ? element
-        : null;
-    };
-
-    const syncWithHash = () => {
-      const target = dialogFromHash();
-      if (target) {
-        openDialog(target);
-        return;
-      }
-      dialogs.forEach(closeDialog);
-    };
-
-    document.querySelectorAll<HTMLButtonElement>('.recipe-card-open').forEach((button) => {
-      button.addEventListener('click', () => {
-        const dialogId = button.dataset.dialog;
-        const dialog = dialogId ? document.getElementById(dialogId) : null;
-        if (!(dialog instanceof HTMLDialogElement)) return;
-
-        openDialog(dialog);
-        if (window.location.hash !== `#${dialog.id}`) {
-          window.history.pushState(null, '', `#${dialog.id}`);
-        }
-      });
+    initModalGroup({
+      dialogSelector: 'dialog.recipe-modal',
+      triggerSelector: '.recipe-card-open',
+      getDialogId: (button) => button.dataset.dialog,
+      onOpen: (dialog) => {
+        const categoryId = categoryByDialog.get(dialog.id);
+        if (categoryId) activateTab(categoryId);
+      },
     });
-
-    document.querySelectorAll<HTMLButtonElement>('[data-close-dialog]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const dialog = button.closest('dialog');
-        if (dialog instanceof HTMLDialogElement) closeDialog(dialog);
-      });
-    });
-
-    dialogs.forEach((dialog) => {
-      dialog.addEventListener('click', (event) => {
-        if (event.target === dialog) closeDialog(dialog);
-      });
-
-      dialog.addEventListener('close', () => {
-        if (window.location.hash === `#${dialog.id}`) {
-          window.history.replaceState(
-            null,
-            '',
-            `${window.location.pathname}${window.location.search}`
-          );
-        }
-      });
-    });
-
-    window.addEventListener('hashchange', syncWithHash);
-    syncWithHash();
   </script>
 </SiteLayout>
