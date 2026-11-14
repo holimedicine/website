@@ -1,10 +1,17 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
 
+// In development the editor works on the local working copy (no GitHub App
+// credentials needed) and writes straight to the files in this repo. Production
+// builds keep GitHub storage for the hosted admin.
+const localContent = process.env.NODE_ENV !== 'production';
+
 export default config({
-  storage: {
-    kind: 'github',
-    repo: 'holimedicine/website',
-  },
+  storage: localContent
+    ? { kind: 'local' }
+    : {
+        kind: 'github',
+        repo: 'holimedicine/website',
+      },
   ui: {
     brand: { name: 'Holimedicine' },
     navigation: {
