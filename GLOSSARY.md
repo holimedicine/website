@@ -6,7 +6,9 @@ Key domain terms and technical concepts for `holimedicine-website`.
 
 | Term | Definition |
 | :--- | :--- |
-| **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as an accordion on `/edukacja/`. |
+| **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as cards on `/edukacja/`; clicking a card opens the education modal. Order comes from the `order` frontmatter field. |
+| **education modal** | Native `<dialog>` on `/edukacja/` showing an article's title, teaser, and full MDX body (or a placeholder when the body is empty). See `src/pages/edukacja.astro`. |
+| **education deep link** | Hash URL `#edukacja-<slug>` that opens the matching education modal; the slug is derived from the content entry ID. |
 | **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`; clicking a card opens the recipe modal. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
 | **recipe modal** | Native `<dialog>` on `/przepisy/` showing a recipe's cover image, tag, title, summary, and full MDX body (or a placeholder when the body is empty). See `src/pages/przepisy.astro`. |
 | **recipe deep link** | Hash URL `#przepis-<slug>` that opens the matching recipe modal and activates its category tab. |

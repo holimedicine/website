@@ -3,11 +3,37 @@ import { getCollection, render } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 
-const entries = await getCollection('edukacja');
-const items = await Promise.all(
-  entries
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
+const entries = (await getCollection('edukacja')).sort((a, b) => a.data.order - b.data.order);
+
+const PL_DIACRITICS: Record<string, string> = {
+  ą: 'a',
+  ć: 'c',
+  ę: 'e',
+  ł: 'l',
+  ń: 'n',
+  ó: 'o',
+  ś: 's',
+  ź: 'z',
+  ż: 'z',
+};
+
+// Content entry IDs come from file names and may contain spaces or Polish
+// characters, which are invalid in HTML IDs and URLs. Derive a stable slug for
+// dialog IDs and deep links instead.
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[ąćęłńóśźż]/g, (char) => PL_DIACRITICS[char] ?? char)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const articles = await Promise.all(
+  entries.map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+    hasContent: Boolean(entry.body?.trim()),
+    dialogId: `edukacja-${slugify(entry.id)}`,
+  }))
 );
 ---
 
@@ -21,31 +47,127 @@ const items = await Promise.all(
   <section class="section site-container">
     <p class="edu-disclaimer reveal">
       Poniższe materiały mają charakter edukacyjny i nie zastępują indywidualnej konsultacji
-      lekarskiej. Kliknij tytuł, aby rozwinąć pełną treść.
+      lekarskiej. Kliknij kafelek, aby przeczytać całą treść.
     </p>
-    <div class="edu-accordion reveal">
-      {items.map(({ entry, Content }) => (
-        <div class="edu-item">
-          <button class="edu-item-header" type="button">
-            <span>
-              <span class="edu-item-title">{entry.data.title}</span>
-              <span class="edu-item-teaser">{entry.data.teaser}</span>
-            </span>
-            <span class="plus">+</span>
-          </button>
-          <div class="edu-item-body">
-            <div class="rich-text"><Content /></div>
-          </div>
-        </div>
+
+    <div class="edu-grid reveal">
+      {articles.map(({ entry, dialogId }) => (
+        <article class="edu-card">
+          <h3 class="edu-card-title">{entry.data.title}</h3>
+          {entry.data.teaser && <p class="edu-card-teaser">{entry.data.teaser}</p>}
+          <span class="edu-card-more" aria-hidden="true">Czytaj więcej →</span>
+          <button
+            type="button"
+            class="edu-card-open"
+            aria-haspopup="dialog"
+            aria-controls={dialogId}
+            aria-label={`Otwórz pełną treść: ${entry.data.title}`}
+            data-dialog={dialogId}
+          />
+        </article>
       ))}
     </div>
   </section>
 
+  {articles.map(({ entry, Content, hasContent, dialogId }) => (
+    <dialog class="edu-modal" id={dialogId} aria-labelledby={`${dialogId}-title`}>
+      <button
+        type="button"
+        class="edu-modal-close"
+        aria-label="Zamknij materiał"
+        data-close-dialog
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="edu-modal-scroll">
+        <div class="edu-modal-body">
+          <h2 id={`${dialogId}-title`}>{entry.data.title}</h2>
+          {entry.data.teaser && <p class="edu-modal-summary">{entry.data.teaser}</p>}
+
+          {hasContent ? (
+            <div class="edu-modal-content rich-text">
+              <Content />
+            </div>
+          ) : (
+            <p class="edu-modal-empty">Pełna treść pojawi się wkrótce.</p>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
+
   <script>
-    document.querySelectorAll<HTMLButtonElement>('.edu-item-header').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        btn.closest('.edu-item')?.classList.toggle('open');
+    const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog.edu-modal');
+
+    const closeDialog = (dialog: HTMLDialogElement) => {
+      if (dialog.open) dialog.close();
+    };
+
+    const openDialog = (dialog: HTMLDialogElement) => {
+      dialogs.forEach((other) => {
+        if (other !== dialog) closeDialog(other);
+      });
+
+      if (!dialog.open) dialog.showModal();
+    };
+
+    const dialogFromHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return null;
+
+      const element = document.getElementById(id);
+      return element instanceof HTMLDialogElement && element.classList.contains('edu-modal')
+        ? element
+        : null;
+    };
+
+    const syncWithHash = () => {
+      const target = dialogFromHash();
+      if (target) {
+        openDialog(target);
+        return;
+      }
+      dialogs.forEach(closeDialog);
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('.edu-card-open').forEach((button) => {
+      button.addEventListener('click', () => {
+        const dialogId = button.dataset.dialog;
+        const dialog = dialogId ? document.getElementById(dialogId) : null;
+        if (!(dialog instanceof HTMLDialogElement)) return;
+
+        openDialog(dialog);
+        if (window.location.hash !== `#${dialog.id}`) {
+          window.history.pushState(null, '', `#${dialog.id}`);
+        }
       });
     });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-close-dialog]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const dialog = button.closest('dialog');
+        if (dialog instanceof HTMLDialogElement) closeDialog(dialog);
+      });
+    });
+
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) closeDialog(dialog);
+      });
+
+      dialog.addEventListener('close', () => {
+        if (window.location.hash === `#${dialog.id}`) {
+          window.history.replaceState(
+            null,
+            '',
+            `${window.location.pathname}${window.location.search}`
+          );
+        }
+      });
+    });
+
+    window.addEventListener('hashchange', syncWithHash);
+    syncWithHash();
   </script>
 </SiteLayout>

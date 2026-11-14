@@ -312,8 +312,9 @@
     }
   }
 
-  /* PRZEPIS — POPUP */
-  .recipe-modal {
+  /* PRZEPIS / EDUKACJA — POPUP */
+  .recipe-modal,
+  .edu-modal {
     @apply m-auto border border-line bg-bg-card text-text-primary;
     width: min(760px, calc(100% - 2rem));
     max-height: 90vh;
@@ -321,16 +322,19 @@
     border-radius: 1rem;
     overflow: hidden;
   }
-  .recipe-modal::backdrop {
+  .recipe-modal::backdrop,
+  .edu-modal::backdrop {
     background: rgba(9, 5, 5, 0.78);
     backdrop-filter: blur(4px);
   }
-  .recipe-modal-scroll {
+  .recipe-modal-scroll,
+  .edu-modal-scroll {
     max-height: 90vh;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  .recipe-modal-close {
+  .recipe-modal-close,
+  .edu-modal-close {
     @apply absolute right-4 top-4 z-20 grid cursor-pointer place-items-center rounded-full border border-line text-text-primary;
     width: 2.5rem;
     height: 2.5rem;
@@ -339,42 +343,52 @@
     font-size: 1.4rem;
     line-height: 1;
   }
-  .recipe-modal-close:hover {
+  .recipe-modal-close:hover,
+  .edu-modal-close:hover {
     @apply border-accent-gold;
   }
   .recipe-modal-img {
     @apply block aspect-[16/9] w-full object-cover;
   }
-  .recipe-modal-body {
+  .recipe-modal-body,
+  .edu-modal-body {
     @apply px-[26px] pb-[30px] pt-[22px];
   }
   .recipe-modal-tag {
     @apply m-0 pr-14 text-[0.7rem] uppercase tracking-[0.08em] text-accent-red;
   }
-  .recipe-modal-body h2 {
+  .recipe-modal-body h2,
+  .edu-modal-body h2 {
     @apply mt-2 pr-14 text-[1.5rem] leading-tight;
   }
-  .recipe-modal-summary {
+  .recipe-modal-summary,
+  .edu-modal-summary {
     @apply mb-5 mt-3 text-[0.95rem] text-text-muted;
   }
-  .recipe-modal-content {
+  .recipe-modal-content,
+  .edu-modal-content {
     @apply border-t border-line pt-5;
   }
-  .recipe-modal-empty {
+  .recipe-modal-empty,
+  .edu-modal-empty {
     @apply m-0 rounded-xl border border-line px-4 py-3 text-[0.88rem] text-text-muted;
   }
-  body:has(dialog.recipe-modal[open]) {
+  body:has(dialog.recipe-modal[open]),
+  body:has(dialog.edu-modal[open]) {
     overflow: hidden;
   }
   @media (max-width: 520px) {
-    .recipe-modal {
+    .recipe-modal,
+    .edu-modal {
       width: calc(100% - 1rem);
       max-height: 94vh;
     }
-    .recipe-modal-scroll {
+    .recipe-modal-scroll,
+    .edu-modal-scroll {
       max-height: 94vh;
     }
-    .recipe-modal-body {
+    .recipe-modal-body,
+    .edu-modal-body {
       @apply px-5 pb-6 pt-5;
     }
   }
@@ -399,33 +413,45 @@
     @apply block;
   }
 
-  /* AKORDEON (Edukacja) */
-  .edu-accordion {
-    @apply flex flex-col gap-3;
+  /* KAFELKI (Edukacja) */
+  .edu-grid {
+    @apply grid grid-cols-3 gap-6;
   }
-  .edu-item {
-    @apply overflow-hidden rounded-2xl border border-line bg-bg-card;
+  .edu-card {
+    @apply relative flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-card px-[22px] py-6 transition duration-300;
   }
-  .edu-item-header {
-    @apply flex w-full cursor-pointer items-center justify-between gap-5 border-none bg-transparent px-[26px] py-[22px] text-left font-sans text-text-primary;
+  .edu-card:hover,
+  .edu-card:focus-within {
+    @apply border-accent-red-soft;
+    transform: translateY(-2px);
   }
-  .edu-item-title {
-    @apply block font-serif text-[1.1rem];
+  .edu-card h3 {
+    @apply m-0 pr-2 text-[1.05rem];
   }
-  .edu-item-teaser {
-    @apply mt-1 block text-[0.88rem] font-normal text-text-muted;
+  .edu-card p {
+    @apply mb-5 mt-2.5 text-[0.88rem] text-text-muted;
   }
-  .edu-item-header .plus {
-    @apply shrink-0 text-2xl leading-none text-accent-gold transition-transform duration-[250ms];
+  .edu-card-more {
+    @apply mt-auto text-[0.75rem] uppercase tracking-[0.08em] text-accent-gold;
   }
-  .edu-item.open .edu-item-header .plus {
-    @apply rotate-45;
+  .edu-card-open {
+    @apply absolute inset-0 z-10 cursor-pointer border-none bg-transparent p-0;
   }
-  .edu-item-body {
-    @apply hidden px-[26px] pb-[30px];
+  .edu-card-open:focus-visible {
+    outline-offset: -3px;
   }
-  .edu-item.open .edu-item-body {
-    @apply block;
+  @media (max-width: 760px) {
+    .edu-grid {
+      @apply grid-cols-1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .edu-card,
+    .edu-card:hover,
+    .edu-card:focus-within {
+      @apply transition-none;
+      transform: none;
+    }
   }
   .rich-text {
     @apply text-[0.94rem] text-text-muted;

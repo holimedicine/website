@@ -27,6 +27,7 @@ rather than duplicating the rules.
 | [0013](./0013-e2e-tests-with-playwright.md)     | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31                      |
 | [0014](./0014-configurable-recipe-categories.md) | Configurable recipe categories                        | Accepted | 2026-11-10 (amended 2026-11-14) |
 | [0015](./0015-recipe-details-modal.md)           | Recipe details modal with hash deep links              | Accepted | 2026-11-14                      |
+| [0016](./0016-education-cards-and-modal.md)      | Education cards with details modal                     | Accepted | 2026-11-14                      |
 
 ## When to add an ADR
 
