@@ -1,4 +1,10 @@
 {
   "title": "Dania",
-  "order": 1
+  "order": 1,
+  "recipes": [
+    "jajecznica-z-awokado-i-szpinakiem",
+    "pieczony-losos-z-brokulem-i-oliwa",
+    "salatka-z-rukola-orzechami-i-kozim-serem",
+    "keto-burgery"
+  ]
 }

@@ -2,6 +2,8 @@
 
 - Status: Accepted
 - Date: 2026-11-10
+- Amended: 2026-11-14 — recipe ordering moved into ordered recipe lists on
+  category entries; recipes no longer store `category` or `order`.
 
 ## Context
 
@@ -44,3 +46,22 @@ remains the default tab.
 - Category files live under `src/content/`, so content-only commits still run
   `build:site` (which validates categories) but skip E2E, per ADR 0013.
 - `keystatic.config.ts` and `src/content.config.ts` must stay in sync.
+
+## Amendment (2026-11-14)
+
+Ordering and membership moved from recipes into the category entries:
+
+- `kategoriePrzepisow.recipes` — an ordered array of recipe slugs, edited as a
+  drag-and-drop relationship list. The array order is the display order within
+  the tab.
+- Recipes no longer store `category` or `order`; the category list is the sole
+  source of membership. A recipe may appear in zero, one, or more categories.
+- `/przepisy/` resolves each category's slugs and throws at build time when a
+  slug does not exist or is duplicated within the same category list. Unassigned
+  recipes are allowed and are simply not rendered.
+- Renaming a recipe's slug breaks category lists that reference the old value;
+  the build-time check catches this. The relationship list displays slugs, while
+  the picker displays recipe titles.
+
+This replaces the `przepisy.category` relationship and the recipe `order` field
+described above.

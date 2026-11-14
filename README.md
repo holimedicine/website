@@ -20,9 +20,10 @@ Live: https://holimedicine.github.io/website/
 Three collections:
 
 - `src/content/edukacja/*.mdx` — educational articles.
-- `src/content/przepisy/*.mdx` — recipes, each referencing a category slug.
-- `src/content/kategorie-przepisow/*.json` — recipe categories (name + order),
-  rendered as tabs on `/przepisy/`.
+- `src/content/przepisy/*.mdx` — recipes.
+- `src/content/kategorie-przepisow/*.json` — recipe categories (name, tab order,
+  ordered recipe list), rendered as tabs on `/przepisy/`. A recipe can appear in
+  multiple categories.
 
 All are editable through the Keystatic admin in dev (requires a GitHub App; see
 `.env.example`). Recipe images live at

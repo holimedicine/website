@@ -5,9 +5,9 @@ const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content');
 
 export type ContentEntry = {
   file: string;
+  slug: string;
   title: string;
   order: number;
-  category?: string;
   coverImage?: string;
 };
 
@@ -15,6 +15,7 @@ export type CategoryEntry = {
   slug: string;
   title: string;
   order: number;
+  recipes: string[];
 };
 
 type Frontmatter = Record<string, string | number | undefined>;
@@ -57,9 +58,9 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
       const data = parseFrontmatter(source);
       return {
         file,
+        slug: file.replace(/\.(md|mdx)$/, ''),
         title: String(data.title ?? ''),
         order: Number(data.order ?? 0),
-        category: data.category ? String(data.category) : undefined,
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
       };
     })
@@ -75,11 +76,16 @@ export function listCategories(): CategoryEntry[] {
       const data = JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')) as {
         title?: string;
         order?: number;
+        recipes?: unknown;
       };
+      const recipes = Array.isArray(data.recipes)
+        ? data.recipes.filter((slug): slug is string => typeof slug === 'string')
+        : [];
       return {
         slug: file.slice(0, -'.json'.length),
         title: String(data.title ?? ''),
         order: Number(data.order ?? 0),
+        recipes,
       };
     })
     .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));

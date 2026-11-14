@@ -223,6 +223,19 @@ export default config({
           description: 'Im mniejsza liczba, tym wcześniej pojawia się zakładka.',
           defaultValue: 0,
         }),
+        recipes: fields.array(
+          fields.relationship({
+            label: 'Przepis',
+            collection: 'przepisy',
+            validation: { isRequired: true },
+          }),
+          {
+            label: 'Przepisy',
+            description:
+              'Kolejność na stronie. Przeciągnij, aby zmienić kolejność; lista pokazuje slugi przepisów.',
+            itemLabel: (props) => props.value ?? 'Wybierz przepis',
+          }
+        ),
       },
     }),
     przepisy: collection({
@@ -231,15 +244,10 @@ export default config({
       path: 'src/content/przepisy/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'category', 'order'],
+      columns: ['title', 'tag'],
       schema: {
         title: fields.slug({
           name: { label: 'Tytuł', validation: { isRequired: true } },
-        }),
-        category: fields.relationship({
-          label: 'Kategoria',
-          collection: 'kategoriePrzepisow',
-          validation: { isRequired: true },
         }),
         tag: fields.text({
           label: 'Tag',
@@ -257,10 +265,6 @@ export default config({
         }),
         alt: fields.text({
           label: 'Opis zdjęcia (alt)',
-        }),
-        order: fields.integer({
-          label: 'Kolejność',
-          defaultValue: 0,
         }),
         content: fields.mdx({
           label: 'Pełny przepis (opcjonalnie)',

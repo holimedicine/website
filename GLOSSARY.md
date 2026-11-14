@@ -7,10 +7,10 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | Term | Definition |
 | :--- | :--- |
 | **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as an accordion on `/edukacja/`. |
-| **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`. Each recipe references a category slug. |
-| **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name and order. See ADR 0014. |
-| **na-wynos** | Default recipe category entry (`src/content/kategorie-przepisow/na-wynos.json`), shown as the first "Na wynos" tab. |
-| **dania** | Default recipe category entry (`src/content/kategorie-przepisow/dania.json`), shown as the "Dania" tab. |
+| **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
+| **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name, tab order, and an ordered list of recipe slugs. See ADR 0014. |
+| **na-wynos** | Default recipe category entry (`src/content/kategorie-przepisow/na-wynos.json`); owns its ordered recipe list and is shown as the first "Na wynos" tab. |
+| **dania** | Default recipe category entry (`src/content/kategorie-przepisow/dania.json`); owns its ordered recipe list and is shown as the "Dania" tab. |
 | **Polecane produkty** | Product and supplement recommendations page (`src/pages/produkty.astro`); content is hardcoded, not CMS-managed. |
 | **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. |
 | **Podejście** | Homepage section (`#podejscie`) backed by the `podejscie` singleton. |

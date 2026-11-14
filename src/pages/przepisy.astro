@@ -4,25 +4,42 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { withBase } from '../utils/url';
 
-const entries = (await getCollection('przepisy')).sort((a, b) => a.data.order - b.data.order);
+const recipes = await getCollection('przepisy');
 const categories = (await getCollection('kategoriePrzepisow')).sort(
   (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
 );
 
-const categoryIds = new Set(categories.map((category) => category.id));
-const orphaned = entries.filter((entry) => !categoryIds.has(entry.data.category));
-if (orphaned.length > 0) {
-  throw new Error(
-    `Przepisy z nieistniejącą kategorią: ${orphaned
-      .map((entry) => `${entry.id} (${entry.data.category})`)
-      .join(', ')}`
-  );
-}
+type RecipeEntry = (typeof recipes)[number];
 
-const groups = categories.map((category) => ({
-  category,
-  entries: entries.filter((entry) => entry.data.category === category.id),
-}));
+const recipesById = new Map(recipes.map((entry) => [entry.id, entry]));
+const problems: string[] = [];
+
+const groups = categories.map((category) => {
+  const seen = new Set<string>();
+  const entries: RecipeEntry[] = [];
+
+  for (const slug of category.data.recipes) {
+    if (seen.has(slug)) {
+      problems.push(`„${slug}” występuje więcej niż raz w kategorii „${category.data.title}”.`);
+      continue;
+    }
+    seen.add(slug);
+
+    const entry = recipesById.get(slug);
+    if (!entry) {
+      problems.push(`Kategoria „${category.data.title}” wskazuje nieistniejący przepis „${slug}”.`);
+      continue;
+    }
+
+    entries.push(entry);
+  }
+
+  return { category, entries };
+});
+
+if (problems.length > 0) {
+  throw new Error(`Problemy z kategoriami przepisów:\n- ${problems.join('\n- ')}`);
+}
 ---
 
 <SiteLayout title="Przepisy — Natalia i Donat Cupiał">

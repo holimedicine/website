@@ -4,6 +4,8 @@
 - Date: 2026-10-01
 - Amended: 2026-11-10 — recipe category is now a relationship to the
   `kategoriePrzepisow` collection; see ADR 0014.
+- Amended: 2026-11-14 — recipes no longer store category/order; category
+  entries own ordered recipe lists. See ADR 0014.
 
 ## Context
 
@@ -25,9 +27,11 @@ collections**, one file per entry.
 
 `edukacja` — `title` (slug), `teaser`, `order` (integer), `content` (MDX body).
 
-`przepisy` — `title` (slug), `category` (relationship to `kategoriePrzepisow`),
-`tag`, `summary`, `coverImage` (image), `alt`, `order`, `content` (MDX body,
-optional).
+`przepisy` — `title` (slug), `tag`, `summary`, `coverImage` (image), `alt`,
+`content` (MDX body, optional).
+
+`kategoriePrzepisow` — `title` (slug), `order` (integer), `recipes` (ordered
+list of recipe slugs; defines membership and display order).
 
 ### Images
 
@@ -54,4 +58,5 @@ The old inline data file (`src/data/edukacja.ts`) was removed.
 - Adding/editing content = adding/editing one MDX file (or using the CMS).
 - Frontmatter keys must match both the Zod schema and the Keystatic schema; keep
   `src/content.config.ts` and `keystatic.config.ts` in sync when changing fields.
-- Ordering on the site comes from the `order` field, not dates.
+- Ordering on the site comes from explicit fields, not dates: edukacja uses
+  `order`; recipes use the ordered `recipes` list on their category entries.
