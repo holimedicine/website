@@ -9,6 +9,7 @@ export type ContentEntry = {
   title: string;
   order: number;
   coverImage?: string;
+  hasContent: boolean;
 };
 
 export type CategoryEntry = {
@@ -19,6 +20,11 @@ export type CategoryEntry = {
 };
 
 type Frontmatter = Record<string, string | number | undefined>;
+
+function hasBody(source: string): boolean {
+  const match = source.match(/^---\r?\n[\s\S]*?\r?\n---/);
+  return (match ? source.slice(match[0].length) : source).trim().length > 0;
+}
 
 function parseFrontmatter(source: string): Frontmatter {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
@@ -62,6 +68,7 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
         title: String(data.title ?? ''),
         order: Number(data.order ?? 0),
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
+        hasContent: hasBody(source),
       };
     })
     .sort((a, b) => a.order - b.order);

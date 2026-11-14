@@ -7,7 +7,9 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | Term | Definition |
 | :--- | :--- |
 | **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as an accordion on `/edukacja/`. |
-| **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
+| **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`; clicking a card opens the recipe modal. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
+| **recipe modal** | Native `<dialog>` on `/przepisy/` showing a recipe's cover image, tag, title, summary, and full MDX body (or a placeholder when the body is empty). See `src/pages/przepisy.astro`. |
+| **recipe deep link** | Hash URL `#przepis-<slug>` that opens the matching recipe modal and activates its category tab. |
 | **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name, tab order, and an ordered list of recipe slugs. See ADR 0014. |
 | **na-wynos** | Default recipe category entry (`src/content/kategorie-przepisow/na-wynos.json`); owns its ordered recipe list and is shown as the first "Na wynos" tab. |
 | **dania** | Default recipe category entry (`src/content/kategorie-przepisow/dania.json`); owns its ordered recipe list and is shown as the "Dania" tab. |
@@ -24,6 +26,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **ADR** | Architecture Decision Record in `docs/adr/`; see `docs/adr/README.md` for the index and rules. |
 | **Astro** | Static site generator used for the site; pages live in `src/pages/`. |
 | **content collection** | Astro collection defined in `src/content.config.ts` and loaded from `src/content/`. |
+| **rich-text** | Shared typographic styles (`.rich-text` in `src/styles/global.css`) used by edukacja bodies and recipe modal content. |
 | **singleton** | Single fixed content entry for a homepage section; a Keystatic singleton read via `getEntry()` from a one-file Astro collection. |
 | **Keystatic** | Git-based CMS used to edit content; the admin runs only in dev at `/keystatic/`. |
 | **GitHub storage** | Keystatic storage mode that reads and writes content by committing to `holimedicine/website`. |

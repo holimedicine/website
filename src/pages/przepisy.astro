@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { withBase } from '../utils/url';
@@ -40,6 +40,21 @@ const groups = categories.map((category) => {
 if (problems.length > 0) {
   throw new Error(`Problemy z kategoriami przepisów:\n- ${problems.join('\n- ')}`);
 }
+
+// A recipe can belong to several categories, so render one dialog per unique
+// recipe instead of once per card.
+const displayedRecipes = new Map<string, RecipeEntry>();
+for (const { entries } of groups) {
+  for (const entry of entries) displayedRecipes.set(entry.id, entry);
+}
+
+const recipeDialogs = await Promise.all(
+  Array.from(displayedRecipes.values()).map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+    hasContent: Boolean(entry.body?.trim()),
+  }))
+);
 ---
 
 <SiteLayout title="Przepisy — Natalia i Donat Cupiał">
@@ -69,7 +84,7 @@ if (problems.length > 0) {
         ) : (
           <div class="recipes-grid reveal">
             {entries.map((entry) => (
-              <div class="recipe-card">
+              <article class="recipe-card">
                 {entry.data.coverImage && (
                   <img
                     src={withBase(entry.data.coverImage)}
@@ -83,7 +98,16 @@ if (problems.length > 0) {
                 </div>
                 <h3>{entry.data.title}</h3>
                 <p>{entry.data.summary}</p>
-              </div>
+                <button
+                  type="button"
+                  class="recipe-card-open"
+                  aria-haspopup="dialog"
+                  aria-controls={`przepis-${entry.id}`}
+                  aria-label={`Otwórz pełny przepis: ${entry.data.title}`}
+                  data-dialog={`przepis-${entry.id}`}
+                  data-category={category.id}
+                />
+              </article>
             ))}
           </div>
         )}
@@ -91,17 +115,147 @@ if (problems.length > 0) {
     ))}
   </section>
 
+  {recipeDialogs.map(({ entry, Content, hasContent }) => (
+    <dialog
+      class="recipe-modal"
+      id={`przepis-${entry.id}`}
+      aria-labelledby={`przepis-${entry.id}-title`}
+    >
+      <button
+        type="button"
+        class="recipe-modal-close"
+        aria-label="Zamknij przepis"
+        data-close-dialog
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="recipe-modal-scroll">
+        {entry.data.coverImage && (
+          <img
+            src={withBase(entry.data.coverImage)}
+            alt={entry.data.alt}
+            class="recipe-modal-img"
+            loading="lazy"
+          />
+        )}
+
+        <div class="recipe-modal-body">
+          {entry.data.tag && <p class="recipe-modal-tag">{entry.data.tag}</p>}
+          <h2 id={`przepis-${entry.id}-title`}>{entry.data.title}</h2>
+          {entry.data.summary && <p class="recipe-modal-summary">{entry.data.summary}</p>}
+
+          {hasContent ? (
+            <div class="recipe-modal-content rich-text">
+              <Content />
+            </div>
+          ) : (
+            <p class="recipe-modal-empty">Pełny przepis pojawi się wkrótce.</p>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
+
   <script>
     const tabs = document.querySelectorAll<HTMLButtonElement>('.subcat-tab');
     const panels = document.querySelectorAll<HTMLElement>('.subcat-panel');
+    const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog.recipe-modal');
+
+    // Remember which category a dialog belongs to, so opening a deep link can
+    // also reveal the right tab behind the modal.
+    const categoryByDialog = new Map<string, string>();
+    document.querySelectorAll<HTMLButtonElement>('.recipe-card-open').forEach((button) => {
+      const dialogId = button.dataset.dialog;
+      const categoryId = button.dataset.category;
+      if (dialogId && categoryId && !categoryByDialog.has(dialogId)) {
+        categoryByDialog.set(dialogId, categoryId);
+      }
+    });
+
+    const activateTab = (target: string) => {
+      tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.target === target));
+      panels.forEach((panel) => panel.classList.toggle('active', panel.id === target));
+    };
+
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
-        tabs.forEach((t) => t.classList.remove('active'));
-        panels.forEach((p) => p.classList.remove('active'));
-        tab.classList.add('active');
         const target = tab.dataset.target;
-        if (target) document.getElementById(target)?.classList.add('active');
+        if (target) activateTab(target);
       });
     });
+
+    const closeDialog = (dialog: HTMLDialogElement) => {
+      if (dialog.open) dialog.close();
+    };
+
+    const openDialog = (dialog: HTMLDialogElement) => {
+      dialogs.forEach((other) => {
+        if (other !== dialog) closeDialog(other);
+      });
+
+      const categoryId = categoryByDialog.get(dialog.id);
+      if (categoryId) activateTab(categoryId);
+
+      if (!dialog.open) dialog.showModal();
+    };
+
+    const dialogFromHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return null;
+
+      const element = document.getElementById(id);
+      return element instanceof HTMLDialogElement && element.classList.contains('recipe-modal')
+        ? element
+        : null;
+    };
+
+    const syncWithHash = () => {
+      const target = dialogFromHash();
+      if (target) {
+        openDialog(target);
+        return;
+      }
+      dialogs.forEach(closeDialog);
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('.recipe-card-open').forEach((button) => {
+      button.addEventListener('click', () => {
+        const dialogId = button.dataset.dialog;
+        const dialog = dialogId ? document.getElementById(dialogId) : null;
+        if (!(dialog instanceof HTMLDialogElement)) return;
+
+        openDialog(dialog);
+        if (window.location.hash !== `#${dialog.id}`) {
+          window.history.pushState(null, '', `#${dialog.id}`);
+        }
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-close-dialog]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const dialog = button.closest('dialog');
+        if (dialog instanceof HTMLDialogElement) closeDialog(dialog);
+      });
+    });
+
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) closeDialog(dialog);
+      });
+
+      dialog.addEventListener('close', () => {
+        if (window.location.hash === `#${dialog.id}`) {
+          window.history.replaceState(
+            null,
+            '',
+            `${window.location.pathname}${window.location.search}`
+          );
+        }
+      });
+    });
+
+    window.addEventListener('hashchange', syncWithHash);
+    syncWithHash();
   </script>
 </SiteLayout>

@@ -17,7 +17,7 @@ test('accordion opens and closes', async ({ page }) => {
   await expect(item).not.toHaveClass(/open/);
   await button.click();
   await expect(item).toHaveClass(/open/);
-  await expect(item.locator('.edu-body')).not.toBeEmpty();
+  await expect(item.locator('.rich-text')).not.toBeEmpty();
   await button.click();
   await expect(item).not.toHaveClass(/open/);
 });
