@@ -78,7 +78,11 @@ Consult it before naming new files, fields, components, or content sections.
 
 ## Skills
 
-Use the `holimedicine-dev` skill for common development tasks.
+Always load the `holimedicine-dev` skill (via the `skill` tool, id:
+`holimedicine-dev`) **before** starting any task that involves scaffolding new
+articles or recipes, validating the Keystatic/Astro content schema, creating or
+amending ADRs, or checking root-relative links. Do not begin such work without
+loading it first.
 
 ## Documentation
 
