@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { listProductSections, listProducts } from './support/content';
+import { slugify } from '../../src/utils/slug';
 
 const sections = listProductSections();
 const products = listProducts();
@@ -7,25 +8,6 @@ const productsBySlug = new Map(products.map((product) => [product.slug, product]
 
 const cardSections = sections.filter((section) => section.display === 'cards');
 const tableSection = sections.find((section) => section.display === 'table');
-
-const PL_DIACRITICS: Record<string, string> = {
-  ą: 'a',
-  ć: 'c',
-  ę: 'e',
-  ł: 'l',
-  ń: 'n',
-  ó: 'o',
-  ś: 's',
-  ź: 'z',
-  ż: 'z',
-};
-
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[ąćęłńóśźż]/g, (char) => PL_DIACRITICS[char] ?? char)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const dialogId = (slug: string) => `produkt-${slugify(slug)}`;
 

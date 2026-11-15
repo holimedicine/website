@@ -24,14 +24,18 @@ for (const section of sections) {
 
   for (const slug of section.data.items) {
     if (seen.has(slug)) {
-      problems.push(`„${slug}” występuje więcej niż raz w sekcji „${section.data.title}”.`);
+      problems.push(
+        `Product "${slug}" is listed more than once in section "${section.data.title}".`
+      );
       continue;
     }
     seen.add(slug);
 
     const entry = productsById.get(slug);
     if (!entry) {
-      problems.push(`Sekcja „${section.data.title}” wskazuje nieistniejący produkt „${slug}”.`);
+      problems.push(
+        `Section "${section.data.title}" references missing product "${slug}".`
+      );
       continue;
     }
 
@@ -42,7 +46,7 @@ for (const section of sections) {
 }
 
 if (problems.length > 0) {
-  throw new Error(`Problemy z sekcjami polecanych produktów:\n- ${problems.join('\n- ')}`);
+  throw new Error(`Invalid product sections:\n- ${problems.join('\n- ')}`);
 }
 
 // A product can appear in several sections, so render one dialog per unique

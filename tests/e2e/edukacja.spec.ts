@@ -1,26 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { listEntries } from './support/content';
+import { slugify } from '../../src/utils/slug';
 
 const entries = listEntries('edukacja');
-
-const PL_DIACRITICS: Record<string, string> = {
-  ą: 'a',
-  ć: 'c',
-  ę: 'e',
-  ł: 'l',
-  ń: 'n',
-  ó: 'o',
-  ś: 's',
-  ź: 'z',
-  ż: 'z',
-};
-
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[ąćęłńóśźż]/g, (char) => PL_DIACRITICS[char] ?? char)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const dialogId = (slug: string) => `edukacja-${slugify(slug)}`;
 
