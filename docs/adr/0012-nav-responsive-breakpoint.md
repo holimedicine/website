@@ -2,27 +2,31 @@
 
 - Status: Accepted
 - Date: 2026-10-29
+- Amended: 2026-11-15 — the brand became a 40px Instagram icon, the CTA grew to
+  fit the plus icon, and two labels were renamed. Re-measured minimum is ~813px,
+  so the 900px breakpoint still holds; see ADR 0018.
 
 ## Context
 
 The nav switched to the hamburger below 1300px, a value inherited from the legacy
 hand-written site when the nav had eight links (including Galeria and Opinie).
-Those pages were removed (ADR 0009), leaving six links: O nas, Podejście, Zakres
-opieki, Przepisy, Edukacja, Polecane produkty.
+Those pages were removed (ADR 0009), leaving six links: O nas, Medycyna
+holistyczna, Zakres opieki, Przepisy, Baza wiedzy, Polecane produkty.
 
 The 1300px breakpoint therefore hid the desktop nav far too early. Measured in
 Chrome with the web fonts loaded, the row needs:
 
 | Part                    | Width   |
 | ----------------------- | ------- |
-| Brand                   | 164px   |
-| Links + gaps            | 467px   |
-| CTA                     | 112px   |
+| Instagram icon          | 40px    |
+| Links + gaps            | 559px   |
+| CTA (with plus icon)    | 134px   |
 | Flex gaps (2 × 16px)    | 32px    |
 | Side padding (2 × 24px) | 48px    |
-| **Minimum viewport**    | **823px** |
+| **Minimum viewport**    | **813px** |
 
-The row overflowed at 820px and fit at 840px.
+At 901px the row fits with room to spare (measured in Chrome with web fonts
+loaded); the original 164px brand and 823px minimum are historical.
 
 ## Decision
 

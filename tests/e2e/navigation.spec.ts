@@ -32,8 +32,26 @@ test('homepage has no page-level current marker', async ({ page }) => {
 
 test('brand and CTA use the production base path', async ({ page }) => {
   await page.goto('edukacja/');
-  await expect(page.locator('.nav-brand')).toHaveAttribute('href', '/website/');
+
+  const instagram = page.locator('.nav-instagram');
+  await expect(instagram).toHaveAttribute(
+    'href',
+    'https://www.instagram.com/holimedicine/?utm_source=ig_web_button_share_sheet'
+  );
+  await expect(instagram).toHaveAttribute('target', '_blank');
+  await expect(instagram).toHaveAttribute('rel', /noopener/);
+  await expect(instagram).toHaveAttribute('aria-label', /Instagram/);
+
   await expect(page.locator('.nav-cta')).toHaveAttribute('href', '/website/#kontakt');
+});
+
+test('shows the refreshed nav labels and CTA plus', async ({ page }) => {
+  await page.goto('./');
+
+  const desktopNav = page.locator('.nav-links');
+  await expect(desktopNav.getByRole('link', { name: 'Medycyna holistyczna' })).toBeVisible();
+  await expect(desktopNav.getByRole('link', { name: 'Baza wiedzy' })).toBeVisible();
+  await expect(page.locator('.nav-cta .cta-plus')).toHaveCount(1);
 });
 
 test.describe('mobile navigation', () => {

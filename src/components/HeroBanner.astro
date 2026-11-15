@@ -1,0 +1,39 @@
+---
+import { withBase } from '../utils/url';
+---
+
+<header class="hero">
+  <div class="hero-banner">
+    <img
+      class="hero-bg"
+      src={withBase('/images/hero-backdrop.svg')}
+      alt=""
+      aria-hidden="true"
+    />
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-kicker">Medycyna holistyczna • Terapia manualna</p>
+        <h1 class="hero-title">
+          <span class="hero-title-holi">Holi</span>medicine
+        </h1>
+        <span class="hero-accent" aria-hidden="true"></span>
+        <p class="hero-tagline">
+          Kompleksowe spojrzenie na zdrowie. Od przyczyny do równowagi.
+        </p>
+        <p class="hero-tagline hero-tagline-strong">
+          Leczymy całego człowieka, nie tylko listę objawów.
+        </p>
+      </div>
+
+      <div class="hero-mark">
+        <img src={withBase('/images/logo-mark.svg')} alt="" aria-hidden="true" />
+      </div>
+
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Umów wizytę</a>
+        <a href="#o-nas" class="btn-secondary">Poznaj nas</a>
+      </div>
+    </div>
+  </div>
+</header>

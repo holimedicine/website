@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-160 -160 320 360" width="320" height="360">
+  <defs>
+    <!-- Heart gradients: soul on the left, body on the right -->
+    <linearGradient id="heartLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a8cfc6" />
+      <stop offset="100%" stop-color="#5d9b8f" />
+    </linearGradient>
+    <linearGradient id="heartRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#87a6b8" />
+      <stop offset="100%" stop-color="#466982" />
+    </linearGradient>
+
+    <!-- Shadow under the round icon -->
+    <filter id="logoBadgeShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#1b3a4b" flood-opacity="0.14" />
+    </filter>
+
+    <!-- Light glow under the ECG line for contrast -->
+    <filter id="logoEcgGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#ffffff" flood-opacity="0.85" />
+    </filter>
+  </defs>
+
+  <!-- Rounded white background -->
+  <circle cx="0" cy="0" r="142" fill="#f9fbfa" filter="url(#logoBadgeShadow)" />
+
+  <!-- Back geometric petals that deepen the heart shape -->
+  <path d="M 0,105 C -35,60 -85,-30 -42,-98 C -15,-65 -4,-35 0,-30 Z" fill="#8bbab0" opacity="0.35" />
+  <path d="M 0,105 C 35,60 85,-30 42,-98 C 15,-65 4,-35 0,-30 Z" fill="#6c8ea3" opacity="0.35" />
+
+  <!-- Main heart: left half (soul, sage) -->
+  <path d="M 0,-42 C -25,-82 -108,-82 -108,-12 C -108,45 -45,78 0,115 Z" fill="url(#heartLeft)" opacity="0.88" />
+  <path d="M 0,-42 C -15,-72 -72,-65 -78,-10 C -82,35 -35,72 0,115 Z" fill="#498478" opacity="0.28" />
+
+  <!-- Main heart: right half (body, steel blue) -->
+  <path d="M 0,-42 C 25,-82 108,-82 108,-12 C 108,45 45,78 0,115 Z" fill="url(#heartRight)" opacity="0.88" />
+  <path d="M 0,-42 C 15,-72 72,-65 78,-10 C 82,35 35,72 0,115 Z" fill="#82a3b5" opacity="0.35" />
+
+  <!-- Spine in the centre (axis and vertebrae) -->
+  <g>
+    <ellipse cx="-1" cy="-98" rx="6.5" ry="3.2" fill="#466982" opacity="0.85" />
+    <ellipse cx="2" cy="-77" rx="11.5" ry="4.5" fill="#3b5c73" opacity="0.9" />
+    <ellipse cx="4" cy="-54" rx="15" ry="5.2" fill="#315167" opacity="0.95" />
+    <ellipse cx="3" cy="-30" rx="17" ry="6" fill="#2b4c63" />
+    <ellipse cx="0" cy="-5" rx="18.5" ry="6.8" fill="#2e6b62" />
+    <ellipse cx="-3" cy="21" rx="17" ry="6.2" fill="#2b4c63" />
+    <ellipse cx="-5" cy="46" rx="15" ry="5.5" fill="#315167" opacity="0.95" />
+    <ellipse cx="-3" cy="69" rx="12" ry="4.6" fill="#3b5c73" opacity="0.9" />
+    <ellipse cx="0" cy="90" rx="8" ry="3.5" fill="#466982" opacity="0.8" />
+
+    <!-- Physiological spinal curve (S line) -->
+    <path d="M 0,-118 C 10,-65 -10,35 2,120" fill="none" stroke="#183242" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- Anatomical ECG trace (P - PQ - QRS - short ST - balanced T - U) -->
+  <path d="M -126,10
+           L -96,10
+           Q -83,-7 -70,10
+           L -55,10
+           L -48,27
+           L -38,-60
+           L -29,40
+           L -23,10
+           L 23,10
+           Q 46,-28 69,10
+           L 75,10
+           Q 86,2 97,10
+           L 126,10" fill="none" stroke="#488277" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#logoEcgGlow)" />
+</svg>

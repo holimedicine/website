@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
+import HeroBanner from '../components/HeroBanner.astro';
 import { withBase } from '../utils/url';
 
 const aboutEntry = await getEntry('about', 'index');
@@ -26,82 +27,7 @@ const contact = contactEntry.data;
   description="Medycyna rodzinna i holistyczne podejście do zdrowia. Natalia i Donat Cupiał."
 >
   <!-- HERO -->
-  <header class="hero">
-    <svg
-      class="hero-motif"
-      viewBox="0 0 400 300"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M200 300 C198 240 202 200 190 160 C178 120 150 100 120 70"
-        stroke="var(--color-accent-red)"
-        stroke-width="1.6"
-        opacity="0.6"></path>
-      <path
-        d="M190 160 C205 130 230 115 260 95"
-        stroke="var(--color-accent-red)"
-        stroke-width="1.2"
-        opacity="0.45"></path>
-      <path
-        d="M200 300 C202 235 200 190 215 150 C230 110 265 90 300 60"
-        stroke="var(--color-accent-gold)"
-        stroke-width="1.4"
-        opacity="0.5"></path>
-      <path
-        d="M120 70 C105 55 95 35 88 10"
-        stroke="var(--color-accent-red)"
-        stroke-width="1"
-        opacity="0.4"></path>
-      <path
-        d="M120 70 C138 60 150 45 155 25"
-        stroke="var(--color-accent-red)"
-        stroke-width="1"
-        opacity="0.4"></path>
-      <path
-        d="M260 95 C275 80 280 60 275 35"
-        stroke="var(--color-accent-gold)"
-        stroke-width="1"
-        opacity="0.4"></path>
-      <path
-        d="M215 150 C195 140 178 145 160 130"
-        stroke="var(--color-accent-red)"
-        stroke-width="1"
-        opacity="0.35"></path>
-    </svg>
-    <svg
-      class="hero-motif-heart"
-      viewBox="0 0 200 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M100 170 C40 130 15 95 15 65 C15 40 35 22 58 22 C75 22 90 32 100 48 C110 32 125 22 142 22 C165 22 185 40 185 65 C185 95 160 130 100 170 Z"
-        stroke="var(--color-accent-red)"
-        stroke-width="1.4"
-        opacity="0.55"></path>
-      <path
-        d="M20 90 L55 90 L68 65 L82 115 L95 80 L105 100 L180 100"
-        stroke="var(--color-accent-gold)"
-        stroke-width="1.2"
-        opacity="0.6"></path>
-    </svg>
-    <div class="hero-inner">
-      <p class="eyebrow">Medycyna rodzinna · podejście holistyczne · holimedicine.eu.org</p>
-      <h1>Leczymy <span class="accent">całego człowieka</span>,<br />nie tylko listę objawów.</h1>
-      <p class="lead">
-        Jesteśmy małżeństwem lekarzy. Łączymy rzetelną diagnostykę medycyny rodzinnej z uważnym
-        spojrzeniem na sen, stres, dietę i codzienne nawyki — bo to one najczęściej decydują o zdrowiu
-        na co dzień.
-      </p>
-      <div class="hero-actions">
-        <a href="#kontakt" class="btn-primary">Umów wizytę</a>
-        <a href="#o-nas" class="btn-secondary">Poznaj nas</a>
-      </div>
-    </div>
-  </header>
+  <HeroBanner />
 
   <!-- O NAS -->
   <section class="section site-container" id="o-nas">

@@ -4,11 +4,11 @@ const pages = [
   {
     path: './',
     title: 'Natalia i Donat Cupiał — holimedicine.eu.org',
-    heading: 'Leczymy',
+    heading: 'Holimedicine',
   },
   {
     path: 'edukacja/',
-    title: 'Edukacja — Natalia i Donat Cupiał',
+    title: 'Baza wiedzy — Natalia i Donat Cupiał',
     heading: 'Materiały, które poszerzają świadomość',
   },
   {

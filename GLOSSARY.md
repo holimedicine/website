@@ -21,7 +21,8 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **product modal** | Native `<dialog>` on `/produkty/` showing a product's image, examples, summary, extra details, full MDX body, and optional store link. See `src/pages/produkty.astro`. |
 | **product deep link** | Hash URL `#produkt-<slug>` that opens the matching product modal; the slug is derived from the content entry ID. |
 | **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. |
-| **Podejście** | Homepage section (`#podejscie`) backed by the `podejscie` singleton. |
+| **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
+| **Baza wiedzy** | User-facing name of the `/edukacja/` page: its nav label, page-header eyebrow, and `<title>`. The route and the `edukacja` collection keep their original names. |
 | **Zakres opieki** | Homepage section (`#zakres`) backed by the `zakres` singleton. |
 | **Kontakt** | Homepage section (`#kontakt`) backed by the `contact` singleton; the nav CTA links here. |
 
@@ -40,6 +41,9 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **MDX** | Markdown + JSX format used for article, recipe, and some singleton bodies. |
 | **local launcher** | `Start Website.command` — macOS double-click script that runs `git pull` and `npm run dev` for content editors. |
 | **Tailwind CSS v4** | Styling system used via PostCSS; the theme lives in `src/styles/global.css`. |
+| **light theme** | The sage/steel colour system defined by the `@theme` tokens in `src/styles/global.css` (Montserrat headings, Public Sans body). See ADR 0018. |
+| **hero banner** | Homepage banner component (`src/components/HeroBanner.astro`) with HTML copy, `public/images/hero-backdrop.svg` as a decorative background, and the logo mark as a separate image so it can reflow below the copy on mobile. |
+| **logo mark** | `public/images/logo-mark.svg` — the heart/spine/ECG brand mark used in the hero and as the basis for `public/favicon.svg` and `favicon.ico`. |
 | **PostCSS** | CSS pipeline that runs the `@tailwindcss/postcss` plugin (`postcss.config.mjs`). |
 | **base path** | Production URL prefix `/website/`; dev uses `/`. See ADR 0007. |
 | **withBase()** | Utility (`src/utils/url.ts`) that prepends the base path to root-relative URLs. MUST be used for all links/assets. |

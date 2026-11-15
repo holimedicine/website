@@ -2,6 +2,11 @@
 
 - Status: Accepted
 - Date: 2026-10-27
+- Amended: 2026-11-15 — the brand link became an Instagram icon, two labels were
+  renamed (**Podejście** → **Medycyna holistyczna**, **Edukacja** → **Baza
+  wiedzy**), the CTA gained a plus icon, and the active underline switched from
+  gold to the steel token. Routes and `data-nav-*` hooks are unchanged; see
+  ADR 0018.
 
 ## Context
 
@@ -31,10 +36,12 @@ the "Zakres opieki" content), but add a persistent active indicator:
   of the link. The marker clears above `#o-nas` and on `#kontakt` (there is no
   contact nav item; the "Umów wizytę" CTA covers it). Updates are rAF-throttled
   and driven by `scroll`/`resize`, so no extra observer is needed.
-- **Visuals:** active desktop links get a 2px gold underline; active mobile rows
-  get a 2px gold left bar (with a transparent placeholder border to avoid layout
-  shift). Gold is used instead of the accent red so the red "Umów wizytę" CTA
-  remains the strongest element in the nav.
+- **Visuals:** active desktop links get a 2px underline in the steel token
+  (`--color-accent-strong`); active mobile rows get a 2px left bar in the same
+  colour (with a transparent placeholder border to avoid layout shift). The
+  underline originally used gold to keep the red "Umów wizytę" CTA dominant; in
+  the light theme the sage CTA is already the strongest element, so steel is
+  enough.
 - **Anchor offset:** `html { scroll-padding-top: 5rem; }` keeps jumped-to
   sections below the sticky header.
 

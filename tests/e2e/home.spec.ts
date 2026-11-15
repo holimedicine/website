@@ -7,6 +7,9 @@ test('renders all homepage sections and hero links', async ({ page }) => {
     await expect(page.locator(`#${id}`)).toBeVisible();
   }
 
+  await expect(page.locator('.hero-banner')).toBeVisible();
+  await expect(page.locator('.hero-banner h1')).toHaveText('Holimedicine');
+  await expect(page.locator('.hero-mark img')).toBeVisible();
   await expect(page.locator('.hero a[href="#kontakt"]')).toBeVisible();
   await expect(page.locator('.hero a[href="#o-nas"]')).toBeVisible();
 });

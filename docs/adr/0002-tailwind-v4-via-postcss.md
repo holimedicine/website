@@ -2,6 +2,8 @@
 
 - Status: Accepted
 - Date: 2026-10-01
+- Amended: 2026-11-15 — the `@theme` tokens now describe the light sage/steel
+  theme and the Montserrat/Public Sans font stacks; see ADR 0018.
 
 ## Context
 
@@ -20,8 +22,8 @@ Use Tailwind v4 through **PostCSS**:
 - `postcss.config.mjs` registers the plugin.
 - `src/styles/global.css` is imported once by `src/layouts/Layout.astro` and
   contains the whole design system:
-  - `@theme` tokens (`--color-bg`, `--color-accent-red`, `--color-accent-gold`,
-    `--font-serif`, …),
+  - `@theme` tokens (`--color-bg`, `--color-accent`, `--color-accent-strong`,
+    `--color-text-primary`, `--font-sans`, `--font-display`, …),
   - `@layer base` for element defaults,
   - `@layer components` with the ported legacy classes (`.nav`, `.hero`, cards,
     grids, accordion, tables, `.reveal`, …) built with `@apply`.

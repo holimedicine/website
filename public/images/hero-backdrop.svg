@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Banner background: subtle gradient -->
+    <linearGradient id="heroBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4f8f7" />
+      <stop offset="50%" stop-color="#e8f0ee" />
+      <stop offset="100%" stop-color="#dce8e5" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="1200" height="500" fill="url(#heroBgGrad)" />
+
+  <!-- Organic background waves -->
+  <path d="M-100,380 C300,480 450,220 850,320 C1050,370 1150,300 1300,250 L1300,550 L-100,550 Z" fill="#68b0ab" opacity="0.12" />
+  <path d="M-100,430 C250,330 550,480 900,360 C1080,300 1180,380 1300,350 L1300,550 L-100,550 Z" fill="#2b5876" opacity="0.07" />
+
+  <!-- Subtle geometric grid, kept on the right side where the logo sits -->
+  <g stroke="#2b5876" stroke-width="0.5" opacity="0.1">
+    <circle cx="900" cy="250" r="180" fill="none" />
+    <circle cx="900" cy="250" r="220" fill="none" stroke-dasharray="4 8" />
+    <circle cx="900" cy="250" r="260" fill="none" />
+    <line x1="580" y1="250" x2="1200" y2="250" />
+    <line x1="900" y1="0" x2="900" y2="500" />
+  </g>
+</svg>
