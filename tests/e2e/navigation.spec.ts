@@ -42,6 +42,7 @@ test('brand and CTA use the production base path', async ({ page }) => {
   await expect(instagram).toHaveAttribute('target', '_blank');
   await expect(instagram).toHaveAttribute('rel', /noopener/);
   await expect(instagram).toHaveAttribute('aria-label', /Instagram/);
+  await expect(instagram.locator('.nav-instagram-wordmark')).toHaveText('holimedicine');
 
   await expect(page.locator('.nav-cta')).toHaveAttribute('href', '/website/#kontakt');
 });

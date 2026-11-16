@@ -66,13 +66,20 @@
     @apply mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-6 py-4;
   }
   .nav-instagram {
-    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-transparent text-accent-strong transition-colors;
+    @apply inline-flex shrink-0 items-center gap-1 rounded-full border border-transparent text-accent-strong transition-opacity;
   }
   .nav-instagram:hover {
-    @apply border-line bg-[#e8f0ee] text-accent;
+    @apply opacity-80;
   }
   .nav-instagram svg {
-    @apply h-[1.4rem] w-[1.4rem];
+    @apply h-4 w-4;
+  }
+  .nav-instagram-wordmark {
+    @apply font-display text-[0.65rem] font-normal leading-none text-accent;
+    letter-spacing: -0.02em;
+  }
+  .nav-instagram-wordmark-holi {
+    @apply font-semibold;
   }
   .nav-links {
     @apply ml-auto flex gap-4 text-[0.8rem] text-text-muted whitespace-nowrap;
@@ -111,9 +118,9 @@
     @apply hidden;
   }
 
-  /* The full row (Instagram + 7 links + CTA) needs ~900px, so switch to a
-     hamburger at 1000px and keep the CTA in the mobile menu. */
-  @media (max-width: 1000px) {
+  /* The full row (brand lockup + 7 links + CTA) needs ~1030px, so switch to a
+     hamburger at 1080px and keep the CTA in the mobile menu. */
+  @media (max-width: 1080px) {
     .nav-links {
       @apply hidden;
     }
