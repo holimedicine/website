@@ -1,0 +1,82 @@
+{
+  "eyebrow": "Współpraca",
+  "heading": "Razem zrobimy więcej dla zdrowia",
+  "lead": "Jesteśmy otwarci na współpracę z osobami i instytucjami, którym bliskie są zdrowy styl życia i rzetelna wiedza medyczna. Zobacz, w czym możemy działać razem.",
+  "areasHeading": "Obszary współpracy - kliknij i sprawdź!",
+  "areas": [
+    {
+      "title": "Firmy i organizacje",
+      "summary": "Wykłady, warsztaty i dni zdrowia dla zespołów.",
+      "body": "Wykłady i warsztaty o śnie, stresie, odżywianiu i regeneracji dla zespołów, a także dni zdrowia i programy profilaktyczne. Edukacja zdrowotna uzupełnia, ale nie zastępuje badań medycyny pracy."
+    },
+    {
+      "title": "Specjaliści i placówki",
+      "summary": "Wspólne prowadzenie pacjentów i wzajemne konsultacje.",
+      "body": "Współpraca z dietetykami, psychologami, fizjoterapeutami, trenerami i laboratoriami: wzajemne konsultacje, wspólne prowadzenie pacjentów i kierowanie do właściwego specjalisty."
+    },
+    {
+      "title": "Edukacja i media",
+      "summary": "Wywiady, podcasty, webinary i komentarze eksperckie.",
+      "body": "Wywiady, komentarze eksperckie, podcasty, webinary i artykuły o medycynie stylu życia, zdrowiu jelit, śnie i profilaktyce. Chętnie gościmy też w szkołach i na uczelniach."
+    },
+    {
+      "title": "Warsztaty i wydarzenia",
+      "summary": "Spotkania i akcje profilaktyczne dla lokalnej społeczności.",
+      "body": "Spotkania dla lokalnej społeczności: warsztaty zdrowego gotowania, wykłady otwarte i akcje profilaktyczne, także w Zawierciu i okolicach."
+    },
+    {
+      "title": "Marki i producenci",
+      "summary": "Rozmowy o produktach, które sami zweryfikowaliśmy.",
+      "body": "Rozmowy o produktach zgodnych z naszym podejściem: skład, jakość, dowody. Do sekcji „Polecane produkty” trafiają wyłącznie te, które sami zweryfikowaliśmy."
+    },
+    {
+      "title": "Materiały i kampanie",
+      "summary": "Poradniki, infografiki i kampanie społeczne o zdrowiu.",
+      "body": "Wspólne tworzenie materiałów dla pacjentów: poradników, infografik, przepisów i kampanii społecznych o zdrowiu."
+    }
+  ],
+  "principlesHeading": "Zasady, na jakich współpracujemy",
+  "principles": [
+    {
+      "title": "Niezależność i dowody",
+      "body": "Rekomendujemy tylko to, co ma oparcie w wiedzy medycznej i co sami uznalibyśmy za sensowne dla bliskich. Współpraca nie wpływa na naszą ocenę."
+    },
+    {
+      "title": "Przejrzystość",
+      "body": "Materiały sponsorowane i partnerskie zawsze wyraźnie oznaczamy, aby odbiorcy wiedzieli, skąd pochodzi rekomendacja."
+    },
+    {
+      "title": "Dobro pacjenta",
+      "body": "Nie reklamujemy leków na receptę i nie obiecujemy cudownych efektów. Działamy zgodnie z zasadami etyki lekarskiej."
+    }
+  ],
+  "stepsHeading": "Jak zaczynamy",
+  "steps": [
+    {
+      "title": "1. Napisz do nas",
+      "body": "Opisz krótko pomysł, grupę odbiorców i oczekiwany termin."
+    },
+    {
+      "title": "2. Porozmawiamy",
+      "body": "Umówimy krótką rozmowę online lub w gabinecie, aby doprecyzować zakres i sprawdzić, czy nasze podejścia do siebie pasują."
+    },
+    {
+      "title": "3. Ustalamy plan",
+      "body": "Wspólnie określamy zakres, harmonogram i sposób oznaczenia współpracy, a następnie działamy."
+    }
+  ],
+  "contactHeading": "Masz pomysł na wspólny projekt?",
+  "contactLead": "Napisz do nas kilka zdań o tym, co planujesz — odpowiemy, gdy tylko znajdziemy chwilę między wizytami.",
+  "contactDetails": [
+    {
+      "label": "E-mail",
+      "value": "gabinet.holimedicine@gmail.com"
+    },
+    {
+      "label": "Gabinet",
+      "value": "ul. Paderewskiego 25, 42-400 Zawiercie"
+    }
+  ],
+  "contactCtaLabel": "Napisz do nas",
+  "contactCtaHref": "mailto:gabinet.holimedicine@gmail.com?subject=Wsp%C3%B3%C5%82praca"
+}

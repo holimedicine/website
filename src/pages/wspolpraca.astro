@@ -1,0 +1,122 @@
+---
+import { getEntry } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const entry = await getEntry('wspolpraca', 'index');
+
+if (!entry) {
+  throw new Error('Brak treści strony Współpraca w CMS.');
+}
+
+const content = entry.data;
+const areas = content.areas.map((area, index) => ({
+  ...area,
+  dialogId: `wspolpraca-obszar-${index + 1}`,
+}));
+---
+
+<SiteLayout
+  title="Współpraca — Natalia i Donat Cupiał"
+  description="Współpraca z firmami, specjalistami, mediami i markami: warsztaty, wykłady, konsultacje i wspólne projekty o zdrowiu."
+>
+  <PageHeader eyebrow={content.eyebrow} title={content.heading} lead={content.lead} />
+
+  <section class="section site-container">
+    <h2 class="sub-title">{content.areasHeading}</h2>
+    <div class="collab-grid reveal">
+      {areas.map((area) => (
+        <article class="collab-card">
+          <div class="collab-card-body">
+            <h3>{area.title}</h3>
+            {area.summary && <p>{area.summary}</p>}
+            <span class="collab-card-more" aria-hidden="true">Zobacz szczegóły →</span>
+          </div>
+          <button
+            type="button"
+            class="collab-card-open"
+            aria-haspopup="dialog"
+            aria-controls={area.dialogId}
+            aria-label={`Otwórz szczegóły: ${area.title}`}
+            data-dialog={area.dialogId}
+          />
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section site-container">
+    <h2 class="sub-title">{content.principlesHeading}</h2>
+    <div class="phil-grid reveal">
+      {content.principles.map((principle) => (
+        <div class="phil-card">
+          <h3>{principle.title}</h3>
+          <p>{principle.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section site-container">
+    <h2 class="sub-title">{content.stepsHeading}</h2>
+    <div class="phil-grid reveal">
+      {content.steps.map((step) => (
+        <div class="phil-card">
+          <h3>{step.title}</h3>
+          <p>{step.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section site-container">
+    <div class="contact-box reveal">
+      <h2>{content.contactHeading}</h2>
+      <p>{content.contactLead}</p>
+      <div class="contact-meta">
+        {content.contactDetails.map((detail) => (
+          <div>
+            <strong>{detail.label}</strong>
+            {detail.value}
+          </div>
+        ))}
+      </div>
+      <div class="hero-actions justify-center mt-8">
+        <a href={content.contactCtaHref} class="btn-primary">{content.contactCtaLabel}</a>
+      </div>
+    </div>
+  </section>
+
+  {areas.map((area) => (
+    <dialog class="collab-modal" id={area.dialogId} aria-labelledby={`${area.dialogId}-title`}>
+      <button
+        type="button"
+        class="collab-modal-close"
+        aria-label="Zamknij opis obszaru współpracy"
+        data-close-dialog
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="collab-modal-scroll">
+        <div class="collab-modal-body">
+          <h2 id={`${area.dialogId}-title`}>{area.title}</h2>
+          {area.summary && <p class="collab-modal-summary">{area.summary}</p>}
+          <div class="collab-modal-content rich-text">
+            <p>{area.body}</p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  ))}
+
+  <script>
+    import { initModalGroup } from '../scripts/modals';
+
+    initModalGroup({
+      dialogSelector: 'dialog.collab-modal',
+      triggerSelector: '.collab-card-open',
+      getDialogId: (button) => button.dataset.dialog,
+    });
+  </script>
+</SiteLayout>

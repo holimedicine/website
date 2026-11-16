@@ -5,6 +5,8 @@
 - Amended: 2026-11-15 — the brand became a 40px Instagram icon, the CTA grew to
   fit the plus icon, and two labels were renamed. Re-measured minimum is ~813px,
   so the 900px breakpoint still holds; see ADR 0018.
+- Amended: 2026-11-16 — a seventh link ("Współpraca") raised the minimum to
+  ~900px, so the breakpoint moved to 1000px; see ADR 0019.
 
 ## Context
 

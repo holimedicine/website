@@ -21,6 +21,11 @@ const pages = [
     title: 'Polecane produkty — Natalia i Donat Cupiał',
     heading: 'Rzeczy, którym ufamy',
   },
+  {
+    path: 'wspolpraca/',
+    title: 'Współpraca — Natalia i Donat Cupiał',
+    heading: 'Razem zrobimy więcej dla zdrowia',
+  },
 ];
 
 for (const pageInfo of pages) {

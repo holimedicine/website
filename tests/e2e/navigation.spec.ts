@@ -4,6 +4,7 @@ const modulePages = [
   { path: 'edukacja/', nav: 'edukacja' },
   { path: 'przepisy/', nav: 'przepisy' },
   { path: 'produkty/', nav: 'produkty' },
+  { path: 'wspolpraca/', nav: 'wspolpraca' },
 ];
 
 for (const { path, nav } of modulePages) {

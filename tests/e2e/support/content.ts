@@ -184,3 +184,82 @@ export function listProductSections(): ProductSection[] {
     })
     .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));
 }
+
+export type CollaborationArea = {
+  title: string;
+  summary: string;
+  body: string;
+};
+
+export type CollaborationPage = {
+  eyebrow: string;
+  heading: string;
+  lead: string;
+  areasHeading: string;
+  areas: CollaborationArea[];
+  principlesHeading: string;
+  principles: { title: string; body: string }[];
+  stepsHeading: string;
+  steps: { title: string; body: string }[];
+  contactHeading: string;
+  contactLead: string;
+  contactDetails: { label: string; value: string }[];
+  contactCtaLabel: string;
+  contactCtaHref: string;
+};
+
+function readCardList(value: unknown): { title: string; body: string }[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => {
+    const record = (item ?? {}) as { title?: unknown; body?: unknown };
+    return {
+      title: String(record.title ?? ''),
+      body: String(record.body ?? ''),
+    };
+  });
+}
+
+function readAreaList(value: unknown): CollaborationArea[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => {
+    const record = (item ?? {}) as { title?: unknown; summary?: unknown; body?: unknown };
+    return {
+      title: String(record.title ?? ''),
+      summary: String(record.summary ?? ''),
+      body: String(record.body ?? ''),
+    };
+  });
+}
+
+function readDetailList(value: unknown): { label: string; value: string }[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => {
+    const record = (item ?? {}) as { label?: unknown; value?: unknown };
+    return {
+      label: String(record.label ?? ''),
+      value: String(record.value ?? ''),
+    };
+  });
+}
+
+export function readCollaborationPage(): CollaborationPage {
+  const file = path.join(CONTENT_ROOT, 'wspolpraca', 'index.json');
+  const data = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
+
+  return {
+    eyebrow: String(data.eyebrow ?? ''),
+    heading: String(data.heading ?? ''),
+    lead: String(data.lead ?? ''),
+    areasHeading: String(data.areasHeading ?? ''),
+    areas: readAreaList(data.areas),
+    principlesHeading: String(data.principlesHeading ?? ''),
+    principles: readCardList(data.principles),
+    stepsHeading: String(data.stepsHeading ?? ''),
+    steps: readCardList(data.steps),
+    contactHeading: String(data.contactHeading ?? ''),
+    contactLead: String(data.contactLead ?? ''),
+    contactDetails: readDetailList(data.contactDetails),
+    contactCtaLabel: String(data.contactCtaLabel ?? ''),
+    contactCtaHref: String(data.contactCtaHref ?? ''),
+  };
+}

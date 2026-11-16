@@ -23,13 +23,14 @@ rather than duplicating the rules.
 | [0009](./0009-remove-galeria-and-opinie.md)              | Remove the Galeria page and Opinie section             | Accepted | 2026-10-27                                  |
 | [0010](./0010-nav-active-state.md)                       | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27 (amended 2026-11-15)             |
 | [0011](./0011-remove-subpage-back-link.md)               | Remove the subpage "back to homepage" link             | Accepted | 2026-10-29                                  |
-| [0012](./0012-nav-responsive-breakpoint.md)              | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29 (amended 2026-11-15)             |
+| [0012](./0012-nav-responsive-breakpoint.md)              | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29 (amended 2026-11-15, 2026-11-16) |
 | [0013](./0013-e2e-tests-with-playwright.md)              | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31                                  |
 | [0014](./0014-configurable-recipe-categories.md)         | Configurable recipe categories                         | Accepted | 2026-11-10 (amended 2026-11-14)             |
 | [0015](./0015-recipe-details-modal.md)                   | Recipe details modal with hash deep links              | Accepted | 2026-11-14                                  |
 | [0016](./0016-education-cards-and-modal.md)              | Education cards with details modal                     | Accepted | 2026-11-14                                  |
 | [0017](./0017-product-recommendations-as-collections.md) | Product recommendations as content collections         | Accepted | 2026-11-14                                  |
 | [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15                                  |
+| [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16)             |
 
 ## When to add an ADR
 

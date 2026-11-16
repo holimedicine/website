@@ -9,6 +9,7 @@ export default config({
     brand: { name: 'Holimedicine' },
     navigation: {
       'Strona główna': ['about', 'podejscie', 'zakres', 'contact'],
+      Współpraca: ['wspolpraca'],
       Moduły: ['edukacja', 'przepisy', 'kategoriePrzepisow', 'produkty', 'sekcjeProduktow'],
     },
   },
@@ -168,6 +169,129 @@ export default config({
         secondaryCtaHref: fields.text({
           label: 'Link przycisku telefonu',
           defaultValue: 'tel:+48000000000',
+        }),
+      },
+    }),
+    wspolpraca: singleton({
+      label: 'Współpraca',
+      path: 'src/content/wspolpraca/',
+      format: { data: 'json' },
+      schema: {
+        eyebrow: fields.text({
+          label: 'Nadtytuł',
+          defaultValue: 'Współpraca',
+        }),
+        heading: fields.text({
+          label: 'Nagłówek',
+          defaultValue: 'Razem zrobimy więcej dla zdrowia',
+        }),
+        lead: fields.text({
+          label: 'Wstęp',
+          description: 'Krótki opis pod nagłówkiem strony.',
+          multiline: true,
+        }),
+        areasHeading: fields.text({
+          label: 'Nagłówek sekcji „Obszary współpracy”',
+          defaultValue: 'Obszary współpracy - kliknij i sprawdź!',
+        }),
+        areas: fields.array(
+          fields.object({
+            title: fields.text({
+              label: 'Tytuł',
+              validation: { isRequired: true },
+            }),
+            summary: fields.text({
+              label: 'Krótki opis na kafelku',
+              multiline: true,
+            }),
+            body: fields.text({
+              label: 'Pełny opis w oknie popup',
+              multiline: true,
+            }),
+          }),
+          {
+            label: 'Obszary współpracy',
+            description:
+              'Kafelki na stronie. Przeciągnij, aby zmienić kolejność; dodaj lub usuń kafelek dowolną liczbą.',
+            itemLabel: (props) => props.fields.title.value,
+          }
+        ),
+        principlesHeading: fields.text({
+          label: 'Nagłówek sekcji „Zasady”',
+          defaultValue: 'Zasady, na jakich współpracujemy',
+        }),
+        principles: fields.array(
+          fields.object({
+            title: fields.text({
+              label: 'Tytuł',
+              validation: { isRequired: true },
+            }),
+            body: fields.text({
+              label: 'Opis',
+              multiline: true,
+            }),
+          }),
+          {
+            label: 'Zasady współpracy',
+            description:
+              'Przeciągnij, aby zmienić kolejność; dodaj lub usuń kafelek dowolną liczbą.',
+            itemLabel: (props) => props.fields.title.value,
+          }
+        ),
+        stepsHeading: fields.text({
+          label: 'Nagłówek sekcji „Jak zaczynamy”',
+          defaultValue: 'Jak zaczynamy',
+        }),
+        steps: fields.array(
+          fields.object({
+            title: fields.text({
+              label: 'Tytuł',
+              validation: { isRequired: true },
+            }),
+            body: fields.text({
+              label: 'Opis',
+              multiline: true,
+            }),
+          }),
+          {
+            label: 'Kroki',
+            description:
+              'Przeciągnij, aby zmienić kolejność; dodaj lub usuń kafelek dowolną liczbą.',
+            itemLabel: (props) => props.fields.title.value,
+          }
+        ),
+        contactHeading: fields.text({
+          label: 'Nagłówek boxu kontaktowego',
+          defaultValue: 'Masz pomysł na wspólny projekt?',
+        }),
+        contactLead: fields.text({
+          label: 'Opis w boxie kontaktowym',
+          multiline: true,
+        }),
+        contactDetails: fields.array(
+          fields.object({
+            label: fields.text({
+              label: 'Etykieta',
+              validation: { isRequired: true },
+            }),
+            value: fields.text({
+              label: 'Wartość',
+              multiline: true,
+            }),
+          }),
+          {
+            label: 'Dane kontaktowe',
+            description: 'Np. e-mail, adres gabinetu. Możesz zmienić je w dowolnym momencie.',
+            itemLabel: (props) => props.fields.label.value,
+          }
+        ),
+        contactCtaLabel: fields.text({
+          label: 'Etykieta przycisku',
+          defaultValue: 'Napisz do nas',
+        }),
+        contactCtaHref: fields.text({
+          label: 'Link przycisku',
+          defaultValue: 'mailto:gabinet.holimedicine@gmail.com?subject=Wsp%C3%B3%C5%82praca',
         }),
       },
     }),

@@ -20,6 +20,8 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **sekcjeProduktow** | Keystatic collection (`src/content/sekcje-produktow/*.json`) that defines the `/produkty/` sections: heading, order, display (`cards` or `table`), an ordered product list for cards, or columns/rows for tables. See ADR 0017. |
 | **product modal** | Native `<dialog>` on `/produkty/` showing a product's image, examples, summary, extra details, full MDX body, and optional store link. See `src/pages/produkty.astro`. |
 | **product deep link** | Hash URL `#produkt-<slug>` that opens the matching product modal; the slug is derived from the content entry ID. |
+| **collaboration modal** | Native `<dialog>` on `/wspolpraca/` showing a cooperation area's full description (`body`); the card shows its short `summary`. The dialog ID is derived from the area's position (`#wspolpraca-obszar-<n>`). See `src/pages/wspolpraca.astro`. |
+| **Współpraca** | Collaboration page (`/wspolpraca/`, `src/pages/wspolpraca.astro`) backed by the `wspolpraca` singleton: cooperation areas as clickable tiles with modals, principles, steps, and an editable contact box. |
 | **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. |
 | **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
 | **Baza wiedzy** | User-facing name of the `/edukacja/` page: its nav label, page-header eyebrow, and `<title>`. The route and the `edukacja` collection keep their original names. |
@@ -35,7 +37,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **content collection** | Astro collection defined in `src/content.config.ts` and loaded from `src/content/`. |
 | **rich-text** | Shared typographic styles (`.rich-text` in `src/styles/global.css`) used by edukacja bodies and recipe/product modal content. |
 | **modal helper** | Shared client-side dialog controller (`src/scripts/modals.ts`) for opening, closing, and hash-linking edukacja, recipe, and product modals. |
-| **singleton** | Single fixed content entry for a homepage section; a Keystatic singleton read via `getEntry()` from a one-file Astro collection. |
+| **singleton** | Single fixed content entry backing a homepage section or a standalone page (e.g. Współpraca); a Keystatic singleton read via `getEntry()` from a one-file Astro collection. |
 | **Keystatic** | Git-based CMS used to edit content; the admin runs only in dev at `/keystatic/`. |
 | **GitHub storage** | Keystatic storage mode that reads and writes content by committing to `holimedicine/website`. |
 | **MDX** | Markdown + JSX format used for article, recipe, and some singleton bodies. |

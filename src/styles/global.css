@@ -111,9 +111,9 @@
     @apply hidden;
   }
 
-  /* The full row (Instagram + 6 links + CTA) needs ~813px, so switch to a
-     hamburger at 900px and keep the CTA in the mobile menu. */
-  @media (max-width: 900px) {
+  /* The full row (Instagram + 7 links + CTA) needs ~900px, so switch to a
+     hamburger at 1000px and keep the CTA in the mobile menu. */
+  @media (max-width: 1000px) {
     .nav-links {
       @apply hidden;
     }
@@ -433,7 +433,8 @@
   /* RECIPE / EDUCATION / PRODUCT MODAL */
   .recipe-modal,
   .edu-modal,
-  .prod-modal {
+  .prod-modal,
+  .collab-modal {
     @apply m-auto border border-line bg-bg-card text-text-primary;
     width: min(760px, calc(100% - 2rem));
     max-height: 90vh;
@@ -444,20 +445,23 @@
   }
   .recipe-modal::backdrop,
   .edu-modal::backdrop,
-  .prod-modal::backdrop {
+  .prod-modal::backdrop,
+  .collab-modal::backdrop {
     background: rgba(15, 35, 45, 0.55);
     backdrop-filter: blur(4px);
   }
   .recipe-modal-scroll,
   .edu-modal-scroll,
-  .prod-modal-scroll {
+  .prod-modal-scroll,
+  .collab-modal-scroll {
     max-height: 90vh;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
   .recipe-modal-close,
   .edu-modal-close,
-  .prod-modal-close {
+  .prod-modal-close,
+  .collab-modal-close {
     @apply absolute right-4 top-4 z-20 grid cursor-pointer place-items-center rounded-full border border-line text-text-primary;
     width: 2.5rem;
     height: 2.5rem;
@@ -468,7 +472,8 @@
   }
   .recipe-modal-close:hover,
   .edu-modal-close:hover,
-  .prod-modal-close:hover {
+  .prod-modal-close:hover,
+  .collab-modal-close:hover {
     @apply border-accent-strong;
   }
   .recipe-modal-img,
@@ -477,7 +482,8 @@
   }
   .recipe-modal-body,
   .edu-modal-body,
-  .prod-modal-body {
+  .prod-modal-body,
+  .collab-modal-body {
     @apply px-[26px] pb-[30px] pt-[22px];
   }
   .recipe-modal-tag {
@@ -485,17 +491,20 @@
   }
   .recipe-modal-body h2,
   .edu-modal-body h2,
-  .prod-modal-body h2 {
+  .prod-modal-body h2,
+  .collab-modal-body h2 {
     @apply mt-2 pr-14 text-[1.5rem] leading-tight;
   }
   .recipe-modal-summary,
   .edu-modal-summary,
-  .prod-modal-summary {
+  .prod-modal-summary,
+  .collab-modal-summary {
     @apply mb-5 mt-3 text-[0.95rem] text-text-muted;
   }
   .recipe-modal-content,
   .edu-modal-content,
-  .prod-modal-content {
+  .prod-modal-content,
+  .collab-modal-content {
     @apply border-t border-line pt-5;
   }
   .recipe-modal-empty,
@@ -522,24 +531,28 @@
   }
   body:has(dialog.recipe-modal[open]),
   body:has(dialog.edu-modal[open]),
-  body:has(dialog.prod-modal[open]) {
+  body:has(dialog.prod-modal[open]),
+  body:has(dialog.collab-modal[open]) {
     overflow: hidden;
   }
   @media (max-width: 520px) {
     .recipe-modal,
     .edu-modal,
-    .prod-modal {
+    .prod-modal,
+    .collab-modal {
       width: calc(100% - 1rem);
       max-height: 94vh;
     }
     .recipe-modal-scroll,
     .edu-modal-scroll,
-    .prod-modal-scroll {
+    .prod-modal-scroll,
+    .collab-modal-scroll {
       max-height: 94vh;
     }
     .recipe-modal-body,
     .edu-modal-body,
-    .prod-modal-body {
+    .prod-modal-body,
+    .collab-modal-body {
       @apply px-5 pb-6 pt-5;
     }
   }
@@ -692,6 +705,51 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal {
       @apply opacity-100 transition-none;
+      transform: none;
+    }
+  }
+
+  /* COLLABORATION AREAS */
+  .collab-grid {
+    @apply grid grid-cols-3 gap-6;
+  }
+  .collab-card {
+    @apply relative flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-card transition duration-300;
+    box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
+  }
+  .collab-card:hover,
+  .collab-card:focus-within {
+    @apply border-accent-soft;
+    transform: translateY(-2px);
+  }
+  .collab-card-body {
+    @apply flex flex-1 flex-col px-[22px] py-6;
+  }
+  .collab-card h3 {
+    @apply m-0 pr-2 text-[1.05rem];
+  }
+  .collab-card p {
+    @apply mb-5 mt-2.5 text-[0.88rem] text-text-muted;
+  }
+  .collab-card-more {
+    @apply mt-auto text-[0.75rem] uppercase tracking-[0.08em] text-accent-strong;
+  }
+  .collab-card-open {
+    @apply absolute inset-0 z-10 cursor-pointer border-none bg-transparent p-0;
+  }
+  .collab-card-open:focus-visible {
+    outline-offset: -3px;
+  }
+  @media (max-width: 760px) {
+    .collab-grid {
+      @apply grid-cols-1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .collab-card,
+    .collab-card:hover,
+    .collab-card:focus-within {
+      @apply transition-none;
       transform: none;
     }
   }

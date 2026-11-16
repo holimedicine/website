@@ -121,6 +121,55 @@ const zakres = defineCollection({
   }),
 });
 
+const wspolpraca = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/wspolpraca' }),
+  schema: z.object({
+    eyebrow: z.string().default('Współpraca'),
+    heading: z.string().default('Razem zrobimy więcej dla zdrowia'),
+    lead: z.string().default(''),
+    areasHeading: z.string().default('Obszary współpracy'),
+    areas: z
+      .array(
+        z.object({
+          title: z.string(),
+          summary: z.string().default(''),
+          body: z.string(),
+        })
+      )
+      .default([]),
+    principlesHeading: z.string().default('Zasady, na jakich współpracujemy'),
+    principles: z
+      .array(
+        z.object({
+          title: z.string(),
+          body: z.string(),
+        })
+      )
+      .default([]),
+    stepsHeading: z.string().default('Jak zaczynamy'),
+    steps: z
+      .array(
+        z.object({
+          title: z.string(),
+          body: z.string(),
+        })
+      )
+      .default([]),
+    contactHeading: z.string().default('Masz pomysł na wspólny projekt?'),
+    contactLead: z.string().default(''),
+    contactDetails: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+        })
+      )
+      .default([]),
+    contactCtaLabel: z.string().default('Napisz do nas'),
+    contactCtaHref: z.string().default('mailto:gabinet.holimedicine@gmail.com'),
+  }),
+});
+
 const contact = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/contact' }),
   schema: z.object({
@@ -147,5 +196,6 @@ export const collections = {
   about,
   podejscie,
   zakres,
+  wspolpraca,
   contact,
 };
