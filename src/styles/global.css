@@ -367,15 +367,21 @@
     }
   }
 
-  /* SERVICES */
+  /* SERVICES (homepage scope-of-care tiles) */
   .services-grid {
-    @apply grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-line bg-line;
+    @apply grid grid-cols-3 gap-6;
   }
   .service-item {
-    @apply bg-bg-card px-[26px] py-[30px];
+    @apply rounded-2xl border border-line bg-bg-card px-6 py-7 transition duration-300;
+    box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
+  }
+  .service-item:hover,
+  .service-item:focus-within {
+    @apply border-accent-soft;
+    transform: translateY(-2px);
   }
   .service-item h3 {
-    @apply mb-2.5 text-base;
+    @apply mb-2.5 text-[1.05rem] text-accent-strong;
   }
   .service-item p {
     @apply m-0 text-[0.88rem] text-text-muted;
@@ -383,6 +389,14 @@
   @media (max-width: 760px) {
     .services-grid {
       @apply grid-cols-1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .service-item,
+    .service-item:hover,
+    .service-item:focus-within {
+      @apply transition-none;
+      transform: none;
     }
   }
 
