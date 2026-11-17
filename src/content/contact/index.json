@@ -19,10 +19,10 @@
     }
   ],
   "phone": "+48 000 000 000",
-  "email": "dscupial@gmail.com",
-  "address": "ul. Paderewskiego 25, 42-400 Zawiercie",
+  "email": "gabinet.holimedicine@gmail.com",
+  "address": "ul. Widok 3, 42-400 Zawiercie",
   "primaryCtaLabel": "Napisz e-mail",
-  "primaryCtaHref": "mailto:kontakt@holimedicine.eu.org",
+  "primaryCtaHref": "mailto:gabinet.holimedicine@gmail.com",
   "secondaryCtaLabel": "Zadzwoń",
   "secondaryCtaHref": "tel:+48000000000"
 }
