@@ -62,6 +62,12 @@
     background: rgba(244, 248, 247, 0.9);
     backdrop-filter: blur(10px);
   }
+  /* Homepage: pull the nav out of the flow so the hero starts at the top edge
+     and runs underneath it. */
+  .nav-overlay {
+    position: fixed;
+    inset-inline: 0;
+  }
   .nav-inner {
     @apply mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-6 py-4;
   }
@@ -156,26 +162,33 @@
 
   /* HERO */
   .hero {
-    @apply relative px-6;
-    padding-top: clamp(2rem, 5vw, 3.5rem);
-    padding-bottom: clamp(3rem, 7vw, 5rem);
+    @apply relative;
   }
   .hero-banner {
-    @apply relative mx-auto max-w-[1080px] overflow-hidden rounded-[28px] border border-line bg-bg;
-    box-shadow: 0 24px 60px rgba(27, 58, 75, 0.1);
+    @apply relative w-full overflow-hidden bg-bg;
   }
   .hero-bg {
     @apply pointer-events-none absolute inset-0 h-full w-full object-cover;
     object-position: 70% center;
   }
   .hero-grid {
-    @apply relative z-10 grid items-center;
+    @apply relative z-10 grid w-full items-center;
+    max-width: 1200px;
+    margin-inline: auto;
+    /* Use the smallest viewport height so mobile browser chrome never hides
+       the hero content. */
+    min-height: 100vh;
+    min-height: 100svh;
+    align-content: center;
     grid-template-columns: minmax(0, 55%) minmax(0, 1fr);
     grid-template-areas:
       'copy mark'
       'actions mark';
     column-gap: clamp(1.5rem, 4vw, 5rem);
-    padding: clamp(1.5rem, 4.5vw, 4.5rem);
+    padding-inline: 1.5rem;
+    /* Top padding clears the fixed nav overlaid on the hero. */
+    padding-top: clamp(6rem, 9vw, 8rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
   }
   .hero-copy {
     @apply max-w-[620px];
@@ -234,9 +247,6 @@
   }
 
   @media (max-width: 720px) {
-    .hero-banner {
-      @apply rounded-[22px];
-    }
     .hero-grid {
       grid-template-columns: auto minmax(0, 1fr);
       grid-template-areas:
@@ -244,7 +254,8 @@
         'mark actions';
       column-gap: clamp(0.75rem, 4vw, 1.5rem);
       row-gap: clamp(1rem, 4vw, 2rem);
-      padding: clamp(1.25rem, 5vw, 2rem);
+      padding-top: clamp(5.5rem, 15vw, 7rem);
+      padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
     }
     .hero-kicker {
       letter-spacing: clamp(1.5px, 0.6vw, 3px);
@@ -261,6 +272,16 @@
     }
     .hero-bg {
       object-position: center;
+    }
+  }
+
+  /* Short viewports (landscape phones, small windows): let the hero keep its
+     natural height instead of squeezing the content into the viewport. */
+  @media (max-height: 640px) {
+    .hero-grid {
+      min-height: 0;
+      padding-top: clamp(5.5rem, 12vh, 7rem);
+      padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
     }
   }
 
@@ -300,6 +321,11 @@
   }
   .section:first-of-type {
     @apply border-t-0;
+  }
+  /* The full-bleed hero already provides its own breathing room, so the first
+     section after it starts noticeably closer than the default section padding. */
+  .hero + .section {
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
   }
   .section-head {
     @apply mb-11 max-w-[640px];

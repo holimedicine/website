@@ -6,13 +6,15 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  /** Fix the nav to the viewport so a full-bleed hero can start at the top edge. */
+  navOverlay?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, navOverlay = false } = Astro.props;
 ---
 
 <Layout title={title} description={description}>
-  <Nav />
+  <Nav overlay={navOverlay} />
   <slot />
   <Footer />
 

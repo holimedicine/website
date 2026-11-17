@@ -14,6 +14,38 @@ test('renders all homepage sections and hero links', async ({ page }) => {
   await expect(page.locator('.hero a[href="#o-nas"]')).toBeVisible();
 });
 
+test('renders the hero full-bleed beneath the fixed nav', async ({ page }) => {
+  await page.goto('./');
+
+  const viewport = await page.evaluate(() => ({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  }));
+  const banner = await page.locator('.hero-banner').boundingBox();
+  const nav = await page.locator('.nav').boundingBox();
+
+  expect(banner).not.toBeNull();
+  expect(nav).not.toBeNull();
+
+  await expect(page.locator('.nav')).toHaveCSS('position', 'fixed');
+  expect(banner!.x).toBeCloseTo(0, 0);
+  expect(banner!.width).toBeCloseTo(viewport.width, 0);
+  expect(banner!.y).toBeCloseTo(0, 0);
+  expect(banner!.height).toBeGreaterThanOrEqual(viewport.height - 0.5);
+  expect(nav!.y).toBeCloseTo(0, 0);
+  expect(banner!.y).toBeLessThan(nav!.height);
+});
+
+test('keeps the first section close to the hero', async ({ page }) => {
+  await page.goto('./');
+
+  const paddingTop = await page
+    .locator('#o-nas')
+    .evaluate((el) => parseFloat(getComputedStyle(el).paddingTop));
+
+  expect(paddingTop).toBeLessThanOrEqual(56);
+});
+
 test('expands the visit description in the contact section', async ({ page }) => {
   await page.goto('./');
 

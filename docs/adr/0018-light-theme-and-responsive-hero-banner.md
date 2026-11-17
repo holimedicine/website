@@ -2,6 +2,8 @@
 
 - Status: Accepted
 - Date: 2026-11-15
+- Amended: 2026-11-17 — the homepage hero became full-bleed and full-height,
+  starts underneath a fixed nav, and sits closer to the first section.
 
 ## Context
 
@@ -37,6 +39,17 @@ screens, which is not possible when the text is baked into a single SVG.
   education page label becomes **Baza wiedzy** (routes unchanged); the CTA gains a
   plus icon. The `/edukacja/` page header eyebrow and `<title>` also use **Baza
   wiedzy**.
+- **Full-bleed, full-height hero:** the homepage hero is edge-to-edge and fills at
+  least the viewport height (`min-height: 100svh` with a `100vh` fallback). The
+  hero content stays centred in a 1200px container that matches `.nav-inner`, with
+  top padding that clears the nav. Short viewports (`max-height: 640px`, e.g.
+  landscape phones) drop the full-height constraint and keep the hero's natural
+  height instead of squeezing the copy. The gap to the first section is tightened
+  with `.hero + .section`.
+- **Nav overlay:** the homepage passes `navOverlay` to `SiteLayout`, which gives
+  `Nav` the `.nav-overlay` class (`position: fixed; inset-inline: 0`). The hero
+  therefore starts at the top edge and shows through the translucent, blurred nav;
+  subpages keep the sticky nav in the document flow.
 
 ## Consequences
 
@@ -54,3 +67,10 @@ screens, which is not possible when the text is baked into a single SVG.
   name of the page is the `<h1>` text.
 - Nav label changes affect the active-state hooks in ADR 0010 only through copy;
   `data-nav-section` / `data-nav-page` values are unchanged.
+- The hero is no longer a rounded card, so `hero-backdrop.svg` must remain safe to
+  crop at any viewport width (it uses `object-fit: cover`).
+- The full-height hero uses `svh` rather than `dvh` so it does not resize while
+  mobile browser chrome hides or shows. On very short viewports it intentionally
+  exceeds the viewport instead of clipping the copy.
+- Only pages that opt into `navOverlay` get the fixed nav; the scroll-spy and
+  `scroll-padding-top` from ADR 0010 rely on `nav.clientHeight` and keep working.

@@ -30,9 +30,16 @@ const links: NavLink[] = [
 }));
 
 const ctaLabel = 'Umów wizytę';
+
+interface Props {
+  /** Fix the nav above the hero instead of keeping it in the document flow. */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
 ---
 
-<nav class="nav">
+<nav class:list={['nav', { 'nav-overlay': overlay }]}>
   <div class="nav-inner">
     <a
       href={instagramUrl}
