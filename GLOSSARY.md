@@ -26,7 +26,8 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
 | **Baza wiedzy** | User-facing name of the `/edukacja/` page: its nav label, page-header eyebrow, and `<title>`. The route and the `edukacja` collection keep their original names. |
 | **Zakres opieki** | Homepage section (`#zakres`) backed by the `zakres` singleton. |
-| **Kontakt** | Homepage section (`#kontakt`) backed by the `contact` singleton; the nav CTA links here. |
+| **Kontakt** | Homepage section (`#kontakt`) backed by the `contact` singleton; the nav CTA links here. Contains the visit FAQ accordion and the editable price list. |
+| **cennik** | Editable price list in the `contact` singleton (`pricingHeading`, `pricingItems`), rendered under the visit FAQ as rows of name and price; the block is hidden until at least one row exists. |
 
 ## Technical terms
 

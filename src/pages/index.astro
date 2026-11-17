@@ -95,6 +95,26 @@ const contact = contactEntry.data;
     <div class="contact-box reveal">
       <h2>{contact.heading}</h2>
       <p>{contact.lead}</p>
+
+      <details class="visit-faq">
+        <summary>{contact.visitQuestion}</summary>
+        <p>{contact.visitAnswer}</p>
+      </details>
+
+      {contact.pricingItems.length > 0 && (
+        <div class="pricing">
+          <h3>{contact.pricingHeading}</h3>
+          <ul>
+            {contact.pricingItems.map((item) => (
+              <li>
+                <span>{item.name}</span>
+                <span>{item.price}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div class="contact-meta">
         <div><strong>Telefon</strong>{contact.phone}</div>
         <div><strong>E-mail</strong>{contact.email}</div>

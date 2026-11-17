@@ -177,6 +177,21 @@ const contact = defineCollection({
     lead: z
       .string()
       .default('Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.'),
+    visitQuestion: z.string().default('Jak wygląda wizyta?'),
+    visitAnswer: z
+      .string()
+      .default(
+        'Standardowa wizyta trwa około 45 minut. W tym czasie z pełną starannością wsłuchujemy się w Twoją historię, zbieramy dokładny wywiad lekarski i przeprowadzamy badanie fizykalne. Jeśli stan zdrowia i sytuacja tego wymagają, od razu włączamy do planu wizyty terapię manualną, dbając o to, by odnaleźć źródło problemu, a nie tylko łagodzić objawy.'
+      ),
+    pricingHeading: z.string().default('Cennik'),
+    pricingItems: z
+      .array(
+        z.object({
+          name: z.string(),
+          price: z.string(),
+        })
+      )
+      .default([]),
     phone: z.string().default('+48 000 000 000'),
     email: z.string().default('dscupial@gmail.com'),
     address: z.string().default('ul. Paderewskiego 25, 42-400 Zawiercie'),

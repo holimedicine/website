@@ -141,6 +141,39 @@ export default config({
           defaultValue:
             'Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.',
         }),
+        visitQuestion: fields.text({
+          label: 'Pytanie o przebieg wizyty',
+          defaultValue: 'Jak wygląda wizyta?',
+        }),
+        visitAnswer: fields.text({
+          label: 'Odpowiedź o przebiegu wizyty',
+          multiline: true,
+          defaultValue:
+            'Standardowa wizyta trwa około 45 minut. W tym czasie z pełną starannością wsłuchujemy się w Twoją historię, zbieramy dokładny wywiad lekarski i przeprowadzamy badanie fizykalne. Jeśli stan zdrowia i sytuacja tego wymagają, od razu włączamy do planu wizyty terapię manualną, dbając o to, by odnaleźć źródło problemu, a nie tylko łagodzić objawy.',
+        }),
+        pricingHeading: fields.text({
+          label: 'Nagłówek cennika',
+          defaultValue: 'Cennik',
+        }),
+        pricingItems: fields.array(
+          fields.object({
+            name: fields.text({
+              label: 'Nazwa usługi',
+              validation: { isRequired: true },
+            }),
+            price: fields.text({
+              label: 'Cena',
+              description: 'Możesz wpisać dowolny tekst, np. „od 250 zł”.',
+              validation: { isRequired: true },
+            }),
+          }),
+          {
+            label: 'Pozycje cennika',
+            description:
+              'Przeciągnij, aby zmienić kolejność; dodaj lub usuń pozycję. Cennik pojawia się pod pytaniem o przebieg wizyty.',
+            itemLabel: (props) => props.fields.name.value,
+          }
+        ),
         phone: fields.text({
           label: 'Telefon',
           defaultValue: '+48 000 000 000',

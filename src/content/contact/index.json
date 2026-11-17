@@ -1,6 +1,10 @@
 {
   "heading": "Porozmawiajmy o Twoim zdrowiu",
   "lead": "Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.",
+  "visitQuestion": "Jak wygląda wizyta?",
+  "visitAnswer": "Standardowa wizyta trwa około 45 minut. W tym czasie z pełną starannością wsłuchujemy się w Twoją historię, zbieramy dokładny wywiad lekarski i przeprowadzamy badanie fizykalne. Jeśli stan zdrowia i sytuacja tego wymagają, od razu włączamy do planu wizyty terapię manualną, dbając o to, by odnaleźć źródło problemu, a nie tylko łagodzić objawy.",
+  "pricingHeading": "Cennik",
+  "pricingItems": [],
   "phone": "+48 000 000 000",
   "email": "dscupial@gmail.com",
   "address": "ul. Paderewskiego 25, 42-400 Zawiercie",

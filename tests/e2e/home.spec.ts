@@ -14,6 +14,18 @@ test('renders all homepage sections and hero links', async ({ page }) => {
   await expect(page.locator('.hero a[href="#o-nas"]')).toBeVisible();
 });
 
+test('expands the visit description in the contact section', async ({ page }) => {
+  await page.goto('./');
+
+  const faq = page.locator('#kontakt .visit-faq');
+  await expect(faq.locator('summary')).toHaveText('Jak wygląda wizyta?');
+  await expect(faq.locator('p')).toBeHidden();
+
+  await faq.locator('summary').click();
+  await expect(faq.locator('p')).toBeVisible();
+  await expect(faq.locator('p')).toContainText('Standardowa wizyta trwa około 45 minut.');
+});
+
 test('scroll-spy marks the current section and clears on contact', async ({ page }) => {
   await page.goto('./');
 

@@ -711,6 +711,60 @@
   .contact-meta strong {
     @apply mb-1 block text-[0.75rem] uppercase tracking-[0.08em] text-text-primary;
   }
+  .visit-faq {
+    @apply mx-auto mt-7 max-w-[560px] border-t border-line pt-5 text-left;
+  }
+  .visit-faq summary {
+    @apply relative cursor-pointer pr-8 font-display text-[1.02rem] font-semibold text-text-primary;
+    list-style: none;
+  }
+  .visit-faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .visit-faq summary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--color-accent-strong);
+    border-bottom: 2px solid var(--color-accent-strong);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 200ms ease;
+  }
+  .visit-faq[open] summary {
+    @apply text-accent-strong;
+  }
+  .visit-faq[open] summary::after {
+    transform: translateY(-50%) rotate(225deg);
+  }
+  .visit-faq p {
+    @apply mb-0 mt-3 text-left text-[0.9rem] leading-[1.7];
+  }
+  .pricing {
+    @apply mx-auto mt-7 max-w-[560px] border-t border-line pt-5 text-left;
+  }
+  .pricing h3 {
+    @apply font-display text-[1.02rem] font-semibold text-text-primary;
+  }
+  .pricing ul {
+    @apply m-0 list-none p-0;
+  }
+  .pricing li {
+    @apply flex items-baseline justify-between gap-4 border-b border-line py-2 text-[0.9rem] text-text-muted;
+  }
+  .pricing li:last-child {
+    @apply border-b-0;
+  }
+  .pricing li span:last-child {
+    @apply shrink-0 font-semibold text-accent-strong;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .visit-faq summary::after {
+      @apply transition-none;
+    }
+  }
 
   .site-footer {
     @apply border-t border-line px-6 py-8 text-center text-[0.8rem] text-text-muted;
