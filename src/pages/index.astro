@@ -96,14 +96,14 @@ const contact = contactEntry.data;
       <h2>{contact.heading}</h2>
       <p>{contact.lead}</p>
 
-      <details class="visit-faq">
+      <details class="contact-faq visit-faq">
         <summary>{contact.visitQuestion}</summary>
         <p>{contact.visitAnswer}</p>
       </details>
 
       {contact.pricingItems.length > 0 && (
-        <div class="pricing">
-          <h3>{contact.pricingHeading}</h3>
+        <details class="contact-faq pricing">
+          <summary>{contact.pricingHeading}</summary>
           <ul>
             {contact.pricingItems.map((item) => (
               <li>
@@ -112,7 +112,7 @@ const contact = contactEntry.data;
               </li>
             ))}
           </ul>
-        </div>
+        </details>
       )}
 
       <div class="contact-meta">

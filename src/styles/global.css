@@ -711,17 +711,17 @@
   .contact-meta strong {
     @apply mb-1 block text-[0.75rem] uppercase tracking-[0.08em] text-text-primary;
   }
-  .visit-faq {
+  .contact-faq {
     @apply mx-auto mt-7 max-w-[560px] border-t border-line pt-5 text-left;
   }
-  .visit-faq summary {
+  .contact-faq summary {
     @apply relative cursor-pointer pr-8 font-display text-[1.02rem] font-semibold text-text-primary;
     list-style: none;
   }
-  .visit-faq summary::-webkit-details-marker {
+  .contact-faq summary::-webkit-details-marker {
     display: none;
   }
-  .visit-faq summary::after {
+  .contact-faq summary::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -733,23 +733,17 @@
     transform: translateY(-50%) rotate(45deg);
     transition: transform 200ms ease;
   }
-  .visit-faq[open] summary {
+  .contact-faq[open] summary {
     @apply text-accent-strong;
   }
-  .visit-faq[open] summary::after {
+  .contact-faq[open] summary::after {
     transform: translateY(-50%) rotate(225deg);
   }
-  .visit-faq p {
+  .contact-faq p {
     @apply mb-0 mt-3 text-left text-[0.9rem] leading-[1.7];
   }
-  .pricing {
-    @apply mx-auto mt-7 max-w-[560px] border-t border-line pt-5 text-left;
-  }
-  .pricing h3 {
-    @apply font-display text-[1.02rem] font-semibold text-text-primary;
-  }
   .pricing ul {
-    @apply m-0 list-none p-0;
+    @apply m-0 mt-3 list-none p-0;
   }
   .pricing li {
     @apply flex items-baseline justify-between gap-4 border-b border-line py-2 text-[0.9rem] text-text-muted;

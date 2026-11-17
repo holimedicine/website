@@ -26,6 +26,18 @@ test('expands the visit description in the contact section', async ({ page }) =>
   await expect(faq.locator('p')).toContainText('Standardowa wizyta trwa około 45 minut.');
 });
 
+test('expands the price list in the contact section', async ({ page }) => {
+  await page.goto('./');
+
+  const pricing = page.locator('#kontakt .pricing');
+  await expect(pricing.locator('summary')).toHaveText('Cennik');
+  await expect(pricing.locator('li').first()).toBeHidden();
+
+  await pricing.locator('summary').click();
+  await expect(pricing.locator('li').first()).toBeVisible();
+  await expect(pricing.locator('li').last()).toContainText('220 zł');
+});
+
 test('scroll-spy marks the current section and clears on contact', async ({ page }) => {
   await page.goto('./');
 

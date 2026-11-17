@@ -60,8 +60,9 @@ and renders arrays directly.
   navigation/UI microcopy, not page content.
 - Service order is the array order; reordering is drag-and-drop in the CMS.
 - The visit FAQ is a native `<details>` accordion, so it works without
-  JavaScript. The price list renders only when `pricingItems` contains at least
-  one row, which keeps an empty heading off the page.
+  JavaScript. The price list uses the same accordion pattern and renders only
+  when `pricingItems` contains at least one row, which keeps an empty heading
+  off the page.
 - `keystatic.config.ts` and `src/content.config.ts` must stay in sync.
 - Keystatic uses GitHub storage, so new content files must be committed and
   pushed before the admin sees them.
