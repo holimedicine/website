@@ -4,7 +4,20 @@
   "visitQuestion": "Jak wygląda wizyta?",
   "visitAnswer": "Standardowa wizyta trwa około 45 minut. W tym czasie z pełną starannością wsłuchujemy się w Twoją historię, zbieramy dokładny wywiad lekarski i przeprowadzamy badanie fizykalne. Jeśli stan zdrowia i sytuacja tego wymagają, od razu włączamy do planu wizyty terapię manualną, dbając o to, by odnaleźć źródło problemu, a nie tylko łagodzić objawy.",
   "pricingHeading": "Cennik",
-  "pricingItems": [],
+  "pricingItems": [
+    {
+      "name": "Konsultacja pierwszorazowa z Terapią Manualną    ",
+      "price": "250 - 300 zł"
+    },
+    {
+      "name": " Konsultacja z Terapią Manualną   ( kolejna ) ",
+      "price": "250 - 270 zł"
+    },
+    {
+      "name": "Konsultacja ",
+      "price": "220 "
+    }
+  ],
   "phone": "+48 000 000 000",
   "email": "dscupial@gmail.com",
   "address": "ul. Paderewskiego 25, 42-400 Zawiercie",
