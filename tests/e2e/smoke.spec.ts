@@ -26,6 +26,11 @@ const pages = [
     title: 'Współpraca — Natalia i Donat Cupiał',
     heading: 'Razem zrobimy więcej dla zdrowia',
   },
+  {
+    path: 'wspolpraca/partnerzy/',
+    title: 'Specjaliści, z którymi współpracujemy — Natalia i Donat Cupiał',
+    heading: 'Specjaliści, z którymi współpracujemy',
+  },
 ];
 
 for (const pageInfo of pages) {

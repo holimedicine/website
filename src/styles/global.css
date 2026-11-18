@@ -309,6 +309,21 @@
   .page-header .lead {
     @apply mt-[18px] max-w-[560px] text-[1.02rem];
   }
+  .page-header-inner {
+    @apply grid;
+  }
+  .page-header-with-aside .page-header-inner {
+    @apply items-center gap-10;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  }
+  .page-header-aside {
+    @apply min-w-0;
+  }
+  @media (max-width: 860px) {
+    .page-header-with-aside .page-header-inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 
   /* SECTION generic */
   .section {
@@ -841,6 +856,165 @@
     .collab-card:focus-within {
       @apply transition-none;
       transform: none;
+    }
+  }
+
+  /* COLLABORATOR DIRECTORY CTA */
+  .partners-cta {
+    @apply relative isolate flex min-h-[210px] flex-col justify-between overflow-hidden rounded-3xl border border-accent p-7 text-white transition duration-300;
+    background: linear-gradient(145deg, #3a7d71 0%, #2f6a5f 58%, #2b5876 130%);
+    box-shadow: 0 18px 42px rgba(43, 88, 118, 0.2);
+  }
+  .partners-cta::before {
+    content: '';
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    width: 190px;
+    height: 190px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    z-index: -1;
+  }
+  .partners-cta:hover,
+  .partners-cta:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 54px rgba(43, 88, 118, 0.26);
+  }
+  .partners-cta:focus-visible {
+    outline-color: #ffffff;
+    outline-offset: 3px;
+  }
+  .partners-cta-title {
+    @apply max-w-[11ch] font-display text-[1.55rem] font-semibold leading-[1.15];
+  }
+  .partners-cta-action {
+    @apply inline-flex items-center gap-2 self-start rounded-full border border-white/35 px-4 py-2 text-[0.78rem] font-semibold uppercase tracking-[0.08em] text-white;
+  }
+  .partners-cta-action svg {
+    @apply h-4 w-4 transition-transform duration-300;
+  }
+  .partners-cta:hover .partners-cta-action svg,
+  .partners-cta:focus-visible .partners-cta-action svg {
+    transform: translateX(3px);
+  }
+
+  /* COLLABORATOR DIRECTORY */
+  .profession-list {
+    @apply mx-auto max-w-[900px];
+  }
+  .profession {
+    @apply border-b border-line;
+  }
+  .profession:first-child {
+    @apply border-t border-line;
+  }
+  .profession summary {
+    @apply relative flex cursor-pointer items-center justify-between gap-4 py-5 pr-10 font-display text-[1.15rem] font-semibold text-text-primary;
+    list-style: none;
+  }
+  .profession summary::-webkit-details-marker {
+    display: none;
+  }
+  .profession summary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--color-accent-strong);
+    border-bottom: 2px solid var(--color-accent-strong);
+    transform: translateY(-65%) rotate(45deg);
+    transition: transform 200ms ease;
+  }
+  .profession[open] summary {
+    @apply text-accent-strong;
+  }
+  .profession[open] summary::after {
+    transform: translateY(-35%) rotate(225deg);
+  }
+  .profession-heading {
+    @apply flex flex-wrap items-baseline gap-x-3 gap-y-1;
+  }
+  .profession-count {
+    @apply font-sans text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-text-muted;
+  }
+  .profession-body {
+    @apply pb-8;
+  }
+  .profession-summary {
+    @apply mb-6 max-w-[680px] text-[0.95rem] leading-[1.7] text-text-muted;
+  }
+  .profession-empty {
+    @apply m-0 text-[0.9rem] text-text-muted;
+  }
+  .collaborator-grid {
+    @apply grid grid-cols-2 gap-6;
+  }
+  .collaborator-card {
+    @apply flex gap-5 rounded-2xl border border-line bg-bg-card p-5;
+    box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
+  }
+  .collaborator-photo {
+    @apply aspect-square w-[112px] shrink-0 rounded-2xl object-cover;
+    background: var(--color-bg-elevated);
+  }
+  .collaborator-photo-initials {
+    @apply flex items-center justify-center font-display text-[1.3rem] font-semibold text-white;
+    background: linear-gradient(145deg, #68b0ab 0%, #3a7d71 100%);
+  }
+  .collaborator-body {
+    @apply min-w-0;
+  }
+  .collaborator-body h3 {
+    @apply mb-1 text-[1.05rem] text-accent-strong;
+  }
+  .collaborator-role {
+    @apply mb-3 text-[0.83rem] font-semibold text-accent;
+  }
+  .collaborator-workplace {
+    @apply mb-3 text-[0.84rem] leading-[1.6] text-text-muted;
+  }
+  .collaborator-workplace span {
+    @apply mb-1 block text-[0.68rem] uppercase tracking-[0.08em] text-text-primary;
+  }
+  .collaborator-bio {
+    @apply mb-4 text-[0.9rem] leading-[1.65] text-text-muted;
+  }
+  .collaborator-link {
+    @apply inline-flex items-center gap-1.5 text-[0.8rem] font-semibold text-accent-strong transition-colors;
+  }
+  .collaborator-link:hover {
+    color: var(--color-accent);
+  }
+  @media (max-width: 760px) {
+    .collaborator-grid {
+      @apply grid-cols-1;
+    }
+  }
+  @media (max-width: 520px) {
+    .partners-cta {
+      min-height: 170px;
+    }
+    .collaborator-card {
+      @apply flex-col;
+    }
+    .collaborator-photo {
+      @apply w-full max-w-[170px];
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .partners-cta,
+    .partners-cta:hover,
+    .partners-cta:focus-visible {
+      transform: none;
+      transition: none;
+    }
+    .partners-cta-action svg,
+    .profession summary::after {
+      transition: none;
     }
   }
 

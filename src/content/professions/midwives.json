@@ -1,0 +1,17 @@
+{
+  "title": "Położne",
+  "order": 3,
+  "summary": "Opieka położnicza, edukacja i wsparcie na każdym etapie — od ciąży po połóg.",
+  "members": [
+    {
+      "name": "Joanna Frukacz",
+      "role": "Położna",
+      "workplace": "Szpital Powiatowy w Zawierciu, ul. Widok 3, Zawiercie",
+      "photo": "/images/collaborators/joanna-frukacz.jpg",
+      "photoAlt": "Joanna Frukacz",
+      "bio": "Położna z 29-letnim doświadczeniem, z licencjatem z położnictwa i specjalizacją ginekologiczno-położniczą. Pracuje w środowisku i na sali porodowej, a pacjentki ceni za empatię i indywidualne podejście.",
+      "link": "https://pregnanavigator.pl/polozne/joanna-frukacz",
+      "linkLabel": "Profil w Pregna Navigator"
+    }
+  ]
+}

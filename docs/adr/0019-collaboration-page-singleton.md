@@ -5,6 +5,8 @@
 - Amended: 2026-11-16 — cooperation areas became separate clickable tiles: each
   area gained a short `summary` for the card and a longer `body` shown in a
   native `<dialog>` (`.collab-modal`); the section heading was renamed.
+- Amended: 2026-11-18 — the page header gained a CTA to the collaborator
+  directory at `/wspolpraca/partnerzy/` (ADR 0020).
 
 ## Context
 

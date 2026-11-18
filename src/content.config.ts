@@ -167,6 +167,33 @@ const wspolpraca = defineCollection({
       .default([]),
     contactCtaLabel: z.string().default('Napisz do nas'),
     contactCtaHref: z.string().default('mailto:gabinet.holimedicine@gmail.com'),
+    partnersCtaLabel: z.string().default('Z nimi współpracujemy - kliknij i sprawdź!'),
+    partnersEyebrow: z.string().default('Z nimi współpracujemy'),
+    partnersHeading: z.string().default('Specjaliści, z którymi współpracujemy'),
+    partnersLead: z.string().default(''),
+  }),
+});
+
+const professions = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/professions' }),
+  schema: z.object({
+    title: z.string(),
+    order: z.number().default(0),
+    summary: z.string().optional(),
+    members: z
+      .array(
+        z.object({
+          name: z.string(),
+          role: z.string().optional(),
+          workplace: z.string().optional(),
+          photo: z.string().nullish(),
+          photoAlt: z.string().optional(),
+          bio: z.string().optional(),
+          link: z.string().nullish(),
+          linkLabel: z.string().optional(),
+        })
+      )
+      .default([]),
   }),
 });
 
@@ -212,5 +239,6 @@ export const collections = {
   podejscie,
   zakres,
   wspolpraca,
+  professions,
   contact,
 };

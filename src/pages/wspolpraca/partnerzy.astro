@@ -1,0 +1,117 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { withBase } from '../../utils/url';
+
+const entry = await getEntry('wspolpraca', 'index');
+
+if (!entry) {
+  throw new Error('Brak treści strony Współpraca w CMS.');
+}
+
+const content = entry.data;
+
+const professions = (await getCollection('professions')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
+);
+
+const memberCountLabel = (count: number) => {
+  if (count === 1) return '1 osoba';
+
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  const isFew = mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14);
+
+  return isFew ? `${count} osoby` : `${count} osób`;
+};
+
+const getInitials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('');
+---
+
+<SiteLayout
+  title={`${content.partnersHeading} — Natalia i Donat Cupiał`}
+  description={content.partnersLead}
+>
+  <PageHeader
+    eyebrow={content.partnersEyebrow}
+    title={content.partnersHeading}
+    lead={content.partnersLead}
+  />
+
+  <section class="section site-container">
+    <div class="profession-list reveal">
+      {professions.map((profession) => {
+        const data = profession.data;
+        const members = data.members.filter((member) => member.name.trim().length > 0);
+
+        return (
+          <details class="profession" id={`profession-${profession.id}`}>
+            <summary>
+              <span class="profession-heading">
+                <span class="profession-title">{data.title}</span>
+                <span class="profession-count">{memberCountLabel(members.length)}</span>
+              </span>
+            </summary>
+
+            <div class="profession-body">
+              {data.summary && <p class="profession-summary">{data.summary}</p>}
+
+              {members.length > 0 ? (
+                <div class="collaborator-grid">
+                  {members.map((member) => (
+                    <article class="collaborator-card">
+                      {member.photo ? (
+                        <img
+                          class="collaborator-photo"
+                          src={withBase(member.photo)}
+                          alt={member.photoAlt || member.name}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div class="collaborator-photo collaborator-photo-initials" aria-hidden="true">
+                          {getInitials(member.name)}
+                        </div>
+                      )}
+
+                      <div class="collaborator-body">
+                        <h3>{member.name}</h3>
+                        {member.role && <p class="collaborator-role">{member.role}</p>}
+                        {member.workplace && (
+                          <p class="collaborator-workplace">
+                            <span>Miejsce pracy</span>
+                            {member.workplace}
+                          </p>
+                        )}
+                        {member.bio && <p class="collaborator-bio">{member.bio}</p>}
+                        {member.link && member.linkLabel && (
+                          <a
+                            class="collaborator-link"
+                            href={member.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {member.linkLabel}
+                            <span aria-hidden="true">→</span>
+                          </a>
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p class="profession-empty">Profile pojawią się wkrótce.</p>
+              )}
+            </div>
+          </details>
+        );
+      })}
+    </div>
+  </section>
+</SiteLayout>

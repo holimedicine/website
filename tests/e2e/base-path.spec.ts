@@ -1,6 +1,13 @@
 import { expect, test } from '@playwright/test';
 
-const pages = ['./', 'edukacja/', 'przepisy/', 'produkty/', 'wspolpraca/'];
+const pages = [
+  './',
+  'edukacja/',
+  'przepisy/',
+  'produkty/',
+  'wspolpraca/',
+  'wspolpraca/partnerzy/',
+];
 
 for (const path of pages) {
   test(`uses the production base path on ${path}`, async ({ page, request }) => {

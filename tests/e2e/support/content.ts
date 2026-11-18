@@ -206,6 +206,10 @@ export type CollaborationPage = {
   contactDetails: { label: string; value: string }[];
   contactCtaLabel: string;
   contactCtaHref: string;
+  partnersCtaLabel: string;
+  partnersEyebrow: string;
+  partnersHeading: string;
+  partnersLead: string;
 };
 
 function readCardList(value: unknown): { title: string; body: string }[] {
@@ -261,5 +265,68 @@ export function readCollaborationPage(): CollaborationPage {
     contactDetails: readDetailList(data.contactDetails),
     contactCtaLabel: String(data.contactCtaLabel ?? ''),
     contactCtaHref: String(data.contactCtaHref ?? ''),
+    partnersCtaLabel: String(data.partnersCtaLabel ?? ''),
+    partnersEyebrow: String(data.partnersEyebrow ?? ''),
+    partnersHeading: String(data.partnersHeading ?? ''),
+    partnersLead: String(data.partnersLead ?? ''),
   };
+}
+
+export type Collaborator = {
+  name: string;
+  role?: string;
+  workplace?: string;
+  photo?: string;
+  photoAlt?: string;
+  bio?: string;
+  link?: string;
+  linkLabel?: string;
+};
+
+export type Profession = {
+  slug: string;
+  title: string;
+  order: number;
+  summary?: string;
+  members: Collaborator[];
+};
+
+export function listProfessions(): Profession[] {
+  const directory = path.join(CONTENT_ROOT, 'professions');
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => {
+      const data = JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')) as {
+        title?: unknown;
+        order?: unknown;
+        summary?: unknown;
+        members?: unknown;
+      };
+
+      const members = Array.isArray(data.members)
+        ? data.members.map((item) => {
+            const record = (item ?? {}) as Record<string, unknown>;
+            return {
+              name: String(record.name ?? ''),
+              role: record.role ? String(record.role) : undefined,
+              workplace: record.workplace ? String(record.workplace) : undefined,
+              photo: record.photo ? String(record.photo) : undefined,
+              photoAlt: record.photoAlt ? String(record.photoAlt) : undefined,
+              bio: record.bio ? String(record.bio) : undefined,
+              link: record.link ? String(record.link) : undefined,
+              linkLabel: record.linkLabel ? String(record.linkLabel) : undefined,
+            };
+          })
+        : [];
+
+      return {
+        slug: file.slice(0, -'.json'.length),
+        title: String(data.title ?? ''),
+        order: Number(data.order ?? 0),
+        summary: data.summary ? String(data.summary) : undefined,
+        members,
+      };
+    })
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));
 }

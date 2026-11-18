@@ -9,7 +9,7 @@ export default config({
     brand: { name: 'Holimedicine' },
     navigation: {
       'Strona główna': ['about', 'podejscie', 'zakres', 'contact'],
-      Współpraca: ['wspolpraca'],
+      Współpraca: ['wspolpraca', 'professions'],
       Moduły: ['edukacja', 'przepisy', 'kategoriePrzepisow', 'produkty', 'sekcjeProduktow'],
     },
   },
@@ -326,10 +326,88 @@ export default config({
           label: 'Link przycisku',
           defaultValue: 'mailto:gabinet.holimedicine@gmail.com?subject=Wsp%C3%B3%C5%82praca',
         }),
+        partnersCtaLabel: fields.text({
+          label: 'Etykieta przycisku „Z nimi współpracujemy”',
+          defaultValue: 'Z nimi współpracujemy - kliknij i sprawdź!',
+        }),
+        partnersEyebrow: fields.text({
+          label: 'Nadtytuł strony „Z nimi współpracujemy”',
+          defaultValue: 'Z nimi współpracujemy',
+        }),
+        partnersHeading: fields.text({
+          label: 'Nagłówek strony „Z nimi współpracujemy”',
+          defaultValue: 'Specjaliści, z którymi współpracujemy',
+        }),
+        partnersLead: fields.text({
+          label: 'Wstęp strony „Z nimi współpracujemy”',
+          multiline: true,
+        }),
       },
     }),
   },
   collections: {
+    professions: collection({
+      label: 'Z nimi współpracujemy',
+      slugField: 'title',
+      path: 'src/content/professions/*',
+      format: { data: 'json' },
+      columns: ['title', 'order'],
+      schema: {
+        title: fields.slug({
+          name: { label: 'Nazwa zawodu', validation: { isRequired: true } },
+        }),
+        order: fields.integer({
+          label: 'Kolejność',
+          description: 'Im mniejsza liczba, tym wyżej pojawia się grupa na stronie.',
+          defaultValue: 0,
+        }),
+        summary: fields.text({
+          label: 'Krótki opis grupy',
+          description: 'Widoczny pod nazwą zawodu po rozwinięciu sekcji.',
+          multiline: true,
+        }),
+        members: fields.array(
+          fields.object({
+            name: fields.text({
+              label: 'Imię i nazwisko',
+              validation: { isRequired: true },
+            }),
+            role: fields.text({
+              label: 'Specjalizacja / rola',
+            }),
+            workplace: fields.text({
+              label: 'Miejsce pracy',
+              multiline: true,
+            }),
+            photo: fields.image({
+              label: 'Zdjęcie',
+              directory: 'public/images/collaborators',
+              publicPath: '/images/collaborators/',
+            }),
+            photoAlt: fields.text({
+              label: 'Opis zdjęcia (alt)',
+            }),
+            bio: fields.text({
+              label: 'Krótki opis osoby',
+              multiline: true,
+            }),
+            link: fields.url({
+              label: 'Link do profilu (opcjonalnie)',
+            }),
+            linkLabel: fields.text({
+              label: 'Etykieta linku',
+              description: 'Np. „Profil na ZnanyLekarz”.',
+            }),
+          }),
+          {
+            label: 'Osoby',
+            description:
+              'Przeciągnij, aby zmienić kolejność; dodaj lub usuń osobę. Bez zdjęcia wyświetli się awatar z inicjałami.',
+            itemLabel: (props) => props.fields.name.value,
+          }
+        ),
+      },
+    }),
     edukacja: collection({
       label: 'Edukacja',
       slugField: 'title',

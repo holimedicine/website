@@ -1,0 +1,17 @@
+{
+  "title": "Dietetycy",
+  "order": 1,
+  "summary": "Dietetyka kliniczna i psychodietetyka — wsparcie w chorobach dietozależnych, gospodarce hormonalnej i relacji z jedzeniem.",
+  "members": [
+    {
+      "name": "Klaudia Grochal",
+      "role": "Psychodietetyk, dietetyk kliniczny",
+      "workplace": "Żwirki i Wigury 6/14/lok. 10D, Śródmieście, 42-217 Częstochowa · konsultacje online",
+      "photo": "/images/collaborators/klaudia-grochal.jpg",
+      "photoAlt": "Klaudia Grochal",
+      "bio": "Dietetyk kliniczny i psychodietetyk. W pracy łączy dietetykę kliniczną z psychologią żywienia — wspiera pacjentów m.in. w insulinooporności, chorobach tarczycy, chorobach jelit i zaburzeniach odżywiania.",
+      "link": "https://www.znanylekarz.pl/profil/klaudia-grochal",
+      "linkLabel": "Profil na ZnanyLekarz"
+    }
+  ]
+}

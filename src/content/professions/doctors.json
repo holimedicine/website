@@ -1,0 +1,17 @@
+{
+  "title": "Lekarze",
+  "order": 4,
+  "summary": "Medycyna rodzinna i profilaktyka — pierwszy kontakt i koordynacja opieki.",
+  "members": [
+    {
+      "name": "Karol Jasiński",
+      "role": "Lekarz medycyny rodzinnej",
+      "workplace": "ul. Paderewskiego 25, 42-400 Zawiercie",
+      "photo": null,
+      "photoAlt": "",
+      "bio": "Lekarz medycyny rodzinnej. W gabinecie przy ul. Paderewskiego 25 w Zawierciu zajmuje się opieką podstawową, profilaktyką i koordynacją leczenia.",
+      "link": null,
+      "linkLabel": ""
+    }
+  ]
+}

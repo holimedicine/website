@@ -1,0 +1,27 @@
+{
+  "title": "Fizjoterapeuci",
+  "order": 2,
+  "summary": "Terapia manualna, chiropraktyka i praca z ciałem — od bólu kręgosłupa po powrót do sportu.",
+  "members": [
+    {
+      "name": "Robert Nawrot",
+      "role": "Chiropraktyk, terapeuta manualny",
+      "workplace": "FIZJO-MET Robert Nawrot, ul. Armii Krajowej 39, 42-400 Zawiercie",
+      "photo": "/images/collaborators/robert-nawrot.jpg",
+      "photoAlt": "Robert Nawrot",
+      "bio": "Fizjoterapeuta, chiropraktyk i terapeuta manualny. W FIZJO-MET prowadzi rehabilitację ortopedyczną, neurologiczną i sportową, łącząc terapię manualną, masaż tkanek głębokich i inne techniki pracy z ciałem.",
+      "link": "https://www.znanylekarz.pl/profil/robert-nawrot",
+      "linkLabel": "Profil na ZnanyLekarz"
+    },
+    {
+      "name": "Bartosz Pakulak",
+      "role": "Sportowiec, terapeuta manualny",
+      "workplace": "Interfit, ul. Leśna 10A, 42-400 Zawiercie",
+      "photo": "/images/collaborators/bartosz-pakulak.jpg",
+      "photoAlt": "Bartosz Pakulak",
+      "bio": "Sportowiec i terapeuta manualny. W Interfit w Zawierciu wspiera pacjentów w pracy nad sprawnością i powrotem do aktywności, łącząc doświadczenie sportowe z terapią manualną.",
+      "link": "https://www.instagram.com/bartosz_pakulak_ultra_ocr/",
+      "linkLabel": "Profil na Instagramie"
+    }
+  ]
+}

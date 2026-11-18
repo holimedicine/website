@@ -78,5 +78,9 @@
     }
   ],
   "contactCtaLabel": "Napisz do nas",
-  "contactCtaHref": "mailto:gabinet.holimedicine@gmail.com?subject=Wsp%C3%B3%C5%82praca"
+  "contactCtaHref": "mailto:gabinet.holimedicine@gmail.com?subject=Wsp%C3%B3%C5%82praca",
+  "partnersCtaLabel": "Z nimi współpracujemy - kliknij i sprawdź!",
+  "partnersEyebrow": "Z nimi współpracujemy",
+  "partnersHeading": "Specjaliści, z którymi współpracujemy",
+  "partnersLead": "Poznaj dietetyków, fizjoterapeutów, położne i lekarzy, z którymi łączymy siły na co dzień. Kliknij wybrany zawód, aby zobaczyć profile i miejsca pracy."
 }

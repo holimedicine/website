@@ -21,7 +21,11 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **product modal** | Native `<dialog>` on `/produkty/` showing a product's image, examples, summary, extra details, full MDX body, and optional store link. See `src/pages/produkty.astro`. |
 | **product deep link** | Hash URL `#produkt-<slug>` that opens the matching product modal; the slug is derived from the content entry ID. |
 | **collaboration modal** | Native `<dialog>` on `/wspolpraca/` showing a cooperation area's full description (`body`); the card shows its short `summary`. The dialog ID is derived from the area's position (`#wspolpraca-obszar-<n>`). See `src/pages/wspolpraca.astro`. |
-| **Współpraca** | Collaboration page (`/wspolpraca/`, `src/pages/wspolpraca.astro`) backed by the `wspolpraca` singleton: cooperation areas as clickable tiles with modals, principles, steps, and an editable contact box. |
+| **Współpraca** | Collaboration page (`/wspolpraca/`, `src/pages/wspolpraca.astro`) backed by the `wspolpraca` singleton: cooperation areas as clickable tiles with modals, principles, steps, an editable contact box, and a header CTA to the collaborator directory. |
+| **professions** | Collection of collaborator groups (`src/content/professions/*.json`), one file per profession (Dietetycy, Fizjoterapeuci, Położne, Lekarze); each entry has a title, order, summary, and an ordered `members` list. See ADR 0020. |
+| **collaborator directory** | Page at `/wspolpraca/partnerzy/` (`src/pages/wspolpraca/partnerzy.astro`) listing the people the practice works with, grouped into profession accordions. It is not linked from the main nav; the only entry point is the **partners CTA** on `/wspolpraca/`. |
+| **partners CTA** | Green card-link in the `/wspolpraca/` page header (`partnersCtaLabel` in the `wspolpraca` singleton) that opens the collaborator directory. |
+| **collaborator card** | Card inside a profession accordion showing a person's photo or initials avatar, name, role, workplace, bio, and optional profile link. |
 | **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. |
 | **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
 | **Baza wiedzy** | User-facing name of the `/edukacja/` page: its nav label, page-header eyebrow, and `<title>`. The route and the `edukacja` collection keep their original names. |

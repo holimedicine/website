@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { withBase } from '../utils/url';
 
 const entry = await getEntry('wspolpraca', 'index');
 
@@ -14,13 +15,40 @@ const areas = content.areas.map((area, index) => ({
   ...area,
   dialogId: `wspolpraca-obszar-${index + 1}`,
 }));
+
+const [partnersCtaTitle, ...partnersCtaActionParts] = content.partnersCtaLabel.split(/\s+-\s+/);
+const partnersCtaAction = partnersCtaActionParts.join(' - ');
+const partnersHref = withBase('/wspolpraca/partnerzy/');
 ---
 
 <SiteLayout
   title="Współpraca — Natalia i Donat Cupiał"
   description="Współpraca z firmami, specjalistami, mediami i markami: warsztaty, wykłady, konsultacje i wspólne projekty o zdrowiu."
 >
-  <PageHeader eyebrow={content.eyebrow} title={content.heading} lead={content.lead} />
+  <PageHeader eyebrow={content.eyebrow} title={content.heading} lead={content.lead}>
+    <a
+      slot="aside"
+      href={partnersHref}
+      class="partners-cta"
+      aria-label={content.partnersCtaLabel}
+    >
+      <span class="partners-cta-title">{partnersCtaTitle}</span>
+      {partnersCtaAction && (
+        <span class="partners-cta-action">
+          {partnersCtaAction}
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+            <path
+              d="M4 10h11M10.5 5.5 15 10l-4.5 4.5"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      )}
+    </a>
+  </PageHeader>
 
   <section class="section site-container">
     <h2 class="sub-title">{content.areasHeading}</h2>
