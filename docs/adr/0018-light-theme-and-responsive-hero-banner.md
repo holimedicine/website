@@ -4,6 +4,8 @@
 - Date: 2026-11-15
 - Amended: 2026-11-17 — the homepage hero became full-bleed and full-height,
   starts underneath a fixed nav, and sits closer to the first section.
+- Amended: 2026-11-18 — the hero height became content-driven again (no
+  `100svh` floor), with tighter vertical padding and a 40px accent bar.
 
 ## Context
 
@@ -50,6 +52,11 @@ screens, which is not possible when the text is baked into a single SVG.
   `Nav` the `.nav-overlay` class (`position: fixed; inset-inline: 0`). The hero
   therefore starts at the top edge and shows through the translucent, blurred nav;
   subpages keep the sticky nav in the document flow.
+- **Compact hero (amended 2026-11-18):** the full-height constraint was removed in
+  favour of a content-driven height. The hero grid keeps only the padding needed
+  to clear the fixed nav (`clamp(5rem, 7vw, 6.5rem)` on top) and a tight bottom
+  padding, so the copy and the logo mark sit higher and no empty band is left
+  under the CTAs. The decorative bar under the `h1` is 40px wide.
 
 ## Consequences
 
@@ -72,5 +79,9 @@ screens, which is not possible when the text is baked into a single SVG.
 - The full-height hero uses `svh` rather than `dvh` so it does not resize while
   mobile browser chrome hides or shows. On very short viewports it intentionally
   exceeds the viewport instead of clipping the copy.
+- The hero no longer fills the viewport, so `tests/e2e/home.spec.ts` asserts a
+  full-bleed top-aligned banner shorter than the viewport with both CTAs visible
+  above the fold. Any change to the hero typography or padding must keep that
+  promise.
 - Only pages that opt into `navOverlay` get the fixed nav; the scroll-spy and
   `scroll-padding-top` from ADR 0010 rely on `nav.clientHeight` and keep working.

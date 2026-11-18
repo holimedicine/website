@@ -29,7 +29,7 @@ rather than duplicating the rules.
 | [0015](./0015-recipe-details-modal.md)                   | Recipe details modal with hash deep links              | Accepted | 2026-11-14                                  |
 | [0016](./0016-education-cards-and-modal.md)              | Education cards with details modal                     | Accepted | 2026-11-14                                  |
 | [0017](./0017-product-recommendations-as-collections.md) | Product recommendations as content collections         | Accepted | 2026-11-14                                  |
-| [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17)             |
+| [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17, 2026-11-18) |
 | [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16)             |
 
 ## When to add an ADR

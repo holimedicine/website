@@ -14,7 +14,7 @@ test('renders all homepage sections and hero links', async ({ page }) => {
   await expect(page.locator('.hero a[href="#o-nas"]')).toBeVisible();
 });
 
-test('renders the hero full-bleed beneath the fixed nav', async ({ page }) => {
+test('renders the compact hero full-bleed beneath the fixed nav', async ({ page }) => {
   await page.goto('./');
 
   const viewport = await page.evaluate(() => ({
@@ -31,9 +31,16 @@ test('renders the hero full-bleed beneath the fixed nav', async ({ page }) => {
   expect(banner!.x).toBeCloseTo(0, 0);
   expect(banner!.width).toBeCloseTo(viewport.width, 0);
   expect(banner!.y).toBeCloseTo(0, 0);
-  expect(banner!.height).toBeGreaterThanOrEqual(viewport.height - 0.5);
+  // The hero is content-driven now, so it should be shorter than the viewport.
+  expect(banner!.height).toBeLessThan(viewport.height);
   expect(nav!.y).toBeCloseTo(0, 0);
   expect(banner!.y).toBeLessThan(nav!.height);
+
+  for (const href of ['#kontakt', '#o-nas']) {
+    const cta = await page.locator(`.hero a[href="${href}"]`).boundingBox();
+    expect(cta).not.toBeNull();
+    expect(cta!.y + cta!.height).toBeLessThanOrEqual(viewport.height);
+  }
 });
 
 test('keeps the first section close to the hero', async ({ page }) => {
