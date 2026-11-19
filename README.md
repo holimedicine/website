@@ -90,7 +90,7 @@ Run `git pull` to bring those commits into the local copy.
 
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and
 publishes to GitHub Pages. Requires **Settings → Pages → Source = "GitHub
-Actions"** (one-time). You never commit build output.
+Actions"** (one-time). You never commit build output. 
 
 ## Architecture decisions
 
