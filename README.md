@@ -95,4 +95,4 @@ Actions"** (one-time). You never commit build output.
 ## Architecture decisions
 
 See [`docs/adr/`](./docs/adr/README.md) for the reasoning behind the framework,
-styling, CMS, content model, deploy and base-path choices.
+styling, CMS, content model, deploy and base-path choices. 
