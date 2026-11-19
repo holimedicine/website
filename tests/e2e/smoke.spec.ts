@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 const pages = [
   {
     path: './',
-    title: 'Natalia i Donat Cupiał — holimedicine.eu.org',
+    title: 'Natalia i Donat Cupiał — holimedicine.eu',
     heading: 'Holimedicine',
   },
   {

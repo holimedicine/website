@@ -223,7 +223,7 @@ const contact = defineCollection({
     email: z.string().default('dscupial@gmail.com'),
     address: z.string().default('ul. Paderewskiego 25, 42-400 Zawiercie'),
     primaryCtaLabel: z.string().default('Napisz e-mail'),
-    primaryCtaHref: z.string().default('mailto:kontakt@holimedicine.eu.org'),
+    primaryCtaHref: z.string().default('mailto:kontakt@holimedicine.eu'),
     secondaryCtaLabel: z.string().default('Zadzwoń'),
     secondaryCtaHref: z.string().default('tel:+48000000000'),
   }),

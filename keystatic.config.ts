@@ -193,7 +193,7 @@ export default config({
         }),
         primaryCtaHref: fields.text({
           label: 'Link przycisku e-mail',
-          defaultValue: 'mailto:kontakt@holimedicine.eu.org',
+          defaultValue: 'mailto:kontakt@holimedicine.eu',
         }),
         secondaryCtaLabel: fields.text({
           label: 'Etykieta przycisku telefonu',
