@@ -56,6 +56,48 @@ test('shows the refreshed nav labels and CTA plus', async ({ page }) => {
   await expect(page.locator('.nav-cta .cta-plus')).toHaveCount(1);
 });
 
+test('reveals the collaborator directory from the collaboration menu', async ({ page }) => {
+  await page.goto('./');
+
+  const item = page.locator('.nav-item-has-menu');
+  const trigger = item.locator('.nav-trigger');
+  const menu = item.locator('.nav-menu');
+  const directoryLink = menu.locator('.nav-menu-link');
+
+  await expect(menu).toBeHidden();
+  await expect(directoryLink).toHaveAttribute('href', '/website/wspolpraca/partnerzy/');
+
+  await trigger.hover();
+  await expect(menu).toBeVisible();
+  await expect(directoryLink).toBeVisible();
+
+  await page.locator('.nav-cta').hover();
+  await expect(menu).toBeHidden();
+});
+
+test('opens the collaboration menu when the trigger is focused', async ({ page }) => {
+  await page.goto('./');
+
+  await page.locator('.nav-trigger').focus();
+  await expect(page.locator('.nav-menu')).toBeVisible();
+});
+
+test('keeps collaboration current inside the collaborator directory', async ({ page }) => {
+  await page.goto('wspolpraca/partnerzy/');
+
+  const currentLinks = page.locator('[data-nav-page="wspolpraca"]');
+  await expect(currentLinks).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    await expect(currentLinks.nth(index)).toHaveAttribute('aria-current', 'page');
+  }
+
+  const directoryLinks = page.locator('[data-nav-child-page="wspolpraca/partnerzy"]');
+  await expect(directoryLinks).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    await expect(directoryLinks.nth(index)).toHaveAttribute('aria-current', 'page');
+  }
+});
+
 test.describe('mobile navigation', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
@@ -70,6 +112,11 @@ test.describe('mobile navigation', () => {
 
     await toggle.click();
     await expect(menu).toHaveClass(/open/);
+
+    await expect(menu.getByRole('link', { name: 'Sprawdź z kim współpracujemy' })).toHaveAttribute(
+      'href',
+      '/website/wspolpraca/partnerzy/'
+    );
 
     await menu.locator('[data-nav-page="przepisy"]').click();
     await expect(page).toHaveURL(/\/website\/przepisy\/?$/);

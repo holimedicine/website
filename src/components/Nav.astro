@@ -7,26 +7,66 @@ const currentPath = base && rawPath.startsWith(base) ? rawPath.slice(base.length
 
 const instagramUrl = 'https://www.instagram.com/holimedicine/?utm_source=ig_web_button_share_sheet';
 
+type NavChild = {
+  href: string;
+  label: string;
+  page: string;
+};
+
+type NavChildLink = NavChild & {
+  isCurrent: boolean;
+};
+
 type NavLink = {
   href: string;
   label: string;
   section?: string;
   page?: string;
-  isCurrent?: boolean;
+  isCurrent: boolean;
+  children: NavChildLink[];
 };
 
-const links: NavLink[] = [
-  { href: '/#o-nas', label: 'O nas', section: 'o-nas' },
-  { href: '/#podejscie', label: 'Medycyna holistyczna', section: 'podejscie' },
-  { href: '/#zakres', label: 'Zakres opieki', section: 'zakres' },
-  { href: '/przepisy', label: 'Przepisy', page: 'przepisy' },
-  { href: '/edukacja', label: 'Baza wiedzy', page: 'edukacja' },
-  { href: '/produkty', label: 'Polecane produkty', page: 'produkty' },
-  { href: '/wspolpraca', label: 'Współpraca', page: 'wspolpraca' },
-].map((link) => ({
+type NavLinkSource = {
+  href: string;
+  label: string;
+  section?: string;
+  page?: string;
+  children?: NavChild[];
+};
+
+const isCurrentPage = (page: string) =>
+  currentPath === `/${page}` || currentPath.startsWith(`/${page}/`);
+
+const links: NavLink[] = (
+  [
+    { href: '/#o-nas', label: 'O nas', section: 'o-nas' },
+    { href: '/#podejscie', label: 'Medycyna holistyczna', section: 'podejscie' },
+    { href: '/#zakres', label: 'Zakres opieki', section: 'zakres' },
+    { href: '/przepisy', label: 'Przepisy', page: 'przepisy' },
+    { href: '/edukacja', label: 'Baza wiedzy', page: 'edukacja' },
+    { href: '/produkty', label: 'Polecane produkty', page: 'produkty' },
+    {
+      href: '/wspolpraca',
+      label: 'Współpraca',
+      page: 'wspolpraca',
+      children: [
+        {
+          href: '/wspolpraca/partnerzy/',
+          label: 'Sprawdź z kim współpracujemy',
+          page: 'wspolpraca/partnerzy',
+        },
+      ],
+    },
+  ] satisfies NavLinkSource[]
+).map((link) => ({
   ...link,
   href: withBase(link.href),
-  isCurrent: link.page ? currentPath === `/${link.page}` : false,
+  isCurrent: link.page ? isCurrentPage(link.page) : false,
+  children: (link.children ?? []).map((child) => ({
+    ...child,
+    href: withBase(child.href),
+    isCurrent: currentPath === `/${child.page}`,
+  })),
 }));
 
 const ctaLabel = 'Umów wizytę';
@@ -82,14 +122,66 @@ const { overlay = false } = Astro.props;
     </a>
 
     <div class="nav-links">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          data-nav-section={link.section}
-          data-nav-page={link.page}
-          aria-current={link.isCurrent ? 'page' : undefined}
-        >{link.label}</a>
-      ))}
+      {links.map((link) =>
+        link.children.length > 0 ? (
+          <div class="nav-item nav-item-has-menu">
+            <a
+              href={link.href}
+              class="nav-trigger"
+              data-nav-section={link.section}
+              data-nav-page={link.page}
+              aria-current={link.isCurrent ? 'page' : undefined}
+            >
+              {link.label}
+              <svg
+                class="nav-chevron"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="m4.5 6.5 3.5 3.5 3.5-3.5"></path>
+              </svg>
+            </a>
+
+            <div class="nav-menu">
+              {link.children.map((child) => (
+                <a
+                  href={child.href}
+                  class="nav-menu-link"
+                  data-nav-child-page={child.page}
+                  aria-current={child.isCurrent ? 'page' : undefined}
+                >
+                  <span>{child.label}</span>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"></path>
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={link.href}
+            data-nav-section={link.section}
+            data-nav-page={link.page}
+            aria-current={link.isCurrent ? 'page' : undefined}
+          >{link.label}</a>
+        )
+      )}
     </div>
 
     <a href={withBase('/#kontakt')} class="nav-cta">
@@ -113,12 +205,22 @@ const { overlay = false } = Astro.props;
 
   <div class="nav-mobile" id="navMobile">
     {links.map((link) => (
-      <a
-        href={link.href}
-        data-nav-section={link.section}
-        data-nav-page={link.page}
-        aria-current={link.isCurrent ? 'page' : undefined}
-      >{link.label}</a>
+      <>
+        <a
+          href={link.href}
+          data-nav-section={link.section}
+          data-nav-page={link.page}
+          aria-current={link.isCurrent ? 'page' : undefined}
+        >{link.label}</a>
+        {link.children.map((child) => (
+          <a
+            href={child.href}
+            class="nav-mobile-sub"
+            data-nav-child-page={child.page}
+            aria-current={child.isCurrent ? 'page' : undefined}
+          >{child.label}</a>
+        ))}
+      </>
     ))}
     <a href={withBase('/#kontakt')} class="nav-mobile-cta">
       {ctaLabel}

@@ -7,6 +7,9 @@
   wiedzy**), the CTA gained a plus icon, and the active underline switched from
   gold to the steel token. Routes and `data-nav-*` hooks are unchanged; see
   ADR 0018.
+- Amended: 2026-11-19 — current-page matching also covers nested routes (so the
+  collaborator directory keeps "Współpraca" active), and the collaboration item
+  gains a hover/focus dropdown.
 
 ## Context
 

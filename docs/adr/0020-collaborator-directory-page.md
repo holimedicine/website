@@ -2,6 +2,9 @@
 
 - Status: Accepted
 - Date: 2026-11-18
+- Amended: 2026-11-19 — the directory is also reachable from a hover/focus
+  dropdown under "Współpraca" in the desktop nav and from an indented link in
+  the mobile menu.
 
 ## Context
 

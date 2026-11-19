@@ -23,7 +23,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **collaboration modal** | Native `<dialog>` on `/wspolpraca/` showing a cooperation area's full description (`body`); the card shows its short `summary`. The dialog ID is derived from the area's position (`#wspolpraca-obszar-<n>`). See `src/pages/wspolpraca.astro`. |
 | **Współpraca** | Collaboration page (`/wspolpraca/`, `src/pages/wspolpraca.astro`) backed by the `wspolpraca` singleton: cooperation areas as clickable tiles with modals, principles, steps, an editable contact box, and a header CTA to the collaborator directory. |
 | **professions** | Collection of collaborator groups (`src/content/professions/*.json`), one file per profession (Dietetycy, Fizjoterapeuci, Położne, Lekarze); each entry has a title, order, summary, and an ordered `members` list. See ADR 0020. |
-| **collaborator directory** | Page at `/wspolpraca/partnerzy/` (`src/pages/wspolpraca/partnerzy.astro`) listing the people the practice works with, grouped into profession accordions. It is not linked from the main nav; the only entry point is the **partners CTA** on `/wspolpraca/`. |
+| **collaborator directory** | Page at `/wspolpraca/partnerzy/` (`src/pages/wspolpraca/partnerzy.astro`) listing the people the practice works with, grouped into profession accordions. It is reachable from the **nav dropdown** under "Współpraca" and from the **partners CTA** on `/wspolpraca/`. |
 | **partners CTA** | Green card-link in the `/wspolpraca/` page header (`partnersCtaLabel` in the `wspolpraca` singleton) that opens the collaborator directory. |
 | **collaborator card** | Card inside a profession accordion showing a person's photo or initials avatar, name, role, workplace, bio, and optional profile link. |
 | **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. |
@@ -54,6 +54,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **PostCSS** | CSS pipeline that runs the `@tailwindcss/postcss` plugin (`postcss.config.mjs`). |
 | **base path** | Production URL prefix `/website/`; dev uses `/`. See ADR 0007. |
 | **withBase()** | Utility (`src/utils/url.ts`) that prepends the base path to root-relative URLs. MUST be used for all links/assets. |
+| **nav dropdown** | Translucent link panel under a top-level nav item, opened on hover or keyboard focus with `:hover`/`:focus-within` (no JS). It is mirrored as an indented link in the mobile menu. See `src/components/Nav.astro`. |
 | **KEYSTATIC_DISABLED** | Env var set by `npm run build`/`preview` to exclude CMS routes from the static build. |
 | **static build** | `npm run build` output in `dist/`, deployed to GitHub Pages; no server runtime. |
 | **check-dist** | Post-build validation (`scripts/check-dist.mjs`) that fails on base-path leaks or missing local links/assets in `dist/`. |

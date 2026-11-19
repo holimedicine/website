@@ -21,7 +21,7 @@ rather than duplicating the rules.
 | [0007](./0007-base-path-and-withbase.md)                 | Project-page base path and the `withBase()` helper     | Accepted | 2026-10-01                                  |
 | [0008](./0008-homepage-content-in-keystatic.md)          | Manage homepage content as Keystatic singletons        | Accepted | 2026-10-27 (amended 2026-10-30)             |
 | [0009](./0009-remove-galeria-and-opinie.md)              | Remove the Galeria page and Opinie section             | Accepted | 2026-10-27                                  |
-| [0010](./0010-nav-active-state.md)                       | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27 (amended 2026-11-15)             |
+| [0010](./0010-nav-active-state.md)                       | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27 (amended 2026-11-15, 2026-11-19) |
 | [0011](./0011-remove-subpage-back-link.md)               | Remove the subpage "back to homepage" link             | Accepted | 2026-10-29                                  |
 | [0012](./0012-nav-responsive-breakpoint.md)              | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29 (amended 2026-11-15, 2026-11-16) |
 | [0013](./0013-e2e-tests-with-playwright.md)              | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31                                  |
@@ -31,7 +31,7 @@ rather than duplicating the rules.
 | [0017](./0017-product-recommendations-as-collections.md) | Product recommendations as content collections         | Accepted | 2026-11-14                                  |
 | [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17, 2026-11-18) |
 | [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16, 2026-11-18) |
-| [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18                                  |
+| [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19)             |
 
 ## When to add an ADR
 
