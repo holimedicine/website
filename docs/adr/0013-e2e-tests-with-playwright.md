@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-10-31
+- Amended: 2026-11-19 — the site moved to the `holimedicine.eu` custom domain, so tests run at `http://127.0.0.1:4323/` instead of the `/website/` subpath.
 
 ## Context
 
@@ -32,7 +33,7 @@ test-gated:
   `src/content/**` and `public/images/**`.
 - The GitHub Pages deploy workflow applies the same path filter, so content-only
   pushes still deploy after `build:site` without waiting for E2E.
-- Tests live in `tests/e2e/` and run against `http://127.0.0.1:4323/website/`
+- Tests live in `tests/e2e/` and run against `http://127.0.0.1:4323/`
   (`npm run preview -- --port 4323`).
 
 ## Consequences

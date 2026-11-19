@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.BASE_URL;
  * Prefixes a root-relative path with Astro's configured `base`.
  * External URLs, protocol-relative URLs and bare anchors are returned as-is.
  *
- * withBase('/edukacja') -> '/website/edukacja' (prod) | '/edukacja' (dev)
+ * withBase('/edukacja') -> '/edukacja' (base is '/', see ADR 0021)
  */
 export function withBase(path: string): string {
   if (/^(?:[a-z]+:)?\/\//i.test(path) || path.startsWith('#') || path.startsWith('mailto:') || path.startsWith('tel:')) {

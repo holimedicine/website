@@ -1,7 +1,7 @@
 # Holimedicine website
 
 Astro (static) + Tailwind CSS v4 + Keystatic CMS, deployed to GitHub Pages at
-`https://holimedicine.github.io/website/`.
+`https://holimedicine.eu/`.
 
 Content for **edukacja** (articles), **przepisy** (recipes), and **polecane
 produkty** (product cards) is managed as MDX content collections; **kategorie
@@ -28,7 +28,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 | `npm run build:site`              | Build and validate links/assets only                               |
 | `npm run test:e2e`                | Build, validate links/assets, and run E2E tests                    |
 | `npm run test:e2e:ui`             | Open the Playwright UI                                             |
-| `npm run preview`                 | Preview the production build at `http://localhost:4322/website/`   |
+| `npm run preview`                 | Preview the production build at `http://localhost:4322/`           |
 | `npm run typecheck`               | Generate Astro types (`astro sync`) and run `tsc --noEmit`         |
 | `npm run verify`                  | Typecheck + build + link/asset validation + E2E                    |
 | `npx playwright install chromium` | Install the browser used by E2E tests (once per machine)           |
@@ -40,15 +40,16 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
   scripts). Never deploy them.
 - **Tailwind import is special:** use `@import "tailwindcss/index.css";` in
   `src/styles/global.css` — plain `@import "tailwindcss";` breaks PostCSS here.
-- **Base path:** production runs under `/website/`, dev at `/`. Every root-relative
-  link/asset must be wrapped with `withBase()` from `src/utils/url.ts`.
+- **Base path:** the site is served from the custom domain at `/` (dev and
+  production). Keep wrapping root-relative links/assets with `withBase()` from
+  `src/utils/url.ts` so a future base change stays a one-line config edit.
 - **Content fields:** when changing a collection, keep `keystatic.config.ts` and
   `src/content.config.ts` in sync.
 - **Builds are test-gated:** `npm run build` runs `scripts/check-dist.mjs` and
   the Playwright E2E suite. Content-only commits (only `src/content/**` or
   `public/images/**`) run `npm run build:site` and skip E2E; see ADR 0013.
 - **E2E setup:** run `npx playwright install chromium` once before the first
-  build/test. Tests run against the production build at `/website/`.
+  build/test. Tests run against the production build at `/`.
 - **Never commit `dist/`** (gitignored). Deployment is handled by GitHub Actions.
 
 ## Architecture decisions

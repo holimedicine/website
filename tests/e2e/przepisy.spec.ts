@@ -58,7 +58,7 @@ test('loads cover images from the production base path', async ({ page }) => {
     const sources = await images.evaluateAll((elements) =>
       elements.map((element) => element.getAttribute('src'))
     );
-    expect(sources).toEqual(withImages.map((entry) => `/website${entry.coverImage}`));
+    expect(sources).toEqual(withImages.map((entry) => entry.coverImage));
 
     await page.locator(`#${category.slug}`).scrollIntoViewIfNeeded();
     await expect

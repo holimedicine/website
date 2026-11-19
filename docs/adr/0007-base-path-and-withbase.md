@@ -1,6 +1,6 @@
 # 0007. Project-page base path and the `withBase()` helper
 
-- Status: Accepted
+- Status: Superseded by [0021](./0021-custom-domain-holimedicine-eu.md)
 - Date: 2026-10-01
 
 ## Context

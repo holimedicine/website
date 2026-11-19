@@ -52,11 +52,11 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **hero banner** | Homepage banner component (`src/components/HeroBanner.astro`) with HTML copy, `public/images/hero-backdrop.svg` as a decorative background, and the logo mark as a separate image so it can reflow below the copy on mobile. |
 | **logo mark** | `public/images/logo-mark.svg` — the heart/spine/ECG brand mark used in the hero and as the basis for `public/favicon.svg` and `favicon.ico`. |
 | **PostCSS** | CSS pipeline that runs the `@tailwindcss/postcss` plugin (`postcss.config.mjs`). |
-| **base path** | Production URL prefix `/website/`; dev uses `/`. See ADR 0007. |
+| **base path** | URL prefix the site is served from; currently `/` (custom domain `holimedicine.eu`). See ADR 0021. |
 | **withBase()** | Utility (`src/utils/url.ts`) that prepends the base path to root-relative URLs. MUST be used for all links/assets. |
 | **nav dropdown** | Translucent link panel under a top-level nav item, opened on hover or keyboard focus with `:hover`/`:focus-within` (no JS). It is mirrored as an indented link in the mobile menu. See `src/components/Nav.astro`. |
 | **KEYSTATIC_DISABLED** | Env var set by `npm run build`/`preview` to exclude CMS routes from the static build. |
 | **static build** | `npm run build` output in `dist/`, deployed to GitHub Pages; no server runtime. |
 | **check-dist** | Post-build validation (`scripts/check-dist.mjs`) that fails on base-path leaks or missing local links/assets in `dist/`. |
-| **E2E test** | Playwright test in `tests/e2e/` run against the production build under `/website/`. |
+| **E2E test** | Playwright test in `tests/e2e/` run against the production build at `/`. |
 | **content-only commit** | Commit touching only `src/content/**` and `public/images/**`; pre-commit and CI run `build:site` but skip E2E. See ADR 0013. |

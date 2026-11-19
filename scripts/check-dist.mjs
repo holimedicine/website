@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const DIST = path.resolve('dist');
-const BASE_PATH = (process.env.BASE_PATH ?? '/website/').replace(/\/+$/, '') + '/';
+const BASE_PATH = (process.env.BASE_PATH ?? '/').replace(/\/+$/, '') + '/';
 
 function walk(dir) {
   const files = [];

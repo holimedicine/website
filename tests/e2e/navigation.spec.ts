@@ -44,7 +44,7 @@ test('brand and CTA use the production base path', async ({ page }) => {
   await expect(instagram).toHaveAttribute('aria-label', /Instagram/);
   await expect(instagram.locator('.nav-instagram-wordmark')).toHaveText('holimedicine');
 
-  await expect(page.locator('.nav-cta')).toHaveAttribute('href', '/website/#kontakt');
+  await expect(page.locator('.nav-cta')).toHaveAttribute('href', '/#kontakt');
 });
 
 test('shows the refreshed nav labels and CTA plus', async ({ page }) => {
@@ -65,7 +65,7 @@ test('reveals the collaborator directory from the collaboration menu', async ({ 
   const directoryLink = menu.locator('.nav-menu-link');
 
   await expect(menu).toBeHidden();
-  await expect(directoryLink).toHaveAttribute('href', '/website/wspolpraca/partnerzy/');
+  await expect(directoryLink).toHaveAttribute('href', '/wspolpraca/partnerzy/');
 
   await trigger.hover();
   await expect(menu).toBeVisible();
@@ -115,11 +115,11 @@ test.describe('mobile navigation', () => {
 
     await expect(menu.getByRole('link', { name: 'Sprawdź z kim współpracujemy' })).toHaveAttribute(
       'href',
-      '/website/wspolpraca/partnerzy/'
+      '/wspolpraca/partnerzy/'
     );
 
     await menu.locator('[data-nav-page="przepisy"]').click();
-    await expect(page).toHaveURL(/\/website\/przepisy\/?$/);
+    await expect(page).toHaveURL(/\/przepisy\/?$/);
     await expect(page.locator('#navMobile')).not.toHaveClass(/open/);
   });
 });

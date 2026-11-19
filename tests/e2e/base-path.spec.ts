@@ -10,7 +10,7 @@ const pages = [
 ];
 
 for (const path of pages) {
-  test(`uses the production base path on ${path}`, async ({ page, request }) => {
+  test(`serves pages from the site root: ${path}`, async ({ page, request }) => {
     await page.goto(path);
 
     const refs = await page.evaluate(() => {
@@ -26,8 +26,9 @@ for (const path of pages) {
 
     const localRefs = refs.filter((ref) => ref.startsWith('/') && !ref.startsWith('//'));
     expect(localRefs.length).toBeGreaterThan(0);
+    expect(new URL(page.url()).pathname, `page URL ${page.url()}`).not.toMatch(/^\/website\//);
     for (const ref of localRefs) {
-      expect(ref, `${path} → ${ref}`).toMatch(/^\/website\//);
+      expect(ref, `${path} → ${ref}`).not.toMatch(/^\/website\//);
     }
 
     const urls = new Set<string>();

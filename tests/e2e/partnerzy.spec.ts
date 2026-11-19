@@ -55,7 +55,7 @@ test('expands a profession and shows its collaborators', async ({ page }) => {
     if (member.photo) {
       await expect(card.locator('img.collaborator-photo')).toHaveAttribute(
         'src',
-        `/website${member.photo}`
+        `${member.photo}`
       );
     } else {
       await expect(card.locator('.collaborator-photo-initials')).toBeVisible();

@@ -18,7 +18,7 @@ rather than duplicating the rules.
 | [0004](./0004-content-collections-mdx.md)                | Manage edukacja/przepisy as MDX content collections    | Accepted | 2026-10-01 (amended 2026-11-10, 2026-11-14) |
 | [0005](./0005-keystatic-dev-only.md)                     | Keystatic runs in dev only; production build is static | Accepted | 2026-10-01                                  |
 | [0006](./0006-github-pages-deploy.md)                    | Deploy to GitHub Pages with GitHub Actions             | Accepted | 2026-10-01                                  |
-| [0007](./0007-base-path-and-withbase.md)                 | Project-page base path and the `withBase()` helper     | Accepted | 2026-10-01                                  |
+| [0007](./0007-base-path-and-withbase.md)                 | Project-page base path and the `withBase()` helper     | Superseded by [0021](./0021-custom-domain-holimedicine-eu.md) | 2026-10-01                |
 | [0008](./0008-homepage-content-in-keystatic.md)          | Manage homepage content as Keystatic singletons        | Accepted | 2026-10-27 (amended 2026-10-30)             |
 | [0009](./0009-remove-galeria-and-opinie.md)              | Remove the Galeria page and Opinie section             | Accepted | 2026-10-27                                  |
 | [0010](./0010-nav-active-state.md)                       | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27 (amended 2026-11-15, 2026-11-19) |
@@ -32,6 +32,7 @@ rather than duplicating the rules.
 | [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17, 2026-11-18) |
 | [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16, 2026-11-18) |
 | [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19)             |
+| [0021](./0021-custom-domain-holimedicine-eu.md)          | Custom domain `holimedicine.eu` at the site root        | Accepted | 2026-11-19                                  |
 
 ## When to add an ADR
 

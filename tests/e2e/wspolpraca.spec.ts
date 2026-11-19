@@ -12,7 +12,7 @@ test('renders the collaboration page from the CMS singleton', async ({ page }) =
   await expect(page.locator('.page-header .lead')).toHaveText(content.lead);
 
   const partnersCta = page.locator('.page-header .partners-cta');
-  await expect(partnersCta).toHaveAttribute('href', '/website/wspolpraca/partnerzy/');
+  await expect(partnersCta).toHaveAttribute('href', '/wspolpraca/partnerzy/');
   await expect(partnersCta).toHaveAttribute('aria-label', content.partnersCtaLabel);
   await expect(partnersCta.locator('.partners-cta-title')).toHaveText('Z nimi współpracujemy');
   await expect(partnersCta.locator('.partners-cta-action')).toContainText('kliknij i sprawdź!');
@@ -77,7 +77,7 @@ test('the partner directory CTA opens the hidden directory page', async ({ page 
   await page.goto('wspolpraca/');
   await page.locator('.page-header .partners-cta').click();
 
-  await expect(page).toHaveURL(/\/website\/wspolpraca\/partnerzy\/?$/);
+  await expect(page).toHaveURL(/\/wspolpraca\/partnerzy\/?$/);
   await expect(page.locator('h1').first()).toHaveText(content.partnersHeading);
 });
 

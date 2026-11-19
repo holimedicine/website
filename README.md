@@ -4,7 +4,7 @@ The website for Natalia i Donat Cupiał — family medicine and a holistic appro
 to health. Built with **Astro** (static output), **Tailwind CSS v4**, and
 **Keystatic** as a Git-based CMS.
 
-Live: https://holimedicine.github.io/website/
+Live: https://holimedicine.eu/
 
 ## Stack
 
@@ -69,14 +69,14 @@ Run `git pull` to bring those commits into the local copy.
 | `npm run build:site`               | Build and validate links/assets only                                |
 | `npm run test:e2e`                 | Build, validate links/assets, and run E2E tests                     |
 | `npm run test:e2e:ui`              | Open the Playwright UI                                              |
-| `npm run preview`                  | Preview the build at `localhost:4322/website/`                      |
+| `npm run preview`                  | Preview the build at `localhost:4322/`                              |
 | `npm run typecheck`                | Generate Astro types and type-check with `tsc`                      |
 | `npm run verify`                   | Typecheck, build, validate, and run E2E tests                       |
 
 ## Testing
 
 - E2E tests live in `tests/e2e/` and run with Playwright against the production
-  build under `/website/`.
+  build at the site root (`/`).
 - `npm run build` always runs `scripts/check-dist.mjs` (link/asset validation)
   and the full E2E suite.
 - **Content-only commits** (only `src/content/**` or `public/images/**`) run
