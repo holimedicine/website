@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { load as loadYaml } from 'js-yaml';
 
 const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content');
 
@@ -269,6 +270,63 @@ export function readCollaborationPage(): CollaborationPage {
     partnersEyebrow: String(data.partnersEyebrow ?? ''),
     partnersHeading: String(data.partnersHeading ?? ''),
     partnersLead: String(data.partnersLead ?? ''),
+  };
+}
+
+export type ProfileGalleryItem = {
+  image: string;
+  alt?: string;
+  caption?: string;
+  document?: string;
+};
+
+export type AboutProfile = {
+  name: string;
+  role: string;
+  bio: string;
+  gallery: ProfileGalleryItem[];
+};
+
+export type AboutPage = {
+  eyebrow: string;
+  heading: string;
+  profiles: AboutProfile[];
+};
+
+export function readAboutPage(): AboutPage {
+  const file = path.join(CONTENT_ROOT, 'about', 'index.mdx');
+  const source = fs.readFileSync(file, 'utf8');
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const data = (match ? loadYaml(match[1]) : {}) as Record<string, unknown>;
+
+  const profiles = Array.isArray(data.profiles)
+    ? data.profiles.map((item) => {
+        const record = (item ?? {}) as Record<string, unknown>;
+        const gallery = Array.isArray(record.gallery)
+          ? record.gallery.map((entry) => {
+              const galleryItem = (entry ?? {}) as Record<string, unknown>;
+              return {
+                image: String(galleryItem.image ?? ''),
+                alt: galleryItem.alt ? String(galleryItem.alt) : undefined,
+                caption: galleryItem.caption ? String(galleryItem.caption) : undefined,
+                document: galleryItem.document ? String(galleryItem.document) : undefined,
+              };
+            })
+          : [];
+
+        return {
+          name: String(record.name ?? ''),
+          role: String(record.role ?? ''),
+          bio: String(record.bio ?? ''),
+          gallery,
+        };
+      })
+    : [];
+
+  return {
+    eyebrow: String(data.eyebrow ?? ''),
+    heading: String(data.heading ?? ''),
+    profiles,
   };
 }
 

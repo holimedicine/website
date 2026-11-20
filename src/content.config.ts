@@ -83,6 +83,16 @@ const about = defineCollection({
           name: z.string(),
           role: z.string(),
           bio: z.string(),
+          gallery: z
+            .array(
+              z.object({
+                image: z.string(),
+                alt: z.string().optional(),
+                caption: z.string().optional(),
+                document: z.string().nullish(),
+              })
+            )
+            .default([]),
         })
       )
       .default([]),

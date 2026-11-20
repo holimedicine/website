@@ -20,6 +20,20 @@ const about = aboutEntry.data;
 const podejscie = podejscieEntry.data;
 const zakres = zakresEntry.data;
 const contact = contactEntry.data;
+
+const slugifyProfileName = (name: string) =>
+  name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ł/g, 'l')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const profiles = about.profiles.map((profile) => ({
+  ...profile,
+  dialogId: `profil-${slugifyProfileName(profile.name)}`,
+}));
 ---
 
 <SiteLayout
@@ -48,15 +62,79 @@ const contact = contactEntry.data;
     )}
 
     <div class="profiles-grid reveal">
-      {about.profiles.map((profile) => (
-        <div class="profile-card">
+      {profiles.map((profile) => (
+        <article class="profile-card">
           <div class="role">{profile.role}</div>
           <h3>{profile.name}</h3>
-          <p>{profile.bio}</p>
-        </div>
+          <p class="profile-card-bio">{profile.bio}</p>
+          <span class="profile-card-more" aria-hidden="true">Czytaj więcej →</span>
+          <button
+            type="button"
+            class="profile-card-open"
+            aria-haspopup="dialog"
+            aria-controls={profile.dialogId}
+            aria-label={`Czytaj więcej o: ${profile.name}`}
+            data-dialog={profile.dialogId}
+          />
+        </article>
       ))}
     </div>
   </section>
+
+  {profiles.map((profile) => (
+    <dialog
+      class="profile-modal"
+      id={profile.dialogId}
+      aria-labelledby={`${profile.dialogId}-title`}
+    >
+      <button
+        type="button"
+        class="profile-modal-close"
+        aria-label={`Zamknij profil: ${profile.name}`}
+        data-close-dialog
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="profile-modal-scroll">
+        <div class="profile-modal-body">
+          <p class="profile-modal-role">{profile.role}</p>
+          <h2 id={`${profile.dialogId}-title`}>{profile.name}</h2>
+
+          <div class="profile-modal-bio">
+            {profile.bio.split(/\n+/).map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+
+          {profile.gallery.length > 0 && (
+            <div class="profile-gallery-wrap">
+              <h3 class="profile-gallery-heading">Grafiki i dokumenty</h3>
+              <ul class="profile-gallery">
+                {profile.gallery.map((item) => (
+                  <li class="profile-gallery-item">
+                    <figure>
+                      <img src={withBase(item.image)} alt={item.alt ?? ''} loading="lazy" />
+                      {(item.caption || item.document) && (
+                        <figcaption>
+                          {item.caption && <span>{item.caption}</span>}
+                          {item.document && (
+                            <a href={withBase(item.document)} target="_blank" rel="noopener">
+                              Otwórz dokument (PDF)
+                            </a>
+                          )}
+                        </figcaption>
+                      )}
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
 
   <!-- PODEJŚCIE -->
   <section class="section site-container" id="podejscie">
@@ -128,4 +206,13 @@ const contact = contactEntry.data;
     </div>
   </section>
 
+  <script>
+    import { initModalGroup } from '../scripts/modals';
+
+    initModalGroup({
+      dialogSelector: 'dialog.profile-modal',
+      triggerSelector: '.profile-card-open',
+      getDialogId: (button) => button.dataset.dialog,
+    });
+  </script>
 </SiteLayout>

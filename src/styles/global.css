@@ -429,8 +429,13 @@
     @apply grid grid-cols-2 gap-6;
   }
   .profile-card {
-    @apply rounded-2xl border border-line bg-bg-card px-[26px] py-7;
+    @apply relative flex flex-col rounded-2xl border border-line bg-bg-card px-[26px] py-7 transition duration-300;
     box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
+  }
+  .profile-card:hover,
+  .profile-card:focus-within {
+    @apply border-accent-soft;
+    transform: translateY(-2px);
   }
   .profile-card .role {
     @apply mb-1.5 text-[0.78rem] uppercase tracking-[0.08em] text-accent-strong;
@@ -438,12 +443,34 @@
   .profile-card h3 {
     @apply mb-2.5 text-[1.2rem];
   }
-  .profile-card p {
+  .profile-card-bio {
     @apply m-0 text-[0.92rem] text-text-muted;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+  .profile-card-more {
+    @apply mt-auto pt-5 text-[0.75rem] uppercase tracking-[0.08em] text-accent-strong;
+  }
+  .profile-card-open {
+    @apply absolute inset-0 z-10 cursor-pointer border-none bg-transparent p-0;
+  }
+  .profile-card-open:focus-visible {
+    outline-offset: -3px;
   }
   @media (max-width: 700px) {
     .profiles-grid {
       @apply grid-cols-1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .profile-card,
+    .profile-card:hover,
+    .profile-card:focus-within {
+      @apply transition-none;
+      transform: none;
     }
   }
 
@@ -551,11 +578,12 @@
     }
   }
 
-  /* RECIPE / EDUCATION / PRODUCT MODAL */
+  /* RECIPE / EDUCATION / PRODUCT / COLLABORATION / PROFILE MODAL */
   .recipe-modal,
   .edu-modal,
   .prod-modal,
-  .collab-modal {
+  .collab-modal,
+  .profile-modal {
     @apply m-auto border border-line bg-bg-card text-text-primary;
     width: min(760px, calc(100% - 2rem));
     max-height: 90vh;
@@ -567,14 +595,16 @@
   .recipe-modal::backdrop,
   .edu-modal::backdrop,
   .prod-modal::backdrop,
-  .collab-modal::backdrop {
+  .collab-modal::backdrop,
+  .profile-modal::backdrop {
     background: rgba(15, 35, 45, 0.55);
     backdrop-filter: blur(4px);
   }
   .recipe-modal-scroll,
   .edu-modal-scroll,
   .prod-modal-scroll,
-  .collab-modal-scroll {
+  .collab-modal-scroll,
+  .profile-modal-scroll {
     max-height: 90vh;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -582,7 +612,8 @@
   .recipe-modal-close,
   .edu-modal-close,
   .prod-modal-close,
-  .collab-modal-close {
+  .collab-modal-close,
+  .profile-modal-close {
     @apply absolute right-4 top-4 z-20 grid cursor-pointer place-items-center rounded-full border border-line text-text-primary;
     width: 2.5rem;
     height: 2.5rem;
@@ -594,7 +625,8 @@
   .recipe-modal-close:hover,
   .edu-modal-close:hover,
   .prod-modal-close:hover,
-  .collab-modal-close:hover {
+  .collab-modal-close:hover,
+  .profile-modal-close:hover {
     @apply border-accent-strong;
   }
   .recipe-modal-img,
@@ -604,7 +636,8 @@
   .recipe-modal-body,
   .edu-modal-body,
   .prod-modal-body,
-  .collab-modal-body {
+  .collab-modal-body,
+  .profile-modal-body {
     @apply px-[26px] pb-[30px] pt-[22px];
   }
   .recipe-modal-tag {
@@ -613,7 +646,8 @@
   .recipe-modal-body h2,
   .edu-modal-body h2,
   .prod-modal-body h2,
-  .collab-modal-body h2 {
+  .collab-modal-body h2,
+  .profile-modal-body h2 {
     @apply mt-2 pr-14 text-[1.5rem] leading-tight;
   }
   .recipe-modal-summary,
@@ -631,6 +665,45 @@
   .recipe-modal-empty,
   .edu-modal-empty {
     @apply m-0 rounded-xl border border-line px-4 py-3 text-[0.88rem] text-text-muted;
+  }
+  .profile-modal-role {
+    @apply m-0 pr-14 text-[0.78rem] uppercase tracking-[0.08em] text-accent-strong;
+  }
+  .profile-modal-bio {
+    @apply mt-4 border-t border-line pt-5 text-[0.95rem] text-text-muted;
+  }
+  .profile-modal-bio p {
+    @apply m-0;
+  }
+  .profile-modal-bio p + p {
+    @apply mt-4;
+  }
+  .profile-gallery-wrap {
+    @apply mt-7 border-t border-line pt-5;
+  }
+  .profile-gallery-heading {
+    @apply mb-3 text-[0.78rem] uppercase tracking-[0.08em] text-accent-strong;
+  }
+  .profile-gallery {
+    @apply m-0 flex list-none gap-4 overflow-x-auto p-0 pb-2;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+  }
+  .profile-gallery-item {
+    @apply w-[min(78vw,300px)] shrink-0;
+    scroll-snap-align: start;
+  }
+  .profile-gallery-item figure {
+    @apply m-0 overflow-hidden rounded-xl border border-line bg-bg-card;
+  }
+  .profile-gallery-item img {
+    @apply block h-[260px] w-full bg-white object-contain p-2;
+  }
+  .profile-gallery-item figcaption {
+    @apply flex flex-col gap-2 border-t border-line px-4 py-3 text-[0.82rem] text-text-muted;
+  }
+  .profile-gallery-item figcaption a {
+    @apply text-[0.72rem] uppercase tracking-[0.08em] text-accent-strong underline underline-offset-2;
   }
   .prod-modal-eg {
     @apply m-0 mt-2 pr-14 text-[0.78rem] leading-normal text-accent;
@@ -653,27 +726,31 @@
   body:has(dialog.recipe-modal[open]),
   body:has(dialog.edu-modal[open]),
   body:has(dialog.prod-modal[open]),
-  body:has(dialog.collab-modal[open]) {
+  body:has(dialog.collab-modal[open]),
+  body:has(dialog.profile-modal[open]) {
     overflow: hidden;
   }
   @media (max-width: 520px) {
     .recipe-modal,
     .edu-modal,
     .prod-modal,
-    .collab-modal {
+    .collab-modal,
+    .profile-modal {
       width: calc(100% - 1rem);
       max-height: 94vh;
     }
     .recipe-modal-scroll,
     .edu-modal-scroll,
     .prod-modal-scroll,
-    .collab-modal-scroll {
+    .collab-modal-scroll,
+    .profile-modal-scroll {
       max-height: 94vh;
     }
     .recipe-modal-body,
     .edu-modal-body,
     .prod-modal-body,
-    .collab-modal-body {
+    .collab-modal-body,
+    .profile-modal-body {
       @apply px-5 pb-6 pt-5;
     }
   }

@@ -52,6 +52,34 @@ export default config({
               label: 'Biogram',
               multiline: true,
             }),
+            gallery: fields.array(
+              fields.object({
+                image: fields.image({
+                  label: 'Grafika',
+                  description: 'Zdjęcie lub skan dokumentu widoczny w popupie profilu.',
+                  directory: 'public/images/o-nas',
+                  publicPath: '/images/o-nas/',
+                  validation: { isRequired: true },
+                }),
+                alt: fields.text({
+                  label: 'Opis grafiki (alt)',
+                }),
+                caption: fields.text({
+                  label: 'Podpis',
+                  multiline: true,
+                }),
+                document: fields.file({
+                  label: 'Dokument (opcjonalnie)',
+                  description: 'Np. oryginał PDF otwierany z poziomu podpisu.',
+                  directory: 'public/dokumenty',
+                  publicPath: '/dokumenty/',
+                }),
+              }),
+              {
+                label: 'Grafiki i dokumenty',
+                itemLabel: (props) => props.fields.caption.value || 'Grafika',
+              }
+            ),
           }),
           {
             label: 'Profile',

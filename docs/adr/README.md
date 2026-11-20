@@ -33,6 +33,7 @@ rather than duplicating the rules.
 | [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16, 2026-11-18) |
 | [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19)             |
 | [0021](./0021-custom-domain-holimedicine-eu.md)          | Custom domain `holimedicine.eu` at the site root        | Accepted | 2026-11-19                                  |
+| [0022](./0022-profile-popups-and-galleries.md)           | Profile cards with popups and per-doctor galleries     | Accepted | 2026-11-20                                  |
 
 ## When to add an ADR
 

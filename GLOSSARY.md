@@ -26,7 +26,10 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **collaborator directory** | Page at `/wspolpraca/partnerzy/` (`src/pages/wspolpraca/partnerzy.astro`) listing the people the practice works with, grouped into profession accordions. It is reachable from the **nav dropdown** under "Współpraca" and from the **partners CTA** on `/wspolpraca/`. |
 | **partners CTA** | Green card-link in the `/wspolpraca/` page header (`partnersCtaLabel` in the `wspolpraca` singleton) that opens the collaborator directory. |
 | **collaborator card** | Card inside a profession accordion showing a person's photo or initials avatar, name, role, workplace, bio, and optional profile link. |
-| **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. |
+| **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. Each doctor is a **profile card** that opens a **profile popup**. |
+| **profile card** | Doctor tile in the homepage **O nas** section: role, name, bio clamped to four lines, and a "Czytaj więcej →" label. The whole tile is a button overlay that opens the profile popup. See `src/pages/index.astro`. |
+| **profile popup** | Native `<dialog>` opened from a profile card; shows the doctor's full bio and gallery. Deep link: `#profil-<name-slug>` (e.g. `#profil-donat-cupial`). See ADR 0022. |
+| **profile gallery** | Per-doctor `gallery` array in the `about` singleton (`image`, `alt`, `caption`, optional `document`), rendered as a horizontally scrollable strip at the bottom of the profile popup. Images live in `public/images/o-nas/`, documents in `public/dokumenty/`. |
 | **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
 | **Baza wiedzy** | User-facing name of the `/edukacja/` page: its nav label, page-header eyebrow, and `<title>`. The route and the `edukacja` collection keep their original names. |
 | **Zakres opieki** | Homepage section (`#zakres`) backed by the `zakres` singleton. |
@@ -41,7 +44,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **Astro** | Static site generator used for the site; pages live in `src/pages/`. |
 | **content collection** | Astro collection defined in `src/content.config.ts` and loaded from `src/content/`. |
 | **rich-text** | Shared typographic styles (`.rich-text` in `src/styles/global.css`) used by edukacja bodies and recipe/product modal content. |
-| **modal helper** | Shared client-side dialog controller (`src/scripts/modals.ts`) for opening, closing, and hash-linking edukacja, recipe, and product modals. |
+| **modal helper** | Shared client-side dialog controller (`src/scripts/modals.ts`) for opening, closing, and hash-linking edukacja, recipe, product, collaboration, and profile modals. |
 | **singleton** | Single fixed content entry backing a homepage section or a standalone page (e.g. Współpraca); a Keystatic singleton read via `getEntry()` from a one-file Astro collection. |
 | **Keystatic** | Git-based CMS used to edit content; the admin runs only in dev at `/keystatic/`. |
 | **GitHub storage** | Keystatic storage mode that reads and writes content by committing to `holimedicine/website`. |
