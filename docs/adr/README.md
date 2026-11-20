@@ -31,7 +31,7 @@ rather than duplicating the rules.
 | [0017](./0017-product-recommendations-as-collections.md) | Product recommendations as content collections         | Accepted | 2026-11-14                                  |
 | [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17, 2026-11-18) |
 | [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16, 2026-11-18) |
-| [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19)             |
+| [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19, 2026-11-20) |
 | [0021](./0021-custom-domain-holimedicine-eu.md)          | Custom domain `holimedicine.eu` at the site root        | Accepted | 2026-11-19                                  |
 | [0022](./0022-profile-popups-and-galleries.md)           | Profile cards with popups and per-doctor galleries     | Accepted | 2026-11-20                                  |
 

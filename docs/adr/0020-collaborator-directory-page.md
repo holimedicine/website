@@ -5,6 +5,11 @@
 - Amended: 2026-11-19 — the directory is also reachable from a hover/focus
   dropdown under "Współpraca" in the desktop nav and from an indented link in
   the mobile menu.
+- Amended: 2026-11-20 — collaborator photos live in
+  `public/images/collaborators/<profession-slug>/`, because Keystatic resolves
+  an image field inside a collection entry as
+  `<directory>/<entry-slug>/<filename>`. Flat files broke saving from the admin
+  with a GitHub GraphQL deletion error.
 
 ## Context
 
@@ -33,7 +38,8 @@ in Keystatic like the other content.
 - Do not add the directory to `Nav.astro`. It remains reachable only from the CTA,
   though the static page is still available by direct URL.
 - Cover the new page with E2E and base-path tests; keep photo assets under
-  `public/images/collaborators/` and pass their paths through `withBase()`.
+  `public/images/collaborators/<profession-slug>/` and pass their paths through
+  `withBase()`.
 
 ## Consequences
 
