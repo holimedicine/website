@@ -7,8 +7,13 @@ const pages = [
     heading: 'Holimedicine',
   },
   {
-    path: 'edukacja/',
+    path: 'baza-wiedzy/',
     title: 'Baza wiedzy — Natalia i Donat Cupiał',
+    heading: 'Baza wiedzy',
+  },
+  {
+    path: 'edukacja/',
+    title: 'Materiały, które poszerzają świadomość — Natalia i Donat Cupiał',
     heading: 'Materiały, które poszerzają świadomość',
   },
   {

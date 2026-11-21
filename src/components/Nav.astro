@@ -31,11 +31,16 @@ type NavLinkSource = {
   label: string;
   section?: string;
   page?: string;
+  /** Extra pages that should mark this link as current, e.g. a hub and its children. */
+  pages?: string[];
   children?: NavChild[];
 };
 
 const isCurrentPage = (page: string) =>
   currentPath === `/${page}` || currentPath.startsWith(`/${page}/`);
+
+const isCurrentLink = (link: { page?: string; pages?: string[] }) =>
+  (link.pages ?? (link.page ? [link.page] : [])).some(isCurrentPage);
 
 const links: NavLink[] = (
   [
@@ -43,8 +48,24 @@ const links: NavLink[] = (
     { href: '/#podejscie', label: 'Medycyna holistyczna', section: 'podejscie' },
     { href: '/#zakres', label: 'Zakres opieki', section: 'zakres' },
     { href: '/przepisy', label: 'Przepisy', page: 'przepisy' },
-    { href: '/edukacja', label: 'Baza wiedzy', page: 'edukacja' },
-    { href: '/produkty', label: 'Polecane produkty', page: 'produkty' },
+    {
+      href: '/baza-wiedzy',
+      label: 'Baza wiedzy',
+      page: 'baza-wiedzy',
+      pages: ['baza-wiedzy', 'edukacja', 'produkty'],
+      children: [
+        {
+          href: '/edukacja/',
+          label: 'Materiały edukacyjne',
+          page: 'edukacja',
+        },
+        {
+          href: '/produkty/',
+          label: 'Polecane produkty',
+          page: 'produkty',
+        },
+      ],
+    },
     {
       href: '/wspolpraca',
       label: 'Współpraca',
@@ -61,7 +82,7 @@ const links: NavLink[] = (
 ).map((link) => ({
   ...link,
   href: withBase(link.href),
-  isCurrent: link.page ? isCurrentPage(link.page) : false,
+  isCurrent: isCurrentLink(link),
   children: (link.children ?? []).map((child) => ({
     ...child,
     href: withBase(child.href),

@@ -1,0 +1,58 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { withBase } from '../utils/url';
+
+const tiles = [
+  {
+    href: withBase('/edukacja/'),
+    title: 'Materiały, które poszerzają świadomość',
+    description:
+      'Krótkie, przystępne wyjaśnienia tematów, o które pytają nasi pacjenci — od jelit i odporności po sen, hormony i styl życia.',
+    action: 'Przejdź do materiałów',
+    variant: 'education',
+  },
+  {
+    href: withBase('/produkty/'),
+    title: 'Polecane produkty',
+    description:
+      'Substancje i preparaty, które omawiamy z pacjentami przy zdrowiu jelit, odporności i regeneracji. Zachęcamy do własnego researchu.',
+    action: 'Zobacz polecane produkty',
+    variant: 'products',
+  },
+];
+---
+
+<SiteLayout
+  title="Baza wiedzy — Natalia i Donat Cupiał"
+  description="Materiały edukacyjne o zdrowiu i polecane produkty — w jednym miejscu. Natalia i Donat Cupiał."
+>
+  <PageHeader
+    eyebrow="Baza wiedzy"
+    title="Baza wiedzy"
+    lead="Materiały edukacyjne i polecane produkty — w jednym miejscu. Wybierz, od czego chcesz zacząć."
+  />
+
+  <section class="section site-container">
+    <div class="knowledge-grid reveal">
+      {tiles.map((tile) => (
+        <a class={`knowledge-tile knowledge-tile-${tile.variant}`} href={tile.href}>
+          <span class="knowledge-tile-title">{tile.title}</span>
+          <span class="knowledge-tile-description">{tile.description}</span>
+          <span class="knowledge-tile-action">
+            {tile.action}
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+              <path
+                d="M4 10h11M10.5 5.5 15 10l-4.5 4.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</SiteLayout>

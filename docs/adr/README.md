@@ -34,6 +34,7 @@ rather than duplicating the rules.
 | [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19, 2026-11-20) |
 | [0021](./0021-custom-domain-holimedicine-eu.md)          | Custom domain `holimedicine.eu` at the site root        | Accepted | 2026-11-19                                  |
 | [0022](./0022-profile-popups-and-galleries.md)           | Profile cards with popups and per-doctor galleries     | Accepted | 2026-11-20 (amended 2026-11-21)             |
+| [0023](./0023-baza-wiedzy-hub-with-cta-tiles.md)         | Baza wiedzy hub with two CTA tiles                     | Accepted | 2026-11-21                                  |
 
 ## When to add an ADR
 

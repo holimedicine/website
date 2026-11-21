@@ -1,9 +1,11 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+const menuItem = (page: Page, label: string) =>
+  page.locator('.nav-item-has-menu').filter({ hasText: label });
 
 const modulePages = [
-  { path: 'edukacja/', nav: 'edukacja' },
+  { path: 'baza-wiedzy/', nav: 'baza-wiedzy' },
   { path: 'przepisy/', nav: 'przepisy' },
-  { path: 'produkty/', nav: 'produkty' },
   { path: 'wspolpraca/', nav: 'wspolpraca' },
 ];
 
@@ -30,6 +32,36 @@ test('homepage has no page-level current marker', async ({ page }) => {
   await page.goto('./');
   await expect(page.locator('[data-nav-page][aria-current="page"]')).toHaveCount(0);
 });
+
+const knowledgeSubpages = [
+  { path: 'edukacja/', child: 'edukacja' },
+  { path: 'produkty/', child: 'produkty' },
+];
+
+for (const { path, child } of knowledgeSubpages) {
+  test(`keeps Baza wiedzy current on ${path}`, async ({ page }) => {
+    await page.goto(path);
+
+    const currentLinks = page.locator('[data-nav-page="baza-wiedzy"]');
+    await expect(currentLinks).toHaveCount(2);
+    for (let index = 0; index < 2; index += 1) {
+      await expect(currentLinks.nth(index)).toHaveAttribute('aria-current', 'page');
+    }
+
+    const childLinks = page.locator(`[data-nav-child-page="${child}"]`);
+    await expect(childLinks).toHaveCount(2);
+    for (let index = 0; index < 2; index += 1) {
+      await expect(childLinks.nth(index)).toHaveAttribute('aria-current', 'page');
+    }
+
+    for (const other of knowledgeSubpages.filter((candidate) => candidate.child !== child)) {
+      const otherLinks = page.locator(`[data-nav-child-page="${other.child}"]`);
+      for (let index = 0; index < (await otherLinks.count()); index += 1) {
+        await expect(otherLinks.nth(index)).not.toHaveAttribute('aria-current', 'page');
+      }
+    }
+  });
+}
 
 test('brand and CTA use the production base path', async ({ page }) => {
   await page.goto('edukacja/');
@@ -59,7 +91,7 @@ test('shows the refreshed nav labels and CTA plus', async ({ page }) => {
 test('reveals the collaborator directory from the collaboration menu', async ({ page }) => {
   await page.goto('./');
 
-  const item = page.locator('.nav-item-has-menu');
+  const item = menuItem(page, 'Współpraca');
   const trigger = item.locator('.nav-trigger');
   const menu = item.locator('.nav-menu');
   const directoryLink = menu.locator('.nav-menu-link');
@@ -78,8 +110,27 @@ test('reveals the collaborator directory from the collaboration menu', async ({ 
 test('opens the collaboration menu when the trigger is focused', async ({ page }) => {
   await page.goto('./');
 
-  await page.locator('.nav-trigger').focus();
-  await expect(page.locator('.nav-menu')).toBeVisible();
+  const item = menuItem(page, 'Współpraca');
+  await item.locator('.nav-trigger').focus();
+  await expect(item.locator('.nav-menu')).toBeVisible();
+});
+
+test('reveals both knowledge areas from the Baza wiedzy menu', async ({ page }) => {
+  await page.goto('./');
+
+  const item = menuItem(page, 'Baza wiedzy');
+  const menu = item.locator('.nav-menu');
+  const links = menu.locator('.nav-menu-link');
+
+  await expect(menu).toBeHidden();
+  await expect(links).toHaveCount(2);
+  await expect(links.nth(0)).toHaveAttribute('href', '/edukacja/');
+  await expect(links.nth(1)).toHaveAttribute('href', '/produkty/');
+
+  await item.locator('.nav-trigger').hover();
+  await expect(menu).toBeVisible();
+  await expect(links.nth(0)).toBeVisible();
+  await expect(links.nth(1)).toBeVisible();
 });
 
 test('keeps collaboration current inside the collaborator directory', async ({ page }) => {

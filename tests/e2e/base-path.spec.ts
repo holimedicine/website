@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 const pages = [
   './',
+  'baza-wiedzy/',
   'edukacja/',
   'przepisy/',
   'produkty/',

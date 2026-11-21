@@ -6,7 +6,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 
 | Term | Definition |
 | :--- | :--- |
-| **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as cards on `/edukacja/`; clicking a card opens the education modal. Order comes from the `order` frontmatter field. |
+| **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as cards on `/edukacja/` (reachable from the **Baza wiedzy** hub and its nav dropdown); clicking a card opens the education modal. Order comes from the `order` frontmatter field. |
 | **education modal** | Native `<dialog>` on `/edukacja/` showing an article's title, teaser, and full MDX body (or a placeholder when the body is empty). See `src/pages/edukacja.astro`. |
 | **education deep link** | Hash URL `#edukacja-<slug>` that opens the matching education modal; the slug is derived from the content entry ID. |
 | **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`; clicking a card opens the recipe modal. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
@@ -15,7 +15,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name, tab order, and an ordered list of recipe slugs. See ADR 0014. |
 | **na-wynos** | Default recipe category entry (`src/content/kategorie-przepisow/na-wynos.json`); owns its ordered recipe list and is shown as the first "Na wynos" tab. |
 | **dania** | Default recipe category entry (`src/content/kategorie-przepisow/dania.json`); owns its ordered recipe list and is shown as the "Dania" tab. |
-| **Polecane produkty** | Product and supplement recommendations page (`src/pages/produkty.astro`) backed by the `produkty` and `sekcjeProduktow` collections; card sections open the product modal. |
+| **Polecane produkty** | Product and supplement recommendations page (`src/pages/produkty.astro`) backed by the `produkty` and `sekcjeProduktow` collections; card sections open the product modal. Reachable from the **Baza wiedzy** hub and its nav dropdown. |
 | **produkty** | Collection of product recommendation entries (`src/content/produkty/*.mdx`), rendered as cards on `/produkty/`; each entry has examples, a summary, optional image/link/details, and an optional MDX body. |
 | **sekcjeProduktow** | Keystatic collection (`src/content/sekcje-produktow/*.json`) that defines the `/produkty/` sections: heading, order, display (`cards` or `table`), an ordered product list for cards, or columns/rows for tables. See ADR 0017. |
 | **product modal** | Native `<dialog>` on `/produkty/` showing a product's image, examples, summary, extra details, full MDX body, and optional store link. See `src/pages/produkty.astro`. |
@@ -32,7 +32,8 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **profile portrait** | Optional `photo`/`photoAlt` pair on a profile in the `about` singleton, rendered between the name and the bio in the profile popup. Separate from the **profile gallery** so personal photos never mix with certificates and documents. Files live in `public/images/o-nas/`. |
 | **profile gallery** | Per-doctor `gallery` array in the `about` singleton (`image`, `alt`, `caption`, optional `document`), rendered as a horizontally scrollable strip at the bottom of the profile popup. Images live in `public/images/o-nas/`, documents in `public/dokumenty/`. |
 | **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
-| **Baza wiedzy** | User-facing name of the `/edukacja/` page: its nav label, page-header eyebrow, and `<title>`. The route and the `edukacja` collection keep their original names. |
+| **Baza wiedzy** | Hub page at `/baza-wiedzy/` (`src/pages/baza-wiedzy.astro`) with two large CTA tiles: **Materiały, które poszerzają świadomość** → `/edukacja/` and **Polecane produkty** → `/produkty/`. It is the nav label for the whole knowledge area; both content pages stay at their original routes. See ADR 0023. |
+| **knowledge tile** | Large gradient link tile on `/baza-wiedzy/` (`.knowledge-tile` inside `.knowledge-grid`), built from the same styles as the **partners CTA**. The whole tile is one `<a>`; it shows a title, description, and an action pill with an arrow. |
 | **Zakres opieki** | Homepage section (`#zakres`) backed by the `zakres` singleton. |
 | **Kontakt** | Homepage section (`#kontakt`) backed by the `contact` singleton; the nav CTA links here. Contains the visit FAQ accordion and the editable price list. |
 | **cennik** | Editable price list in the `contact` singleton (`pricingHeading`, `pricingItems`), rendered under the visit FAQ as a collapsible native `<details>` accordion with rows of name and price; the block is hidden until at least one row exists. |
