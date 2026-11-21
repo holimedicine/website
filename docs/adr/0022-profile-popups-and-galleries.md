@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-11-20
+- Amended: 2026-11-21 — added an optional per-profile portrait shown between the name and the bio, separate from the gallery.
 
 ## Context
 
@@ -25,6 +26,11 @@ editing markup or guessing which image belongs to whom.
   `initModalGroup()` (`src/scripts/modals.ts`) for open/close, Escape, backdrop
   clicks, scroll locking, and hash deep links. Dialog IDs are derived from the
   person's name, e.g. `#profil-donat-cupial`.
+- Give each profile an optional `photo`/`photoAlt` pair for a personal portrait.
+  It renders between the doctor's name and the bio, while the `gallery` stays at
+  the bottom of the popup for certificates and other documents. Two separate
+  fields and two separate spots keep personal imagery from mixing with
+  credentials.
 - Show the full bio as paragraphs and, at the bottom of the popup, a horizontally
   scrollable gallery. A gallery item links to its original document (PDF) in a
   new tab when `document` is set; the preview image is a separate field so mobile
@@ -35,6 +41,8 @@ editing markup or guessing which image belongs to whom.
 ## Consequences
 
 - New graphics can be added in Keystatic per doctor without touching code.
+- Profile portraits are optional; a profile without one renders the role, name,
+  and bio as before.
 - A gallery item requires a preview image; the document link is optional.
 - Deep-link slugs depend on the person's name, so renaming a doctor changes
   their popup URL.

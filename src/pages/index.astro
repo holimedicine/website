@@ -101,6 +101,16 @@ const profiles = about.profiles.map((profile) => ({
           <p class="profile-modal-role">{profile.role}</p>
           <h2 id={`${profile.dialogId}-title`}>{profile.name}</h2>
 
+          {profile.photo && (
+            <figure class="profile-modal-photo">
+              <img
+                src={withBase(profile.photo)}
+                alt={profile.photoAlt ?? ''}
+                loading="lazy"
+              />
+            </figure>
+          )}
+
           <div class="profile-modal-bio">
             {profile.bio.split(/\n+/).map((paragraph) => (
               <p>{paragraph}</p>

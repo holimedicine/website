@@ -74,6 +74,37 @@ test('opens a profile popup from the card and shows the full bio with its galler
   await expect(page).not.toHaveURL(/#/);
 });
 
+test('shows the personal portrait between the name and the bio, separate from the gallery', async ({
+  page,
+}) => {
+  const profile = about.profiles.find((entry) => entry.photo);
+  test.skip(!profile, 'No profile has a personal photo yet.');
+
+  await page.goto(`./#${dialogId(profile!.name)}`);
+
+  const dialog = page.locator(`#${dialogId(profile!.name)}`);
+  await expect(dialog).toBeVisible();
+
+  const portrait = dialog.locator('.profile-modal-photo img');
+  await expect(portrait).toHaveAttribute('src', profile!.photo!);
+  await expect(portrait).toHaveAttribute('alt', profile!.photoAlt ?? '');
+
+  const headingBox = await dialog.locator('h2').boundingBox();
+  const portraitBox = await portrait.boundingBox();
+  const bioBox = await dialog.locator('.profile-modal-bio').boundingBox();
+  expect(headingBox).not.toBeNull();
+  expect(portraitBox).not.toBeNull();
+  expect(bioBox).not.toBeNull();
+  expect(portraitBox!.y).toBeGreaterThan(headingBox!.y);
+  expect(bioBox!.y).toBeGreaterThan(portraitBox!.y);
+
+  const gallerySources = await dialog
+    .locator('.profile-gallery-item img')
+    .evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? ''));
+  expect(gallerySources).toHaveLength(profile!.gallery.length);
+  expect(gallerySources).not.toContain(profile!.photo!);
+});
+
 test('closes a profile popup with Escape', async ({ page }) => {
   await page.goto('./');
 

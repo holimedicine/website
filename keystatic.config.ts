@@ -48,6 +48,15 @@ export default config({
             role: fields.text({
               label: 'Rola',
             }),
+            photo: fields.image({
+              label: 'Zdjęcie profilowe',
+              description: 'Portret widoczny w popupie, między nazwiskiem a biogramem.',
+              directory: 'public/images/o-nas',
+              publicPath: '/images/o-nas/',
+            }),
+            photoAlt: fields.text({
+              label: 'Opis zdjęcia profilowego (alt)',
+            }),
             bio: fields.text({
               label: 'Biogram',
               multiline: true,

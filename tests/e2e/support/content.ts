@@ -283,6 +283,8 @@ export type ProfileGalleryItem = {
 export type AboutProfile = {
   name: string;
   role: string;
+  photo?: string;
+  photoAlt?: string;
   bio: string;
   gallery: ProfileGalleryItem[];
 };
@@ -317,6 +319,8 @@ export function readAboutPage(): AboutPage {
         return {
           name: String(record.name ?? ''),
           role: String(record.role ?? ''),
+          photo: record.photo ? String(record.photo) : undefined,
+          photoAlt: record.photoAlt ? String(record.photoAlt) : undefined,
           bio: String(record.bio ?? ''),
           gallery,
         };

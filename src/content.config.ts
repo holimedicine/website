@@ -82,6 +82,8 @@ const about = defineCollection({
         z.object({
           name: z.string(),
           role: z.string(),
+          photo: z.string().nullish(),
+          photoAlt: z.string().optional(),
           bio: z.string(),
           gallery: z
             .array(
