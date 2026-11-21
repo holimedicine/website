@@ -16,6 +16,10 @@
     {
       "name": "Konsultacja ",
       "price": "220 zł"
+    },
+    {
+      "name": "Wizyta domowa z terapią manualną",
+      "price": "400 zł + koszty dojazdu "
     }
   ],
   "phone": "+48 000 000 000",
