@@ -47,7 +47,13 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
   `src/content.config.ts` in sync.
 - **Builds are test-gated:** `npm run build` runs `scripts/check-dist.mjs` and
   the Playwright E2E suite. Content-only commits (only `src/content/**` or
-  `public/images/**`) run `npm run build:site` and skip E2E; see ADR 0013.
+  `public/images/**`) run `npm run build:site` and skip E2E; see ADR 0013. The
+  skip relies on `predicate-quantifier: 'some-with-excludes'` in both workflows
+  — the default `some` ignores the `!` exclusions.
+- **Content-driven E2E:** tests that assert on editable content must read it
+  from `src/content/**` via `tests/e2e/support/content.ts`. Never hardcode CMS
+  copy, prices, or category slugs — a Keystatic edit would then fail the next
+  code-change build (ADR 0013).
 - **E2E setup:** run `npx playwright install chromium` once before the first
   build/test. Tests run against the production build at `/`.
 - **Never commit `dist/`** (gitignored). Deployment is handled by GitHub Actions.

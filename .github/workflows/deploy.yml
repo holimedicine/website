@@ -25,9 +25,12 @@ jobs:
 
       - name: Detect changed paths
         if: github.event_name != 'workflow_dispatch'
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         id: changes
         with:
+          # Content-only pushes skip the browser suite (ADR 0013). Negated
+          # patterns require this quantifier; the default `some` ignores them.
+          predicate-quantifier: 'some-with-excludes'
           filters: |
             code:
               - '**'

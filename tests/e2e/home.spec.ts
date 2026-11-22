@@ -1,4 +1,7 @@
 import { expect, test } from '@playwright/test';
+import { readContactPage } from './support/content';
+
+const contact = readContactPage();
 
 test('renders all homepage sections and hero links', async ({ page }) => {
   await page.goto('./');
@@ -57,24 +60,31 @@ test('expands the visit description in the contact section', async ({ page }) =>
   await page.goto('./');
 
   const faq = page.locator('#kontakt .visit-faq');
-  await expect(faq.locator('summary')).toHaveText('Jak wygląda wizyta?');
+  await expect(faq.locator('summary')).toHaveText(contact.visitQuestion);
   await expect(faq.locator('p')).toBeHidden();
 
   await faq.locator('summary').click();
   await expect(faq.locator('p')).toBeVisible();
-  await expect(faq.locator('p')).toContainText('Standardowa wizyta trwa około 45 minut.');
+  await expect(faq.locator('p')).toHaveText(contact.visitAnswer);
 });
 
 test('expands the price list in the contact section', async ({ page }) => {
   await page.goto('./');
 
   const pricing = page.locator('#kontakt .pricing');
-  await expect(pricing.locator('summary')).toHaveText('Cennik');
-  await expect(pricing.locator('li').first()).toBeHidden();
+  await expect(pricing.locator('summary')).toHaveText(contact.pricingHeading);
+
+  const rows = pricing.locator('li');
+  await expect(rows).toHaveCount(contact.pricingItems.length);
+  await expect(rows.first()).toBeHidden();
 
   await pricing.locator('summary').click();
-  await expect(pricing.locator('li').first()).toBeVisible();
-  await expect(pricing.locator('li').last()).toContainText('220 zł');
+  await expect(rows.first()).toBeVisible();
+
+  for (const [index, item] of contact.pricingItems.entries()) {
+    await expect(rows.nth(index).locator('span').first()).toHaveText(item.name.trim());
+    await expect(rows.nth(index).locator('span').last()).toHaveText(item.price.trim());
+  }
 });
 
 test('scroll-spy marks the current section and clears on contact', async ({ page }) => {

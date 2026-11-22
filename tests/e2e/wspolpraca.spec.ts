@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { readCollaborationPage } from './support/content';
 
 const content = readCollaborationPage();
+const [partnersTitle, ...partnersActionParts] = content.partnersCtaLabel.split(/\s+-\s+/);
+const partnersAction = partnersActionParts.join(' - ');
 const dialogId = (index: number) => `wspolpraca-obszar-${index + 1}`;
 
 test('renders the collaboration page from the CMS singleton', async ({ page }) => {
@@ -14,8 +16,10 @@ test('renders the collaboration page from the CMS singleton', async ({ page }) =
   const partnersCta = page.locator('.page-header .partners-cta');
   await expect(partnersCta).toHaveAttribute('href', '/wspolpraca/partnerzy/');
   await expect(partnersCta).toHaveAttribute('aria-label', content.partnersCtaLabel);
-  await expect(partnersCta.locator('.partners-cta-title')).toHaveText('Z nimi współpracujemy');
-  await expect(partnersCta.locator('.partners-cta-action')).toContainText('kliknij i sprawdź!');
+  await expect(partnersCta.locator('.partners-cta-title')).toHaveText(partnersTitle.trim());
+  if (partnersAction) {
+    await expect(partnersCta.locator('.partners-cta-action')).toContainText(partnersAction);
+  }
 
   const sections = page.locator('section.section');
   await expect(sections).toHaveCount(4);

@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
+import { listCategories } from './support/content';
 
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -37,18 +38,32 @@ test('fails the build for unknown and duplicate recipe slugs', async () => {
     );
 
     const categoriesDir = path.join(tempDir, 'src/content/kategorie-przepisow');
+    const categories = listCategories();
 
-    const daniaPath = path.join(categoriesDir, 'dania.json');
-    const dania = JSON.parse(await fs.readFile(daniaPath, 'utf8')) as { recipes: string[] };
-    const duplicate = dania.recipes[0];
-    if (!duplicate) throw new Error('dania.json has no recipes');
-    dania.recipes.push(duplicate);
-    await fs.writeFile(daniaPath, `${JSON.stringify(dania, null, 2)}\n`);
+    // Categories are editable content, so pick them dynamically instead of
+    // hardcoding a slug that editors may rename in Keystatic.
+    const duplicateCategory = categories.find((category) => category.recipes.length > 0);
+    if (!duplicateCategory) {
+      throw new Error('No recipe category with recipes found');
+    }
+    const unknownSlugCategory =
+      categories.find((category) => category.slug !== duplicateCategory.slug) ?? duplicateCategory;
 
-    const naWynosPath = path.join(categoriesDir, 'na-wynos.json');
-    const naWynos = JSON.parse(await fs.readFile(naWynosPath, 'utf8')) as { recipes: string[] };
-    naWynos.recipes.push('nieistniejacy-przepis');
-    await fs.writeFile(naWynosPath, `${JSON.stringify(naWynos, null, 2)}\n`);
+    const duplicatePath = path.join(categoriesDir, `${duplicateCategory.slug}.json`);
+    const duplicateData = JSON.parse(await fs.readFile(duplicatePath, 'utf8')) as {
+      recipes: string[];
+    };
+    const duplicate = duplicateData.recipes[0];
+    if (!duplicate) throw new Error(`${duplicateCategory.slug}.json has no recipes`);
+    duplicateData.recipes.push(duplicate);
+    await fs.writeFile(duplicatePath, `${JSON.stringify(duplicateData, null, 2)}\n`);
+
+    const unknownSlugPath = path.join(categoriesDir, `${unknownSlugCategory.slug}.json`);
+    const unknownSlugData = JSON.parse(await fs.readFile(unknownSlugPath, 'utf8')) as {
+      recipes: string[];
+    };
+    unknownSlugData.recipes.push('nieistniejacy-przepis');
+    await fs.writeFile(unknownSlugPath, `${JSON.stringify(unknownSlugData, null, 2)}\n`);
 
     const result = await runBuild(tempDir);
 

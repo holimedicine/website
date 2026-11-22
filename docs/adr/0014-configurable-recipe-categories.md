@@ -4,6 +4,8 @@
 - Date: 2026-11-10
 - Amended: 2026-11-14 — recipe ordering moved into ordered recipe lists on
   category entries; recipes no longer store `category` or `order`.
+- Amended: 2026-11-22 — concrete category slugs, titles, order, and membership
+  are editorial content and may change in Keystatic without code changes.
 
 ## Context
 
@@ -65,3 +67,11 @@ Ordering and membership moved from recipes into the category entries:
 
 This replaces the `przepisy.category` relationship and the recipe `order` field
 described above.
+
+## Amendment (2026-11-22)
+
+The `na-wynos`/`dania` entries above describe the initial content, not a fixed
+contract. Category slugs, titles, order, and membership are edited in Keystatic,
+so code, tests, and scripts must discover categories from
+`src/content/kategorie-przepisow/*.json` instead of assuming specific slugs (see
+ADR 0013).

@@ -3,6 +3,7 @@
 - Status: Accepted
 - Date: 2026-10-31
 - Amended: 2026-11-19 — the site moved to the `holimedicine.eu` custom domain, so tests run at `http://127.0.0.1:4323/` instead of the `/website/` subpath.
+- Amended: 2026-11-22 — the path filter needs `predicate-quantifier: 'some-with-excludes'`; E2E expectations for CMS content must read `src/content/**`.
 
 ## Context
 
@@ -52,3 +53,19 @@ test-gated:
   `.github/workflows/deploy.yml`.
 - `npm run build` is slower and requires Playwright browsers; install Chromium
   once with `npx playwright install chromium`.
+
+## Amendment (2026-11-22)
+
+Two gaps surfaced when a Keystatic edit added a price row and renamed a recipe
+category:
+
+- The content-only path filter did not work as intended. `dorny/paths-filter`
+  defaults to `predicate-quantifier: 'some'`, where negated patterns such as
+  `!src/content/**` are ignored, so content-only pushes still ran the browser
+  suite and could be blocked by it. Both workflows now use
+  `predicate-quantifier: 'some-with-excludes'` (requires `dorny/paths-filter@v4`).
+- E2E assertions about editable content must read it from `src/content/**`
+  through `tests/e2e/support/content.ts` instead of hardcoding copy, prices, or
+  category slugs. Hardcode only labels owned by code and markup, never CMS
+  fields. Otherwise a valid content edit (for example a new price row or a
+  renamed category file) fails the next code-change build.

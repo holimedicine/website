@@ -13,8 +13,6 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **recipe modal** | Native `<dialog>` on `/przepisy/` showing a recipe's cover image, tag, title, summary, and full MDX body (or a placeholder when the body is empty). See `src/pages/przepisy.astro`. |
 | **recipe deep link** | Hash URL `#przepis-<slug>` that opens the matching recipe modal and activates its category tab. |
 | **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name, tab order, and an ordered list of recipe slugs. See ADR 0014. |
-| **na-wynos** | Default recipe category entry (`src/content/kategorie-przepisow/na-wynos.json`); owns its ordered recipe list and is shown as the first "Na wynos" tab. |
-| **dania** | Default recipe category entry (`src/content/kategorie-przepisow/dania.json`); owns its ordered recipe list and is shown as the "Dania" tab. |
 | **Polecane produkty** | Product and supplement recommendations page (`src/pages/produkty.astro`) backed by the `produkty` and `sekcjeProduktow` collections; card sections open the product modal. Reachable from the **Baza wiedzy** hub and its nav dropdown. |
 | **produkty** | Collection of product recommendation entries (`src/content/produkty/*.mdx`), rendered as cards on `/produkty/`; each entry has examples, a summary, optional image/link/details, and an optional MDX body. |
 | **sekcjeProduktow** | Keystatic collection (`src/content/sekcje-produktow/*.json`) that defines the `/produkty/` sections: heading, order, display (`cards` or `table`), an ordered product list for cards, or columns/rows for tables. See ADR 0017. |

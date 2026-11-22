@@ -273,6 +273,44 @@ export function readCollaborationPage(): CollaborationPage {
   };
 }
 
+export type PricingItem = {
+  name: string;
+  price: string;
+};
+
+export type ContactPage = {
+  heading: string;
+  lead: string;
+  visitQuestion: string;
+  visitAnswer: string;
+  pricingHeading: string;
+  pricingItems: PricingItem[];
+};
+
+export function readContactPage(): ContactPage {
+  const file = path.join(CONTENT_ROOT, 'contact', 'index.json');
+  const data = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
+
+  const pricingItems = Array.isArray(data.pricingItems)
+    ? data.pricingItems.map((item) => {
+        const record = (item ?? {}) as { name?: unknown; price?: unknown };
+        return {
+          name: String(record.name ?? ''),
+          price: String(record.price ?? ''),
+        };
+      })
+    : [];
+
+  return {
+    heading: String(data.heading ?? ''),
+    lead: String(data.lead ?? ''),
+    visitQuestion: String(data.visitQuestion ?? ''),
+    visitAnswer: String(data.visitAnswer ?? ''),
+    pricingHeading: String(data.pricingHeading ?? ''),
+    pricingItems,
+  };
+}
+
 export type ProfileGalleryItem = {
   image: string;
   alt?: string;
