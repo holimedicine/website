@@ -10,6 +10,9 @@
 - Amended: 2026-11-19 — current-page matching also covers nested routes (so the
   collaborator directory keeps "Współpraca" active), and the collaboration item
   gains a hover/focus dropdown.
+- Amended: 2026-11-22 — the **Przepisy** item gains a hover/focus dropdown
+  built from the `kategoriePrzepisow` collection; its children are in-page
+  category tabs (`/przepisy/#<category-slug>`). See ADR 0014.
 
 ## Context
 

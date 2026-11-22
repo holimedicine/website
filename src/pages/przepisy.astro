@@ -179,12 +179,35 @@ const recipeDialogs = await Promise.all(
       panels.forEach((panel) => panel.classList.toggle('active', panel.id === target));
     };
 
+    // Category tabs are addressable by hash so nav dropdown links can deep link
+    // to a category (for example /przepisy/#obiad).
+    const categoryFromHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return null;
+
+      const panel = document.getElementById(id);
+      return panel?.classList.contains('subcat-panel') ? id : null;
+    };
+
+    const syncTabFromHash = () => {
+      const target = categoryFromHash();
+      if (target) activateTab(target);
+    };
+
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.target;
-        if (target) activateTab(target);
+        if (!target) return;
+
+        activateTab(target);
+        if (window.location.hash !== `#${target}`) {
+          window.history.replaceState(null, '', `#${target}`);
+        }
       });
     });
+
+    window.addEventListener('hashchange', syncTabFromHash);
+    syncTabFromHash();
 
     initModalGroup({
       dialogSelector: 'dialog.recipe-modal',

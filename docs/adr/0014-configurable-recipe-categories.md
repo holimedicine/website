@@ -75,3 +75,20 @@ contract. Category slugs, titles, order, and membership are edited in Keystatic,
 so code, tests, and scripts must discover categories from
 `src/content/kategorie-przepisow/*.json` instead of assuming specific slugs (see
 ADR 0013).
+
+## Amendment (2026-11-22) — category deep links
+
+The **Przepisy** nav dropdown lists this collection's categories, so new or
+renamed categories appear without code changes. Each child links to
+`/przepisy/#<category-slug>`:
+
+- On load, a hash matching a category panel activates that tab; otherwise the
+  first category by `order` is shown.
+- Clicking a tab replaces the hash with the active category slug via
+  `history.replaceState`, keeping the URL shareable without adding history
+  entries.
+- Recipe modal hashes (`#przepis-<slug>`) keep their existing behaviour and
+  still activate the recipe's category tab (ADR 0015).
+- Since category children are in-page anchors, they do not set
+  `aria-current="page"`; the parent **Przepisy** link carries the page-level
+  current marker.

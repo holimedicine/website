@@ -12,6 +12,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`; clicking a card opens the recipe modal. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
 | **recipe modal** | Native `<dialog>` on `/przepisy/` showing a recipe's cover image, tag, title, summary, and full MDX body (or a placeholder when the body is empty). See `src/pages/przepisy.astro`. |
 | **recipe deep link** | Hash URL `#przepis-<slug>` that opens the matching recipe modal and activates its category tab. |
+| **recipe category deep link** | Hash URL `/przepisy/#<category-slug>` that activates the matching category tab; used by the **nav dropdown** under "Przepisy". See ADR 0014. |
 | **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name, tab order, and an ordered list of recipe slugs. See ADR 0014. |
 | **Polecane produkty** | Product and supplement recommendations page (`src/pages/produkty.astro`) backed by the `produkty` and `sekcjeProduktow` collections; card sections open the product modal. Reachable from the **Baza wiedzy** hub and its nav dropdown. |
 | **produkty** | Collection of product recommendation entries (`src/content/produkty/*.mdx`), rendered as cards on `/produkty/`; each entry has examples, a summary, optional image/link/details, and an optional MDX body. |
@@ -57,7 +58,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **PostCSS** | CSS pipeline that runs the `@tailwindcss/postcss` plugin (`postcss.config.mjs`). |
 | **base path** | URL prefix the site is served from; currently `/` (custom domain `holimedicine.eu`). See ADR 0021. |
 | **withBase()** | Utility (`src/utils/url.ts`) that prepends the base path to root-relative URLs. MUST be used for all links/assets. |
-| **nav dropdown** | Translucent link panel under a top-level nav item, opened on hover or keyboard focus with `:hover`/`:focus-within` (no JS). It is mirrored as an indented link in the mobile menu. See `src/components/Nav.astro`. |
+| **nav dropdown** | Translucent link panel under a top-level nav item, opened on hover or keyboard focus with `:hover`/`:focus-within` (no JS). It is mirrored as an indented link in the mobile menu. Children normally point at pages; under "Przepisy" they point at **recipe category deep links**. See `src/components/Nav.astro`. |
 | **KEYSTATIC_DISABLED** | Env var set by `npm run build`/`preview` to exclude CMS routes from the static build. |
 | **static build** | `npm run build` output in `dist/`, deployed to GitHub Pages; no server runtime. |
 | **check-dist** | Post-build validation (`scripts/check-dist.mjs`) that fails on base-path leaks or missing local links/assets in `dist/`. |

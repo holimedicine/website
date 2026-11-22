@@ -1,7 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
+import { listCategories } from './support/content';
 
 const menuItem = (page: Page, label: string) =>
   page.locator('.nav-item-has-menu').filter({ hasText: label });
+
+const recipeCategories = listCategories();
 
 const modulePages = [
   { path: 'baza-wiedzy/', nav: 'baza-wiedzy' },
@@ -131,6 +134,30 @@ test('reveals both knowledge areas from the Baza wiedzy menu', async ({ page }) 
   await expect(menu).toBeVisible();
   await expect(links.nth(0)).toBeVisible();
   await expect(links.nth(1)).toBeVisible();
+});
+
+test('reveals recipe categories from the Przepisy menu', async ({ page }) => {
+  test.skip(recipeCategories.length === 0, 'No recipe categories in content');
+
+  await page.goto('./');
+
+  const item = menuItem(page, 'Przepisy');
+  const menu = item.locator('.nav-menu');
+  const links = menu.locator('.nav-menu-link');
+
+  await expect(menu).toBeHidden();
+  await expect(links).toHaveCount(recipeCategories.length);
+
+  for (const [index, category] of recipeCategories.entries()) {
+    await expect(links.nth(index)).toContainText(category.title);
+    await expect(links.nth(index)).toHaveAttribute('href', `/przepisy/#${category.slug}`);
+  }
+
+  await item.locator('.nav-trigger').hover();
+  await expect(menu).toBeVisible();
+  for (const category of recipeCategories) {
+    await expect(menu.getByRole('link', { name: category.title })).toBeVisible();
+  }
 });
 
 test('keeps collaboration current inside the collaborator directory', async ({ page }) => {

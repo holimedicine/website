@@ -43,6 +43,29 @@ test('switches between category tabs', async ({ page }) => {
   }
 });
 
+test('updates the hash when switching category tabs', async ({ page }) => {
+  test.skip(categories.length < 2, 'Needs at least two recipe categories');
+
+  const category = categories[categories.length - 1];
+
+  await page.goto('przepisy/');
+  await page.getByRole('button', { name: category.title, exact: true }).click();
+
+  await expect(page).toHaveURL(new RegExp(`#${category.slug}$`));
+});
+
+test('activates a category from a hash deep link', async ({ page }) => {
+  test.skip(categories.length < 2, 'Needs at least two recipe categories');
+
+  const category = categories[categories.length - 1];
+
+  await page.goto(`przepisy/#${category.slug}`);
+
+  await expect(page.locator('.subcat-tab.active')).toHaveText(category.title);
+  await expect(page.locator(`#${category.slug}`)).toHaveClass(/active/);
+  await expect(page.locator(`#${categories[0].slug}`)).not.toHaveClass(/active/);
+});
+
 test('loads cover images from the production base path', async ({ page }) => {
   await page.goto('przepisy/');
 
