@@ -8,6 +8,7 @@ export type ContentEntry = {
   file: string;
   slug: string;
   title: string;
+  author?: string;
   order: number;
   coverImage?: string;
   hasContent: boolean;
@@ -70,6 +71,7 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
         file,
         slug: file.replace(/\.(md|mdx)$/, ''),
         title: String(data.title ?? ''),
+        author: data.author ? String(data.author) : undefined,
         order: Number(data.order ?? 0),
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
         hasContent: hasBody(source),
@@ -106,6 +108,7 @@ export type ProductEntry = {
   file: string;
   slug: string;
   title: string;
+  author?: string;
   examples?: string;
   summary?: string;
   hasContent: boolean;
@@ -123,6 +126,7 @@ export function listProducts(): ProductEntry[] {
         file,
         slug: file.replace(/\.(md|mdx)$/, ''),
         title: String(data.title ?? ''),
+        author: data.author ? String(data.author) : undefined,
         examples: data.examples ? String(data.examples) : undefined,
         summary: data.summary ? String(data.summary) : undefined,
         hasContent: hasBody(source),

@@ -106,6 +106,20 @@ test('card opens the full product details and the close button closes them', asy
   await expect(page).not.toHaveURL(/#produkt-/);
 });
 
+test('shows the author under the title in every product modal', async ({ page }) => {
+  await page.goto('produkty/');
+
+  const slugs = Array.from(new Set(cardSections.flatMap((section) => section.items)));
+
+  for (const slug of slugs) {
+    const product = productFor(slug);
+    expect(product.author, `Missing author for "${product.title}"`).toBeTruthy();
+    await expect(page.locator(`#${dialogId(slug)} .prod-modal-author`)).toHaveText(
+      `Autor: ${product.author}`
+    );
+  }
+});
+
 test('Escape closes the product modal', async ({ page }) => {
   await page.goto('produkty/');
 

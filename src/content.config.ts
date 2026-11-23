@@ -5,6 +5,7 @@ const edukacja = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/edukacja' }),
   schema: z.object({
     title: z.string(),
+    author: z.string().default('Donat Cupiał'),
     teaser: z.string().optional(),
     order: z.number().default(0),
   }),
@@ -34,6 +35,7 @@ const produkty = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/produkty' }),
   schema: z.object({
     title: z.string(),
+    author: z.string().default('Donat Cupiał'),
     examples: z.string().optional(),
     summary: z.string().optional(),
     image: z.string().nullish(),

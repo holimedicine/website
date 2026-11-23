@@ -451,10 +451,15 @@ export default config({
       path: 'src/content/edukacja/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'order'],
+      columns: ['title', 'author', 'order'],
       schema: {
         title: fields.slug({
           name: { label: 'Tytuł', validation: { isRequired: true } },
+        }),
+        author: fields.text({
+          label: 'Autor',
+          description: 'Podpis widoczny pod tytułem w pełnym artykule.',
+          defaultValue: 'Donat Cupiał',
         }),
         teaser: fields.text({
           label: 'Zajawka',
@@ -549,10 +554,15 @@ export default config({
       path: 'src/content/produkty/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'examples'],
+      columns: ['title', 'author', 'examples'],
       schema: {
         title: fields.slug({
           name: { label: 'Nazwa', validation: { isRequired: true } },
+        }),
+        author: fields.text({
+          label: 'Autor',
+          description: 'Podpis widoczny pod tytułem w szczegółach produktu.',
+          defaultValue: 'Donat Cupiał',
         }),
         examples: fields.text({
           label: 'Przykładowe preparaty',

@@ -65,6 +65,7 @@ const articles = await Promise.all(
       <div class="edu-modal-scroll">
         <div class="edu-modal-body">
           <h2 id={`${dialogId}-title`}>{entry.data.title}</h2>
+          <p class="edu-modal-author">Autor: {entry.data.author}</p>
           {entry.data.teaser && <p class="edu-modal-summary">{entry.data.teaser}</p>}
 
           {hasContent ? (

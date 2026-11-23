@@ -178,6 +178,7 @@ const productDialogs = await Promise.all(
 
         <div class="prod-modal-body">
           <h2 id={`${dialogId}-title`}>{entry.data.title}</h2>
+          <p class="prod-modal-author">Autor: {entry.data.author}</p>
           {entry.data.examples && <p class="prod-modal-eg">{entry.data.examples}</p>}
           {entry.data.summary && <p class="prod-modal-summary">{entry.data.summary}</p>}
 

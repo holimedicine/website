@@ -6,8 +6,8 @@ Key domain terms and technical concepts for `holimedicine-website`.
 
 | Term | Definition |
 | :--- | :--- |
-| **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as cards on `/edukacja/` (reachable from the **Baza wiedzy** hub and its nav dropdown); clicking a card opens the education modal. Order comes from the `order` frontmatter field. |
-| **education modal** | Native `<dialog>` on `/edukacja/` showing an article's title, teaser, and full MDX body (or a placeholder when the body is empty). See `src/pages/edukacja.astro`. |
+| **edukacja** | Collection of educational articles (`src/content/edukacja/`), rendered as cards on `/edukacja/` (reachable from the **Baza wiedzy** hub and its nav dropdown); clicking a card opens the education modal. Order comes from the `order` frontmatter field; the author comes from the `author` field (default `Donat Cupiał`). |
+| **education modal** | Native `<dialog>` on `/edukacja/` showing an article's title, author, teaser, and full MDX body (or a placeholder when the body is empty). See `src/pages/edukacja.astro`. |
 | **education deep link** | Hash URL `#edukacja-<slug>` that opens the matching education modal; the slug is derived from the content entry ID. |
 | **przepisy** | Collection of recipes (`src/content/przepisy/`), rendered as cards on `/przepisy/`; clicking a card opens the recipe modal. Membership and order come from the `recipes` lists in `Kategorie przepisów`; a recipe may appear in multiple categories or none. |
 | **recipe modal** | Native `<dialog>` on `/przepisy/` showing a recipe's cover image, tag, title, summary, and full MDX body (or a placeholder when the body is empty). See `src/pages/przepisy.astro`. |
@@ -15,9 +15,9 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **recipe category deep link** | Hash URL `/przepisy/#<category-slug>` that activates the matching category tab; used by the **nav dropdown** under "Przepisy". See ADR 0014. |
 | **Kategorie przepisów** | Keystatic collection (`src/content/kategorie-przepisow/*.json`) that defines the recipe tabs; each entry has a name, tab order, and an ordered list of recipe slugs. See ADR 0014. |
 | **Polecane produkty** | Product and supplement recommendations page (`src/pages/produkty.astro`) backed by the `produkty` and `sekcjeProduktow` collections; card sections open the product modal. Reachable from the **Baza wiedzy** hub and its nav dropdown. |
-| **produkty** | Collection of product recommendation entries (`src/content/produkty/*.mdx`), rendered as cards on `/produkty/`; each entry has examples, a summary, optional image/link/details, and an optional MDX body. |
+| **produkty** | Collection of product recommendation entries (`src/content/produkty/*.mdx`), rendered as cards on `/produkty/`; each entry has examples, a summary, optional image/link/details, an optional MDX body, and an `author` field (default `Donat Cupiał`). |
 | **sekcjeProduktow** | Keystatic collection (`src/content/sekcje-produktow/*.json`) that defines the `/produkty/` sections: heading, order, display (`cards` or `table`), an ordered product list for cards, or columns/rows for tables. See ADR 0017. |
-| **product modal** | Native `<dialog>` on `/produkty/` showing a product's image, examples, summary, extra details, full MDX body, and optional store link. See `src/pages/produkty.astro`. |
+| **product modal** | Native `<dialog>` on `/produkty/` showing a product's image, title, author, examples, summary, extra details, full MDX body, and optional store link. See `src/pages/produkty.astro`. |
 | **product deep link** | Hash URL `#produkt-<slug>` that opens the matching product modal; the slug is derived from the content entry ID. |
 | **collaboration modal** | Native `<dialog>` on `/wspolpraca/` showing a cooperation area's full description (`body`); the card shows its short `summary`. The dialog ID is derived from the area's position (`#wspolpraca-obszar-<n>`). See `src/pages/wspolpraca.astro`. |
 | **Współpraca** | Collaboration page (`/wspolpraca/`, `src/pages/wspolpraca.astro`) backed by the `wspolpraca` singleton: cooperation areas as clickable tiles with modals, principles, steps, an editable contact box, and a header CTA to the collaborator directory. |

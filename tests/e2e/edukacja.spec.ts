@@ -44,6 +44,17 @@ test('card opens the full article and the close button closes it', async ({ page
   await expect(page).not.toHaveURL(/#edukacja-/);
 });
 
+test('shows the author under the title in every article modal', async ({ page }) => {
+  await page.goto('edukacja/');
+
+  for (const entry of entries) {
+    expect(entry.author, `Missing author for "${entry.title}"`).toBeTruthy();
+    await expect(page.locator(`#${dialogId(entry.slug)} .edu-modal-author`)).toHaveText(
+      `Autor: ${entry.author}`
+    );
+  }
+});
+
 test('Escape closes the article modal', async ({ page }) => {
   await page.goto('edukacja/');
 
