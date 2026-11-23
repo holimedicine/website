@@ -6,6 +6,7 @@ const pages = [
   'edukacja/',
   'przepisy/',
   'produkty/',
+  'szukaj/',
   'wspolpraca/',
   'wspolpraca/partnerzy/',
 ];

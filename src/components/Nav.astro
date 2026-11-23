@@ -105,6 +105,7 @@ const links: NavLink[] = (
 }));
 
 const ctaLabel = 'Umów wizytę';
+const isSearchCurrent = currentPath === '/szukaj';
 
 interface Props {
   /** Fix the nav above the hero instead of keeping it in the document flow. */
@@ -219,6 +220,26 @@ const { overlay = false } = Astro.props;
       )}
     </div>
 
+    <a
+      href={withBase('/szukaj/')}
+      class="nav-search"
+      aria-current={isSearchCurrent ? 'page' : undefined}
+    >
+      <svg
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <circle cx="8.5" cy="8.5" r="5.5"></circle>
+        <path d="m12.6 12.6 4.1 4.1"></path>
+      </svg>
+      <span>Szukaj</span>
+    </a>
+
     <a href={withBase('/#kontakt')} class="nav-cta">
       {ctaLabel}
       <svg
@@ -239,6 +260,26 @@ const { overlay = false } = Astro.props;
   </div>
 
   <div class="nav-mobile" id="navMobile">
+    <a
+      href={withBase('/szukaj/')}
+      class="nav-mobile-search"
+      aria-current={isSearchCurrent ? 'page' : undefined}
+    >
+      <svg
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <circle cx="8.5" cy="8.5" r="5.5"></circle>
+        <path d="m12.6 12.6 4.1 4.1"></path>
+      </svg>
+      <span>Szukaj</span>
+    </a>
+
     {links.map((link) => (
       <>
         <a

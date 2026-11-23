@@ -12,6 +12,8 @@ export type ContentEntry = {
   order: number;
   coverImage?: string;
   hasContent: boolean;
+  /** Raw body without frontmatter, used by content-driven search tests. */
+  body?: string;
 };
 
 export type CategoryEntry = {
@@ -23,9 +25,13 @@ export type CategoryEntry = {
 
 type Frontmatter = Record<string, string | number | undefined>;
 
-function hasBody(source: string): boolean {
+function bodyOf(source: string): string {
   const match = source.match(/^---\r?\n[\s\S]*?\r?\n---/);
-  return (match ? source.slice(match[0].length) : source).trim().length > 0;
+  return (match ? source.slice(match[0].length) : source).trim();
+}
+
+function hasBody(source: string): boolean {
+  return bodyOf(source).length > 0;
 }
 
 function parseFrontmatter(source: string): Frontmatter {
@@ -75,6 +81,7 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
         order: Number(data.order ?? 0),
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
         hasContent: hasBody(source),
+        body: bodyOf(source),
       };
     })
     .sort((a, b) => a.order - b.order);
@@ -112,6 +119,8 @@ export type ProductEntry = {
   examples?: string;
   summary?: string;
   hasContent: boolean;
+  /** Raw body without frontmatter, used by content-driven search tests. */
+  body?: string;
 };
 
 export function listProducts(): ProductEntry[] {
@@ -130,6 +139,7 @@ export function listProducts(): ProductEntry[] {
         examples: data.examples ? String(data.examples) : undefined,
         summary: data.summary ? String(data.summary) : undefined,
         hasContent: hasBody(source),
+        body: bodyOf(source),
       };
     });
 }

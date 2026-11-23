@@ -32,6 +32,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **profile gallery** | Per-doctor `gallery` array in the `about` singleton (`image`, `alt`, `caption`, optional `document`), rendered as a horizontally scrollable strip at the bottom of the profile popup. Images live in `public/images/o-nas/`, documents in `public/dokumenty/`. |
 | **Medycyna holistyczna** | Homepage section (`#podejscie`) backed by the `podejscie` singleton; the nav label for it (formerly **Podejście**). The route keeps the `#podejscie` anchor. |
 | **Baza wiedzy** | Hub page at `/baza-wiedzy/` (`src/pages/baza-wiedzy.astro`) with two large CTA tiles: **Materiały, które poszerzają świadomość** → `/edukacja/` and **Polecane produkty** → `/produkty/`. It is the nav label for the whole knowledge area; both content pages stay at their original routes. See ADR 0023. |
+| **Szukaj** | Search page at `/szukaj/` (`src/pages/szukaj.astro`) covering **przepisy**, **edukacja**, and **produkty**. Results appear in a panel under the search field and deep-link into the matching modal. The query is mirrored to `?q=`. Reachable from the nav link with the magnifier icon and from the mobile menu. See ADR 0024. |
 | **knowledge tile** | Large gradient link tile on `/baza-wiedzy/` (`.knowledge-tile` inside `.knowledge-grid`), built from the same styles as the **partners CTA**. The whole tile is one `<a>`; it shows a title, description, and an action pill with an arrow. |
 | **Zakres opieki** | Homepage section (`#zakres`) backed by the `zakres` singleton. |
 | **Kontakt** | Homepage section (`#kontakt`) backed by the `contact` singleton; the nav CTA links here. Contains the visit FAQ accordion and the editable price list. |
@@ -46,6 +47,9 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **content collection** | Astro collection defined in `src/content.config.ts` and loaded from `src/content/`. |
 | **rich-text** | Shared typographic styles (`.rich-text` in `src/styles/global.css`) used by edukacja bodies and recipe/product modal content. |
 | **modal helper** | Shared client-side dialog controller (`src/scripts/modals.ts`) for opening, closing, and hash-linking edukacja, recipe, product, collaboration, and profile modals. |
+| **search index** | Static JSON index built from the `edukacja`, `przepisy`, and `produkty` collections by `src/utils/search-index.ts` and served at `/szukaj/index.json`; fetched only on `/szukaj/`. See ADR 0024. |
+| **search matching** | Pure helpers in `src/utils/search-text.ts` (diacritic normalization, token matching, stemming, ranking, snippets) shared by the build-time index and the browser UI. |
+| **search page script** | Browser controller for `/szukaj/` (`src/scripts/search-page.ts`): fetches the index, renders grouped results, highlights snippets, and syncs `?q=`. |
 | **singleton** | Single fixed content entry backing a homepage section or a standalone page (e.g. Współpraca); a Keystatic singleton read via `getEntry()` from a one-file Astro collection. |
 | **Keystatic** | Git-based CMS used to edit content; the admin runs only in dev at `/keystatic/`. |
 | **GitHub storage** | Keystatic storage mode that reads and writes content by committing to `holimedicine/website`. |

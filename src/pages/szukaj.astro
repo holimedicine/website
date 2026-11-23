@@ -1,0 +1,85 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { withBase } from '../utils/url';
+---
+
+<SiteLayout
+  title="Szukaj — Natalia i Donat Cupiał"
+  description="Przeszukaj przepisy oraz bazę wiedzy: materiały edukacyjne i polecane produkty."
+>
+  <PageHeader
+    eyebrow="Szukaj"
+    title="Znajdź to, czego szukasz"
+    lead="Przeszukaj przepisy oraz bazę wiedzy — materiały edukacyjne i polecane produkty."
+  />
+
+  <section class="section search-section">
+    <div class="site-container">
+      <div class="search-wrap">
+        <form
+          class="search-box"
+          role="search"
+          data-search-root
+          data-index-url={withBase('/szukaj/index.json')}
+        >
+          <label class="search-label" for="search-input">Szukaj w przepisach i bazie wiedzy</label>
+
+          <div class="search-field">
+            <svg
+              class="search-icon"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <circle cx="8.5" cy="8.5" r="5.5"></circle>
+              <path d="m12.6 12.6 4.1 4.1"></path>
+            </svg>
+
+            <input
+              id="search-input"
+              class="search-input"
+              type="search"
+              name="q"
+              placeholder="np. witamina, jelita, sen"
+              autocomplete="off"
+              spellcheck="false"
+              data-search-input
+            />
+
+            <button
+              type="button"
+              class="search-clear"
+              aria-label="Wyczyść wyszukiwanie"
+              data-search-clear
+              hidden
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <p class="search-hint" data-search-hint>
+            Wpisz co najmniej 2 znaki. Wyszukiwanie obejmuje przepisy, materiały edukacyjne i
+            polecane produkty.
+          </p>
+
+          <p class="search-status" data-search-status aria-live="polite"></p>
+
+          <div class="search-panel" data-search-panel hidden></div>
+        </form>
+
+        <noscript>
+          <p class="search-empty">Wyszukiwarka wymaga włączonego JavaScriptu.</p>
+        </noscript>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import '../scripts/search-page';
+  </script>
+</SiteLayout>

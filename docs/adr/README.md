@@ -35,6 +35,7 @@ rather than duplicating the rules.
 | [0021](./0021-custom-domain-holimedicine-eu.md)          | Custom domain `holimedicine.eu` at the site root        | Accepted | 2026-11-19                                  |
 | [0022](./0022-profile-popups-and-galleries.md)           | Profile cards with popups and per-doctor galleries     | Accepted | 2026-11-20 (amended 2026-11-21)             |
 | [0023](./0023-baza-wiedzy-hub-with-cta-tiles.md)         | Baza wiedzy hub with two CTA tiles                     | Accepted | 2026-11-21                                  |
+| [0024](./0024-static-site-search.md)                     | Static site search over recipes and the knowledge base | Accepted | 2026-11-23                                  |
 
 ## When to add an ADR
 
