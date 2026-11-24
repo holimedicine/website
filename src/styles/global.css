@@ -168,6 +168,9 @@
       transition: none;
     }
   }
+  .nav-home-icon {
+    @apply h-3.5 w-3.5 shrink-0;
+  }
   .nav-cta {
     @apply inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-accent bg-accent px-4 py-2 text-[0.8rem] font-semibold text-white transition-colors whitespace-nowrap;
   }
@@ -196,8 +199,9 @@
     @apply hidden;
   }
 
-  /* The full row (brand lockup + links + search + CTA) needs ~1110px, so
-     switch to a hamburger at 1180px and keep search/CTA in the mobile menu. */
+  /* The full row (brand lockup + links + search + CTA) needs ~1035px with the
+     Start link, so keep the hamburger switch at 1180px for headroom and keep
+     search/CTA in the mobile menu. */
   @media (max-width: 1180px) {
     .nav-links {
       @apply hidden;
@@ -225,6 +229,9 @@
       @apply text-text-primary;
       border-left-color: var(--color-accent-strong);
     }
+    .nav-mobile a.nav-home {
+      @apply inline-flex items-center gap-2;
+    }
     .nav-mobile a.nav-mobile-search {
       @apply inline-flex items-center gap-2;
     }
@@ -235,7 +242,7 @@
       @apply border-b-0 pt-1 pb-2 pl-6 text-[0.78rem] text-accent-strong;
     }
     .nav-mobile a.nav-mobile-cta {
-      @apply mt-3 inline-flex items-center justify-center gap-1.5 rounded-full border border-accent bg-accent px-4 py-2.5 font-semibold text-white;
+      @apply mb-3 inline-flex items-center justify-center gap-1.5 rounded-full border border-accent bg-accent px-4 py-2.5 font-semibold text-white;
     }
     .nav-mobile a.nav-mobile-cta:hover {
       border-color: #2f6a5f;

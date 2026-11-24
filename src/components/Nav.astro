@@ -28,6 +28,8 @@ type NavLink = {
   label: string;
   section?: string;
   page?: string;
+  /** Marks the site root as this link's current page. */
+  home?: boolean;
   isCurrent: boolean;
   children: NavChildLink[];
 };
@@ -37,6 +39,8 @@ type NavLinkSource = {
   label: string;
   section?: string;
   page?: string;
+  /** Marks the site root as this link's current page. */
+  home?: boolean;
   /** Extra pages that should mark this link as current, e.g. a hub and its children. */
   pages?: string[];
   children?: NavChild[];
@@ -45,11 +49,13 @@ type NavLinkSource = {
 const isCurrentPage = (page: string) =>
   currentPath === `/${page}` || currentPath.startsWith(`/${page}/`);
 
-const isCurrentLink = (link: { page?: string; pages?: string[] }) =>
+const isCurrentLink = (link: { home?: boolean; page?: string; pages?: string[] }) =>
+  (link.home === true && currentPath === '/') ||
   (link.pages ?? (link.page ? [link.page] : [])).some(isCurrentPage);
 
 const links: NavLink[] = (
   [
+    { href: '/', label: 'Start', home: true },
     { href: '/#o-nas', label: 'O nas', section: 'o-nas' },
     { href: '/#podejscie', label: 'Medycyna holistyczna', section: 'podejscie' },
     { href: '/#zakres', label: 'Zakres opieki', section: 'zakres' },
@@ -212,10 +218,30 @@ const { overlay = false } = Astro.props;
         ) : (
           <a
             href={link.href}
+            class:list={[{ 'nav-home': link.home }]}
             data-nav-section={link.section}
             data-nav-page={link.page}
             aria-current={link.isCurrent ? 'page' : undefined}
-          >{link.label}</a>
+          >
+            {link.home && (
+              <svg
+                class="nav-home-icon"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M3.5 8.5 10 3l6.5 5.5"></path>
+                <path d="M5 8v8h10V8"></path>
+                <path d="M8.5 16v-4.5h3V16"></path>
+              </svg>
+            )}
+            {link.label}
+          </a>
         )
       )}
     </div>
@@ -260,6 +286,22 @@ const { overlay = false } = Astro.props;
   </div>
 
   <div class="nav-mobile" id="navMobile">
+    <a href={withBase('/#kontakt')} class="nav-mobile-cta">
+      {ctaLabel}
+      <svg
+        class="cta-plus"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M8 3v10M3 8h10"></path>
+      </svg>
+    </a>
+
     <a
       href={withBase('/szukaj/')}
       class="nav-mobile-search"
@@ -284,10 +326,30 @@ const { overlay = false } = Astro.props;
       <>
         <a
           href={link.href}
+          class:list={[{ 'nav-home': link.home }]}
           data-nav-section={link.section}
           data-nav-page={link.page}
           aria-current={link.isCurrent ? 'page' : undefined}
-        >{link.label}</a>
+        >
+          {link.home && (
+            <svg
+              class="nav-home-icon"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M3.5 8.5 10 3l6.5 5.5"></path>
+              <path d="M5 8v8h10V8"></path>
+              <path d="M8.5 16v-4.5h3V16"></path>
+            </svg>
+          )}
+          {link.label}
+        </a>
         {link.children.map((child) => (
           <a
             href={child.href}
@@ -298,20 +360,5 @@ const { overlay = false } = Astro.props;
         ))}
       </>
     ))}
-    <a href={withBase('/#kontakt')} class="nav-mobile-cta">
-      {ctaLabel}
-      <svg
-        class="cta-plus"
-        viewBox="0 0 16 16"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M8 3v10M3 8h10"></path>
-      </svg>
-    </a>
   </div>
 </nav>

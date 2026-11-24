@@ -25,6 +25,7 @@ Key domain terms and technical concepts for `holimedicine-website`.
 | **collaborator directory** | Page at `/wspolpraca/partnerzy/` (`src/pages/wspolpraca/partnerzy.astro`) listing the people the practice works with, grouped into profession accordions. It is reachable from the **nav dropdown** under "Współpraca" and from the **partners CTA** on `/wspolpraca/`. |
 | **partners CTA** | Green card-link in the `/wspolpraca/` page header (`partnersCtaLabel` in the `wspolpraca` singleton) that opens the collaborator directory. |
 | **collaborator card** | Card inside a profession accordion showing a person's photo or initials avatar, name, role, workplace, bio, and optional profile link. |
+| **Start** | Nav link with a house icon (`/`) that leads back to the homepage. It is the first link in both the desktop nav and the mobile menu and is marked current on the homepage. See `src/components/Nav.astro`. |
 | **O nas** | Homepage section (`#o-nas`) backed by the `about` singleton. Each doctor is a **profile card** that opens a **profile popup**. |
 | **profile card** | Doctor tile in the homepage **O nas** section: role, name, bio clamped to four lines, and a "Czytaj więcej →" label. The whole tile is a button overlay that opens the profile popup. See `src/pages/index.astro`. |
 | **profile popup** | Native `<dialog>` opened from a profile card; shows the role, name, optional portrait, full bio, and gallery. Deep link: `#profil-<name-slug>` (e.g. `#profil-donat-cupial`). See ADR 0022. |

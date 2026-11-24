@@ -31,9 +31,25 @@ for (const { path, nav } of modulePages) {
   });
 }
 
-test('homepage has no page-level current marker', async ({ page }) => {
+test('marks Start as the current page on the homepage', async ({ page }) => {
   await page.goto('./');
-  await expect(page.locator('[data-nav-page][aria-current="page"]')).toHaveCount(0);
+
+  const startLinks = page.locator('.nav-home');
+  await expect(startLinks).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    await expect(startLinks.nth(index)).toHaveAttribute('aria-current', 'page');
+  }
+});
+
+test('shows Start as the first nav link with a home icon', async ({ page }) => {
+  await page.goto('edukacja/');
+
+  const firstLink = page.locator('.nav-links > a').first();
+  await expect(firstLink).toHaveClass(/nav-home/);
+  await expect(firstLink).toHaveAttribute('href', '/');
+  await expect(firstLink).toContainText('Start');
+  await expect(firstLink.locator('.nav-home-icon')).toHaveCount(1);
+  await expect(firstLink).not.toHaveAttribute('aria-current', 'page');
 });
 
 const knowledgeSubpages = [
@@ -199,5 +215,29 @@ test.describe('mobile navigation', () => {
     await menu.locator('[data-nav-page="przepisy"]').click();
     await expect(page).toHaveURL(/\/przepisy\/?$/);
     await expect(page.locator('#navMobile')).not.toHaveClass(/open/);
+  });
+
+  test('places the CTA above the search link', async ({ page }) => {
+    await page.goto('./');
+    await page.locator('#navToggle').click();
+
+    const menu = page.locator('#navMobile');
+    const cta = menu.locator('.nav-mobile-cta');
+    const search = menu.locator('.nav-mobile-search');
+
+    await expect(cta).toBeVisible();
+    await expect(search).toBeVisible();
+
+    const ctaPrecedesSearch = await menu.evaluate((element) => {
+      const ctaLink = element.querySelector('.nav-mobile-cta');
+      const searchLink = element.querySelector('.nav-mobile-search');
+      if (!ctaLink || !searchLink) return false;
+      return Boolean(
+        ctaLink.compareDocumentPosition(searchLink) & Node.DOCUMENT_POSITION_FOLLOWING
+      );
+    });
+
+    expect(ctaPrecedesSearch).toBe(true);
+    await expect(menu.locator('a.nav-home')).toHaveAttribute('href', '/');
   });
 });

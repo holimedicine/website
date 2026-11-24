@@ -13,6 +13,9 @@
 - Amended: 2026-11-22 — the **Przepisy** item gains a hover/focus dropdown
   built from the `kategoriePrzepisow` collection; its children are in-page
   category tabs (`/przepisy/#<category-slug>`). See ADR 0014.
+- Amended: 2026-11-24 — a **Start** home link with a house icon now leads the
+  desktop and mobile nav. It is marked `aria-current="page"` on `/`; the
+  scroll-spy still owns the `location` state for the homepage sections.
 
 ## Context
 

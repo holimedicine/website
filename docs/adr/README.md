@@ -21,9 +21,9 @@ rather than duplicating the rules.
 | [0007](./0007-base-path-and-withbase.md)                 | Project-page base path and the `withBase()` helper     | Superseded by [0021](./0021-custom-domain-holimedicine-eu.md) | 2026-10-01                |
 | [0008](./0008-homepage-content-in-keystatic.md)          | Manage homepage content as Keystatic singletons        | Accepted | 2026-10-27 (amended 2026-10-30)             |
 | [0009](./0009-remove-galeria-and-opinie.md)              | Remove the Galeria page and Opinie section             | Accepted | 2026-10-27                                  |
-| [0010](./0010-nav-active-state.md)                       | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27 (amended 2026-11-15, 2026-11-19) |
+| [0010](./0010-nav-active-state.md)                       | Nav active state and homepage scroll-spy               | Accepted | 2026-10-27 (amended 2026-11-15, 2026-11-19, 2026-11-24) |
 | [0011](./0011-remove-subpage-back-link.md)               | Remove the subpage "back to homepage" link             | Accepted | 2026-10-29                                  |
-| [0012](./0012-nav-responsive-breakpoint.md)              | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29 (amended 2026-11-15, 2026-11-16) |
+| [0012](./0012-nav-responsive-breakpoint.md)              | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29 (amended 2026-11-15, 2026-11-16, 2026-11-24) |
 | [0013](./0013-e2e-tests-with-playwright.md)              | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31 (amended 2026-11-22)             |
 | [0014](./0014-configurable-recipe-categories.md)         | Configurable recipe categories                         | Accepted | 2026-11-10 (amended 2026-11-14, 2026-11-22) |
 | [0015](./0015-recipe-details-modal.md)                   | Recipe details modal with hash deep links              | Accepted | 2026-11-14                                  |

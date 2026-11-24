@@ -7,6 +7,11 @@
   so the 900px breakpoint still holds; see ADR 0018.
 - Amended: 2026-11-16 — a seventh link ("Współpraca") raised the minimum to
   ~900px, so the breakpoint moved to 1000px; see ADR 0019.
+- Amended: 2026-11-24 — the search link (ADR 0024) had already widened the row
+  (breakpoint 1180px), and the new **Start** link with its house icon raises the
+  measured minimum to ~1035px. The 1180px hamburger breakpoint still holds, so
+  it is unchanged. In the mobile menu the "Umów wizytę" CTA now sits at the top,
+  above **Szukaj**.
 
 ## Context
 
