@@ -1,6 +1,6 @@
 {
   "heading": "Porozmawiajmy o Twoim zdrowiu",
-  "lead": "Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.",
+  "lead": "Umów wizytę w gabinecie lub napisz, jeśli chcesz najpierw zapytać, czy możemy pomóc.\n\nProsimy nie przesyłać e-mailem danych zdrowotnych, wyników badań ani zdjęć\ndokumentacji. Do umówienia wizyty wystarczą imię i nazwisko, numer telefonu oraz\npreferowany termin",
   "visitQuestion": "Jak wygląda wizyta?",
   "visitAnswer": "Standardowa wizyta trwa około 45 minut. W tym czasie z pełną starannością wsłuchujemy się w Twoją historię, zbieramy dokładny wywiad lekarski i przeprowadzamy badanie fizykalne. Jeśli stan zdrowia i sytuacja tego wymagają, od razu włączamy do planu wizyty terapię manualną, dbając o to, by odnaleźć źródło problemu, a nie tylko łagodzić objawy.",
   "pricingHeading": "Cennik",
@@ -24,7 +24,7 @@
   ],
   "phone": "+48 000 000 000",
   "email": "gabinet.holimedicine@gmail.com",
-  "address": "ul. Widok 3, 42-400 Zawiercie",
+  "address": "ul. Paderewskiego 25, 42-400 Zawiercie (obecnie)\nul. Widok 3, 42-400 Zawiercie (wkrótce)",
   "primaryCtaLabel": "Napisz e-mail",
   "primaryCtaHref": "mailto:gabinet.holimedicine@gmail.com",
   "secondaryCtaLabel": "Zadzwoń",
