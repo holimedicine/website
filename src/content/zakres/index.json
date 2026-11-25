@@ -24,15 +24,15 @@
     },
     {
       "title": "Zdrowie psychiczne",
-      "body": "Pierwszy kontakt i wsparcie przy stresie, wypaleniu i zaburzeniach snu, z jasną ścieżką dalszej pomocy."
+      "body": "Pierwszy kontakt i wsparcie przy stresie, wypaleniu i zaburzeniach snu. W cięższych objawach kierujemy do psychiatry lub psychoterapeuty."
     },
     {
       "title": "Przewlekłe stany zapalne",
-      "body": "Szukanie i usuwanie źródeł przewlekłego zapalenia w organizmie, nie tylko łagodzenie jego objawów."
+      "body": "Ocena przyczyn podwyższonych wskaźników zapalnych (np. CRP, OB) i przewlekłych dolegliwości: wykluczanie chorób wymagających swoistego i nieswoistego leczenia (infekcje, choroby reumatyczne, jelitowe) oraz praca nad czynnikami stylu życia (masa ciała, palenie, sen, aktywność). Szukanie i usuwanie źródeł przewlekłego zapalenia w organizmie, nie tylko łagodzenie jego objawów."
     },
     {
       "title": "Choroby autoimmunologiczne",
-      "body": "Diagnostyka i prowadzenie schorzeń takich jak: choroby tarczycy (Hashimoto, Graves-Basedow); reumatyczne zapalenie stawów i polimialgia reumatyczna; nieswoiste choroby zapalne jelit (WZJG, ChLC), choroby dermatologiczne (np.: łuszczyca). Ponadto leczenie chorób alergicznych i związanych z nietolerancjami pokarmowymi."
+      "body": "Diagnostyka i prowadzenie schorzeń takich jak: choroby tarczycy (Hashimoto, Graves-Basedow); reumatyczne zapalenie stawów; nieswoiste choroby zapalne jelit (WZJG, ChLC), choroby dermatologiczne (np.: łuszczyca). Ponadto diagnostyka i leczenie chorób alergicznych (też związanych z nietolerancjami pokarmowymi)."
     },
     {
       "title": "Choroby przewodu pokarmowego",
@@ -40,7 +40,7 @@
     },
     {
       "title": "Choroby narządu ruchu",
-      "body": "Diagnoza i leczenie dolegliwości układu mięśniowo-szkieletowego. Na przykład: ostre i przewlekłe bóle kręgosłupa, dyskopatie, rwa kulszowa i barkowa, zmiany zwyrodnieniowe stawów, zespoły przeciążeniowe (np. łokieć tenisisty, zespół cieśni nadgarstka, zapalenie Achillesa, zespół bolesnego barku), zablokowania stawowe oraz wady postawy. Wykorzystanie podejścia funkcjonalnego, terapii manualnej, chiropraktyki."
+      "body": "Diagnoza i leczenie dolegliwości układu mięśniowo-szkieletowego. Na przykład: ostre i przewlekłe bóle kręgosłupa, dyskopatie, rwa kulszowa i barkowa, zmiany zwyrodnieniowe stawów, zespoły przeciążeniowe (np. łokieć tenisisty, zespół cieśni nadgarstka, zapalenie Achillesa, zespół bolesnego barku), tzw \"zablokowania stawowe\", oraz wady postawy. Wykorzystanie podejścia funkcjonalnego, terapii manualnej, chiropraktyki."
     },
     {
       "title": "Choroby neurologiczne",
