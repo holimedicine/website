@@ -1278,7 +1278,7 @@
     @apply mb-2.5 block text-[0.78rem] leading-normal text-accent;
   }
   .prod-intro {
-    @apply mb-10 max-w-[760px] rounded-xl border border-line bg-bg-card px-6 py-5 text-[0.95rem] leading-[1.7] text-text-muted;
+    @apply mb-10 w-full rounded-xl border border-line bg-bg-card px-6 py-5 text-[0.95rem] leading-[1.7] text-text-muted;
   }
   .prod-intro p {
     @apply m-0;
