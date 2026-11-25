@@ -1262,6 +1262,9 @@
   }
 
   /* PRODUCT RECOMMENDATIONS */
+  .prod-page {
+    @apply pt-8;
+  }
   .prod-section {
     @apply mb-12;
   }
@@ -1274,8 +1277,14 @@
   .prod-eg {
     @apply mb-2.5 block text-[0.78rem] leading-normal text-accent;
   }
-  .prod-note {
-    @apply mb-10 rounded-xl border border-line bg-bg-card px-5 py-4 text-[0.82rem] text-text-muted;
+  .prod-intro {
+    @apply mb-10 max-w-[760px] rounded-xl border border-line bg-bg-card px-6 py-5 text-[0.95rem] leading-[1.7] text-text-muted;
+  }
+  .prod-intro p {
+    @apply m-0;
+  }
+  .prod-intro a {
+    @apply font-semibold text-accent-strong underline underline-offset-2;
   }
   .prod-grid {
     @apply grid grid-cols-3 gap-6;

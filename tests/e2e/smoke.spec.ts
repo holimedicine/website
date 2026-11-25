@@ -23,8 +23,8 @@ const pages = [
   },
   {
     path: 'produkty/',
-    title: 'Polecane produkty — Natalia i Donat Cupiał',
-    heading: 'Rzeczy, którym ufamy',
+    title: 'Suplementy i probiotyki – co mówią badania — Natalia i Donat Cupiał',
+    heading: 'Suplementy i probiotyki – co mówią badania',
   },
   {
     path: 'wspolpraca/',

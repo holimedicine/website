@@ -7,9 +7,9 @@ const tiles = [
     action: 'Przejdź do materiałów',
   },
   {
-    title: 'Polecane produkty',
+    title: 'Suplementy i probiotyki – co mówią badania',
     href: '/produkty/',
-    action: 'Zobacz polecane produkty',
+    action: 'Zobacz suplementy i probiotyki',
   },
 ];
 
@@ -46,7 +46,9 @@ test('the products tile opens the product list', async ({ page }) => {
   await page.locator('.knowledge-tile').nth(1).click();
 
   await expect(page).toHaveURL(/\/produkty\/?$/);
-  await expect(page.locator('h1').first()).toHaveText('Rzeczy, którym ufamy');
+  await expect(page.locator('h1').first()).toHaveText(
+    'Suplementy i probiotyki – co mówią badania'
+  );
 });
 
 test('stacks the tiles on narrow screens', async ({ page }) => {

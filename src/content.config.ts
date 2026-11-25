@@ -53,6 +53,14 @@ const produkty = defineCollection({
   }),
 });
 
+const produktyPage = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/produkty-page' }),
+  schema: z.object({
+    lead: z.string().default(''),
+    intro: z.string().default(''),
+  }),
+});
+
 const sekcjeProduktow = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/sekcje-produktow' }),
   schema: z.object({
@@ -248,6 +256,7 @@ export const collections = {
   kategoriePrzepisow,
   przepisy,
   produkty,
+  produktyPage,
   sekcjeProduktow,
   about,
   podejscie,

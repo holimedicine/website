@@ -10,7 +10,14 @@ export default config({
     navigation: {
       'Strona główna': ['about', 'podejscie', 'zakres', 'contact'],
       Współpraca: ['wspolpraca', 'professions'],
-      Moduły: ['edukacja', 'przepisy', 'kategoriePrzepisow', 'produkty', 'sekcjeProduktow'],
+      Moduły: [
+        'edukacja',
+        'przepisy',
+        'kategoriePrzepisow',
+        'produktyPage',
+        'produkty',
+        'sekcjeProduktow',
+      ],
     },
   },
   singletons: {
@@ -378,6 +385,25 @@ export default config({
         partnersLead: fields.text({
           label: 'Wstęp strony „Z nimi współpracujemy”',
           multiline: true,
+        }),
+      },
+    }),
+    produktyPage: singleton({
+      label: 'Strona suplementów',
+      path: 'src/content/produkty-page/',
+      format: { data: 'json' },
+      schema: {
+        lead: fields.text({
+          label: 'Wstęp w nagłówku (opcjonalnie)',
+          description: 'Krótki tekst pod nagłówkiem strony. Pozostaw puste, aby go ukryć.',
+          multiline: true,
+        }),
+        intro: fields.text({
+          label: 'Wstęp w ramce',
+          description:
+            'Tekst w ramce pod nagłówkiem. Zdanie z linkiem do zakładki „Współpraca” dodawane jest automatycznie.',
+          multiline: true,
+          validation: { isRequired: true },
         }),
       },
     }),

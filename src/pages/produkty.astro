@@ -1,11 +1,20 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { withBase } from '../utils/url';
 import { slugify } from '../utils/slug';
 
 const products = await getCollection('produkty');
+const pageEntry = await getEntry('produktyPage', 'index');
+
+if (!pageEntry) {
+  throw new Error('Brak treści strony suplementów w CMS.');
+}
+
+const page = pageEntry.data;
+const collaborationHref = withBase('/wspolpraca/');
+
 const sections = (await getCollection('sekcjeProduktow')).sort(
   (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
 );
@@ -66,18 +75,23 @@ const productDialogs = await Promise.all(
 );
 ---
 
-<SiteLayout title="Polecane produkty — Natalia i Donat Cupiał">
+<SiteLayout title="Suplementy i probiotyki – co mówią badania — Natalia i Donat Cupiał">
   <PageHeader
-    eyebrow="Polecane produkty"
-    title="Rzeczy, którym ufamy"
-    lead="Przykładowe substancje i preparaty, które omawiamy z pacjentami przy zdrowiu jelit, odporności i regeneracji. Zachęcamy do własnego researchu."
+    eyebrow="Suplementy i probiotyki – co mówią badania"
+    title="Suplementy i probiotyki – co mówią badania"
+    lead={page.lead || undefined}
   />
 
-  <section class="section site-container">
-    <p class="prod-note reveal">
-      Materiał ma charakter informacyjny i nie zastępuje konsultacji lekarskiej. Probiotyki działają
-      szczepowo-specyficznie, a dobór preparatu i dawek warto omówić z lekarzem.
-    </p>
+  <section class="section site-container prod-page">
+    {page.intro && (
+      <div class="prod-intro reveal">
+        <p>
+          {page.intro}{' '}
+          Listę współpracujących z nami podmiotów znajdziesz w zakładce{' '}
+          <a href={collaborationHref}>„Współpraca”</a>.
+        </p>
+      </div>
+    )}
 
     {sections.map((section) => {
       const entries = entriesBySection.get(section.id) ?? [];

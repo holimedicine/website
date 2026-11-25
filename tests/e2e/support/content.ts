@@ -38,31 +38,7 @@ function parseFrontmatter(source: string): Frontmatter {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!match) return {};
 
-  const data: Frontmatter = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    if (/^\s/.test(line)) continue;
-
-    const separator = line.indexOf(':');
-    if (separator === -1) continue;
-
-    const key = line.slice(0, separator).trim();
-    let value = line.slice(separator + 1).trim();
-    if (!key) continue;
-
-    if (value.startsWith('"') && value.endsWith('"')) {
-      try {
-        value = JSON.parse(value) as string;
-      } catch {
-        value = value.slice(1, -1);
-      }
-    } else if (value.startsWith("'") && value.endsWith("'")) {
-      value = value.slice(1, -1);
-    }
-
-    data[key] = key === 'order' ? Number(value) : value;
-  }
-
-  return data;
+  return (loadYaml(match[1]) ?? {}) as Frontmatter;
 }
 
 export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[] {
@@ -77,7 +53,7 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
         file,
         slug: file.replace(/\.(md|mdx)$/, ''),
         title: String(data.title ?? ''),
-        author: data.author ? String(data.author) : undefined,
+        author: data.author ? String(data.author) : 'Donat Cupiał',
         order: Number(data.order ?? 0),
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
         hasContent: hasBody(source),
@@ -135,13 +111,28 @@ export function listProducts(): ProductEntry[] {
         file,
         slug: file.replace(/\.(md|mdx)$/, ''),
         title: String(data.title ?? ''),
-        author: data.author ? String(data.author) : undefined,
+        author: data.author ? String(data.author) : 'Donat Cupiał',
         examples: data.examples ? String(data.examples) : undefined,
         summary: data.summary ? String(data.summary) : undefined,
         hasContent: hasBody(source),
         body: bodyOf(source),
       };
     });
+}
+
+export type ProductsPage = {
+  lead: string;
+  intro: string;
+};
+
+export function readProductsPage(): ProductsPage {
+  const file = path.join(CONTENT_ROOT, 'produkty-page', 'index.json');
+  const data = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
+
+  return {
+    lead: String(data.lead ?? ''),
+    intro: String(data.intro ?? ''),
+  };
 }
 
 export type ProductSection = {

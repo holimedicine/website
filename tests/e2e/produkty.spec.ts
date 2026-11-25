@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { listProductSections, listProducts } from './support/content';
+import { listProductSections, listProducts, readProductsPage } from './support/content';
 import { slugify } from '../../src/utils/slug';
 
 const sections = listProductSections();
@@ -144,7 +144,17 @@ test('deep link opens the matching product', async ({ page }) => {
   await expect(dialog.locator('.prod-modal-body h2')).toHaveText(product.title);
 });
 
-test('shows the product disclaimer', async ({ page }) => {
+test('shows the product intro and the collaboration link', async ({ page }) => {
+  const productsPage = readProductsPage();
   await page.goto('produkty/');
-  await expect(page.locator('.prod-note')).toContainText('nie zastępuje konsultacji lekarskiej');
+
+  const intro = page.locator('.prod-intro');
+  await expect(intro).toBeVisible();
+
+  const firstSentence = productsPage.intro.split('. ')[0];
+  if (firstSentence) {
+    await expect(intro).toContainText(firstSentence);
+  }
+
+  await expect(intro.locator('a')).toHaveAttribute('href', '/wspolpraca/');
 });
