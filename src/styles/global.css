@@ -815,6 +815,9 @@
   }
 
   /* EDUCATION CARDS */
+  .edu-page {
+    @apply pt-8;
+  }
   .edu-grid {
     @apply grid grid-cols-3 gap-6;
   }
