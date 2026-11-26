@@ -43,11 +43,11 @@
     },
     {
       "title": "Przejrzystość",
-      "body": "Materiały sponsorowane i partnerskie zawsze wyraźnie oznaczamy, aby odbiorcy wiedzieli, skąd pochodzi rekomendacja."
+      "body": "Materiały sponsorowane i partnerskie zawsze będą wyraźnie oznaczone, aby odbiorcy wiedzieli, skąd pochodzi rekomendacja."
     },
     {
       "title": "Dobro pacjenta",
-      "body": "Nie reklamujemy leków na receptę i nie obiecujemy cudownych efektów. Działamy zgodnie z zasadami etyki lekarskiej."
+      "body": "Nie reklamujemy leków, ani suplementów i nie obiecujemy cudownych efektów. Działamy zgodnie z zasadami etyki lekarskiej."
     }
   ],
   "stepsHeading": "Jak zaczynamy",
@@ -74,7 +74,7 @@
     },
     {
       "label": "Gabinet",
-      "value": "ul. Paderewskiego 25, 42-400 Zawiercie"
+      "value": "ul. Widok 3, 42-400 Zawiercie"
     }
   ],
   "contactCtaLabel": "Napisz do nas",
