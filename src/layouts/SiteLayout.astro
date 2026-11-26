@@ -8,12 +8,26 @@ interface Props {
   description?: string;
   /** Fix the nav to the viewport so a full-bleed hero can start at the top edge. */
   navOverlay?: boolean;
+  /** See `Layout.astro`; defaults to the current page path. */
+  canonicalPath?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
 }
 
-const { title, description, navOverlay = false } = Astro.props;
+const { title, description, navOverlay = false, canonicalPath, image, type, noindex } =
+  Astro.props;
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  image={image}
+  type={type}
+  noindex={noindex}
+>
+  <slot name="head" slot="head" />
   <Nav overlay={navOverlay} />
   <slot />
   <Footer />

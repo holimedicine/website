@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://holimedicine.eu/sitemap-index.xml

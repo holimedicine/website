@@ -11,7 +11,10 @@ test('renders all homepage sections and hero links', async ({ page }) => {
   }
 
   await expect(page.locator('.hero-banner')).toBeVisible();
-  await expect(page.locator('.hero-banner h1')).toHaveText('Holimedicine');
+  await expect(page.locator('.hero-banner h1')).toContainText('Holimedicine');
+  await expect(page.locator('.hero-title-sub')).toHaveText(
+    'medycyna holistyczna i terapia manualna'
+  );
   await expect(page.locator('.hero-mark img')).toBeVisible();
   await expect(page.locator('.hero a[href="#kontakt"]')).toBeVisible();
   await expect(page.locator('.hero a[href="#o-nas"]')).toBeVisible();

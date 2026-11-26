@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
 
 // Keystatic's admin + API routes are server-rendered. GitHub Pages is static,
@@ -21,6 +22,8 @@ export default defineConfig({
   integrations: [
     react(),
     mdx(),
+    // `/szukaj/` is marked noindex, so it is kept out of the sitemap too.
+    sitemap({ filter: (page) => !page.includes('/szukaj') }),
     ...(keystaticEnabled ? [keystatic()] : []),
   ],
 });
