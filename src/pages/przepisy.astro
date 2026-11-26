@@ -146,6 +146,7 @@ const recipeDialogs = await Promise.all(
         <div class="recipe-modal-body">
           {entry.data.tag && <p class="recipe-modal-tag">{entry.data.tag}</p>}
           <h2 id={`przepis-${entry.id}-title`}>{entry.data.title}</h2>
+          <p class="recipe-modal-author">Autor: {entry.data.author}</p>
           {entry.data.summary && <p class="recipe-modal-summary">{entry.data.summary}</p>}
 
           {hasContent ? (

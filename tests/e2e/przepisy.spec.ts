@@ -128,6 +128,7 @@ test('opens a recipe modal with the full recipe and closes it', async ({ page })
   const dialog = page.locator(`#przepis-${entry.slug}`);
   await expect(dialog).toBeVisible();
   await expect(page.locator(`#przepis-${entry.slug}-title`)).toHaveText(entry.title);
+  await expect(dialog.locator('.recipe-modal-author')).toHaveText(`Autor: ${entry.author}`);
   await expect(dialog.locator('.recipe-modal-tag')).toBeVisible();
   await expect(dialog.locator('.recipe-modal-summary')).toBeVisible();
   await expect(dialog.locator('.rich-text')).not.toBeEmpty();

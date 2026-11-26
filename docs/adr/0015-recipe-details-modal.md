@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-11-14
+- Amended: 2026-11-26 — the modal shows the recipe author (see ADR 0026).
 
 ## Context
 

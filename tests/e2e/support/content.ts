@@ -53,7 +53,11 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
         file,
         slug: file.replace(/\.(md|mdx)$/, ''),
         title: String(data.title ?? ''),
-        author: data.author ? String(data.author) : 'Donat Cupiał',
+        author: data.author
+          ? String(data.author)
+          : collection === 'przepisy'
+            ? 'Natalia Cupiał'
+            : 'Donat Cupiał',
         order: Number(data.order ?? 0),
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
         hasContent: hasBody(source),

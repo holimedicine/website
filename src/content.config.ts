@@ -24,6 +24,7 @@ const przepisy = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/przepisy' }),
   schema: z.object({
     title: z.string(),
+    author: z.string().default('Natalia Cupiał'),
     tag: z.string().optional(),
     summary: z.string().optional(),
     coverImage: z.string().optional(),

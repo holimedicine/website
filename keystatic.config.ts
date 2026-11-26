@@ -547,10 +547,15 @@ export default config({
       path: 'src/content/przepisy/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'tag'],
+      columns: ['title', 'author', 'tag'],
       schema: {
         title: fields.slug({
           name: { label: 'Tytuł', validation: { isRequired: true } },
+        }),
+        author: fields.text({
+          label: 'Autor',
+          description: 'Podpis widoczny pod tytułem w oknie przepisu.',
+          defaultValue: 'Natalia Cupiał',
         }),
         tag: fields.text({
           label: 'Tag',

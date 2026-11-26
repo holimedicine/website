@@ -26,7 +26,7 @@ rather than duplicating the rules.
 | [0012](./0012-nav-responsive-breakpoint.md)              | Responsive nav breakpoint and mobile CTA               | Accepted | 2026-10-29 (amended 2026-11-15, 2026-11-16, 2026-11-24) |
 | [0013](./0013-e2e-tests-with-playwright.md)              | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31 (amended 2026-11-22)             |
 | [0014](./0014-configurable-recipe-categories.md)         | Configurable recipe categories                         | Accepted | 2026-11-10 (amended 2026-11-14, 2026-11-22) |
-| [0015](./0015-recipe-details-modal.md)                   | Recipe details modal with hash deep links              | Accepted | 2026-11-14                                  |
+| [0015](./0015-recipe-details-modal.md)                   | Recipe details modal with hash deep links              | Accepted | 2026-11-14 (amended 2026-11-26)             |
 | [0016](./0016-education-cards-and-modal.md)              | Education cards with details modal                     | Accepted | 2026-11-14                                  |
 | [0017](./0017-product-recommendations-as-collections.md) | Product recommendations as content collections         | Accepted | 2026-11-14                                  |
 | [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17, 2026-11-18) |
@@ -37,6 +37,7 @@ rather than duplicating the rules.
 | [0023](./0023-baza-wiedzy-hub-with-cta-tiles.md)         | Baza wiedzy hub with two CTA tiles                     | Accepted | 2026-11-21                                  |
 | [0024](./0024-static-site-search.md)                     | Static site search over recipes and the knowledge base | Accepted | 2026-11-23                                  |
 | [0025](./0025-seo-metadata-and-crawler-basics.md)        | SEO metadata, canonical URLs and crawler basics        | Accepted | 2026-11-26                                  |
+| [0026](./0026-recipe-authors.md)                         | Recipe author field and author in the recipe modal     | Accepted | 2026-11-26                                  |
 
 ## When to add an ADR
 
