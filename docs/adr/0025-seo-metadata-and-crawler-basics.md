@@ -39,8 +39,9 @@ absolute URLs are available at build time. Titles also ended with
   JSON-LD.
 - Front-load keywords and the brand in titles: the homepage leads with
   `Holimedicine`, subpages end with `| Holimedicine`.
-- Put the keyword phrase in the homepage `<h1>` as a styled second line and use
-  `.hero-kicker` for the local signal (`Gabinet lekarski • Zawiercie`).
+- Put the keyword phrase and the city in the homepage `<h1>` as a styled second
+  line (`medycyna holistyczna i terapia manualna w Zawierciu`); `.hero-kicker`
+  stays the short local cue (`Gabinet lekarski`).
 - Keep `/szukaj` out of the index; it stays reachable from the nav.
 - Cover all of the above with E2E assertions in `tests/e2e/smoke.spec.ts` and
   `tests/e2e/seo.spec.ts`.
