@@ -282,7 +282,14 @@ const { overlay = false } = Astro.props;
       </svg>
     </a>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Otwórz menu">☰</button>
+    <button
+      class="nav-toggle"
+      id="navToggle"
+      type="button"
+      aria-label="Otwórz menu"
+      aria-controls="navMobile"
+      aria-expanded="false">☰</button
+    >
   </div>
 
   <div class="nav-mobile" id="navMobile">

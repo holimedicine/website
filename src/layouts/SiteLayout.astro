@@ -36,15 +36,69 @@ const { title, description, navOverlay = false, canonicalPath, image, type, noin
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+    const siteNav = document.querySelector('.nav');
     const navToggle = document.getElementById('navToggle');
     const navMobile = document.getElementById('navMobile');
+    const desktopNavQuery = window.matchMedia('(min-width: 1181px)');
+    let mobileMenuOpen = false;
+
+    const syncMenuOffset = () => {
+      const navHeight = siteNav?.getBoundingClientRect().height ?? 0;
+      document.documentElement.style.setProperty('--nav-height', `${navHeight}px`);
+    };
+
+    const setMobileMenu = (open: boolean) => {
+      if (!navToggle || !navMobile) return;
+
+      if (open) syncMenuOffset();
+
+      mobileMenuOpen = open;
+      navMobile.classList.toggle('open', open);
+      siteNav?.classList.toggle('menu-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Zamknij menu' : 'Otwórz menu');
+      document.documentElement.classList.toggle('nav-menu-open', open);
+    };
+
     if (navToggle && navMobile) {
-      navToggle.addEventListener('click', () => {
-        navMobile.classList.toggle('open');
-      });
+      navToggle.addEventListener('click', () => setMobileMenu(!mobileMenuOpen));
+
       navMobile.querySelectorAll('a').forEach((a) => {
-        a.addEventListener('click', () => navMobile.classList.remove('open'));
+        a.addEventListener('click', () => setMobileMenu(false));
       });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && mobileMenuOpen) {
+          setMobileMenu(false);
+          navToggle.focus({ preventScroll: true });
+        }
+      });
+
+      // Wheel events over the header must not scroll the page behind the menu.
+      // Inside the menu, `overscroll-behavior: contain` stops scroll chaining.
+      siteNav?.addEventListener(
+        'wheel',
+        (event) => {
+          if (!mobileMenuOpen) return;
+          const target = event.target;
+          if (!(target instanceof Node) || !navMobile.contains(target)) {
+            event.preventDefault();
+          }
+        },
+        { passive: false }
+      );
+
+      desktopNavQuery.addEventListener('change', (event) => {
+        if (event.matches) setMobileMenu(false);
+      });
+
+      window.addEventListener(
+        'resize',
+        () => {
+          if (mobileMenuOpen) syncMenuOffset();
+        },
+        { passive: true }
+      );
     }
 
     const sectionIds = ['o-nas', 'podejscie', 'zakres', 'kontakt'];

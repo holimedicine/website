@@ -240,4 +240,45 @@ test.describe('mobile navigation', () => {
     expect(ctaPrecedesSearch).toBe(true);
     await expect(menu.locator('a.nav-home')).toHaveAttribute('href', '/');
   });
+
+  test('scrolls the open menu instead of the page behind it', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 600 });
+    await page.goto('edukacja/');
+    await page.evaluate(() => window.scrollTo(0, 200));
+
+    const toggle = page.locator('#navToggle');
+    const menu = page.locator('#navMobile');
+
+    // Click via the DOM so the assertion checks the menu, not Playwright's
+    // scroll-into-view before clicking the sticky toggle.
+    await page.evaluate(() => document.getElementById('navToggle')?.click());
+    await expect(menu).toHaveClass(/open/);
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(await page.evaluate(() => window.scrollY)).toBe(200);
+
+    const metrics = await menu.evaluate((element) => ({
+      scrollHeight: element.scrollHeight,
+      clientHeight: element.clientHeight,
+      overflowY: getComputedStyle(element).overflowY,
+    }));
+
+    expect(metrics.scrollHeight).toBeGreaterThan(metrics.clientHeight);
+    expect(metrics.overflowY).toBe('auto');
+
+    await menu.evaluate((element) => element.scrollTo(0, element.scrollHeight));
+
+    expect(await menu.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+    await expect(menu.locator('[data-nav-child-page="wspolpraca/partnerzy"]')).toBeInViewport();
+    expect(await page.evaluate(() => window.scrollY)).toBe(200);
+
+    // A wheel over the header must not move the page either.
+    await page.mouse.move(200, 20);
+    await page.mouse.wheel(0, 600);
+    expect(await page.evaluate(() => window.scrollY)).toBe(200);
+
+    await page.keyboard.press('Escape');
+    await expect(menu).not.toHaveClass(/open/);
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(await page.evaluate(() => window.scrollY)).toBe(200);
+  });
 });

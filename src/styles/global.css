@@ -27,6 +27,11 @@
     @apply bg-bg text-text-primary font-sans leading-relaxed overflow-x-hidden;
   }
 
+  /* Keep scroll gestures that start on the mobile header from reaching the page. */
+  html.nav-menu-open .nav.menu-open .nav-inner {
+    touch-action: none;
+  }
+
   h1,
   h2,
   h3 {
@@ -215,11 +220,27 @@
     .nav-toggle {
       @apply block;
     }
+    /* The open menu is a fixed sheet under the header and the only scroll
+       container, so swiping it never moves the page behind. */
+    .nav.menu-open {
+      background: var(--color-bg);
+      backdrop-filter: none;
+    }
     .nav-mobile {
       @apply flex-col gap-1 border-b border-line px-6 pt-2 pb-5;
     }
     .nav-mobile.open {
       @apply flex;
+      position: fixed;
+      top: var(--nav-height, 4rem);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
+      background: var(--color-bg);
     }
     .nav-mobile a {
       @apply border-b border-line py-2.5 pl-3 text-text-muted transition-colors;
