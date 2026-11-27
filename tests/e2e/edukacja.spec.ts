@@ -1,81 +1,75 @@
 import { expect, test } from '@playwright/test';
-import { listEntries } from './support/content';
 import { slugify } from '../../src/utils/slug';
+import {
+  listEntries,
+  listKnowledgeSections,
+  listPublishedArticles,
+  readKnowledgePage,
+} from './support/content';
 
-const entries = listEntries('edukacja');
+const sections = listKnowledgeSections();
+const published = listPublishedArticles();
+const drafts = listEntries('edukacja').filter((entry) => entry.status === 'draft');
+const knowledgePage = readKnowledgePage();
 
-const dialogId = (slug: string) => `edukacja-${slugify(slug)}`;
+const articleHref = (article: (typeof published)[number]) =>
+  article.topic
+    ? `/baza-wiedzy/${article.section}/${article.topic}/${article.slug}/`
+    : `/baza-wiedzy/${article.section}/${article.slug}/`;
 
-test('lists articles as cards in the configured order', async ({ page }) => {
-  await page.goto('edukacja/');
-  await expect(page.locator('.edu-card-title')).toHaveText(entries.map((entry) => entry.title));
-});
+const groups = sections
+  .map((section) => ({
+    section,
+    articles: published
+      .filter((article) => article.section === section.slug)
+      .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl')),
+  }))
+  .filter((group) => group.articles.length > 0);
 
-test('renders one dialog per article', async ({ page }) => {
-  await page.goto('edukacja/');
-
-  const dialogs = page.locator('dialog.edu-modal');
-  await expect(dialogs).toHaveCount(entries.length);
-
-  const ids = await dialogs.evaluateAll((elements) => elements.map((element) => element.id));
-  expect(ids).toEqual(entries.map((entry) => dialogId(entry.slug)));
-});
-
-test('card opens the full article and the close button closes it', async ({ page }) => {
-  await page.goto('edukacja/');
-
-  const entry = entries.find((item) => item.hasContent);
-  expect(entry).toBeTruthy();
-  if (!entry) return;
-
-  const dialog = page.locator(`#${dialogId(entry.slug)}`);
-  await expect(dialog).not.toBeVisible();
-
-  await page.locator('.edu-card', { hasText: entry.title }).locator('.edu-card-open').click();
-
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('.edu-modal-body h2')).toHaveText(entry.title);
-  await expect(dialog.locator('.rich-text')).not.toBeEmpty();
-  await expect(page).toHaveURL(new RegExp(`#${dialogId(entry.slug)}$`));
-
-  await dialog.locator('.edu-modal-close').click();
-
-  await expect(dialog).not.toBeVisible();
-  await expect(page).not.toHaveURL(/#edukacja-/);
-});
-
-test('shows the author under the title in every article modal', async ({ page }) => {
+test('lists every published article grouped by section', async ({ page }) => {
   await page.goto('edukacja/');
 
-  for (const entry of entries) {
-    expect(entry.author, `Missing author for "${entry.title}"`).toBeTruthy();
-    await expect(page.locator(`#${dialogId(entry.slug)} .edu-modal-author`)).toHaveText(
-      `Autor: ${entry.author}`
+  const renderedGroups = page.locator('.kb-article-group');
+  await expect(renderedGroups).toHaveCount(groups.length);
+
+  for (const [index, group] of groups.entries()) {
+    const renderedGroup = renderedGroups.nth(index);
+    await expect(renderedGroup.locator('.sub-title')).toHaveText(group.section.title);
+
+    const cards = renderedGroup.locator('.kb-card');
+    await expect(cards).toHaveCount(group.articles.length);
+    await expect(cards.locator('h3')).toHaveText(
+      group.articles.map((article) => article.title)
     );
+
+    for (const [cardIndex, article] of group.articles.entries()) {
+      await expect(cards.nth(cardIndex)).toHaveAttribute(
+        'href',
+        articleHref(article)
+      );
+    }
   }
 });
 
-test('Escape closes the article modal', async ({ page }) => {
+test('does not list draft articles', async ({ page }) => {
   await page.goto('edukacja/');
-
-  const dialog = page.locator('dialog.edu-modal').first();
-  await page.locator('.edu-card-open').first().click();
-  await expect(dialog).toBeVisible();
-
-  await page.keyboard.press('Escape');
-  await expect(dialog).not.toBeVisible();
+  for (const draft of drafts) {
+    await expect(page.locator('.kb-card', { hasText: draft.title })).toHaveCount(0);
+  }
 });
 
-test('deep link opens the matching article', async ({ page }) => {
-  const entry = entries[0];
-  await page.goto(`edukacja/#${dialogId(entry.slug)}`);
+test('old #edukacja-* deep links redirect to the article page', async ({ page }) => {
+  const article = published[0];
+  expect(article).toBeTruthy();
+  if (!article) return;
 
-  const dialog = page.locator(`#${dialogId(entry.slug)}`);
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('.edu-modal-body h2')).toHaveText(entry.title);
+  await page.goto(`edukacja/#edukacja-${slugify(article.slug)}`);
+
+  await expect(page).toHaveURL(new RegExp(`${articleHref(article)}$`));
+  await expect(page.locator('.page-header h1')).toHaveText(article.title);
 });
 
 test('shows the educational disclaimer', async ({ page }) => {
   await page.goto('edukacja/');
-  await expect(page.locator('.edu-disclaimer')).toContainText('nie zastępują indywidualnej konsultacji');
+  await expect(page.locator('.kb-disclaimer')).toHaveText(knowledgePage.disclaimer);
 });

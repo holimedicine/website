@@ -27,17 +27,18 @@ rather than duplicating the rules.
 | [0013](./0013-e2e-tests-with-playwright.md)              | Playwright E2E tests gated by builds and CI            | Accepted | 2026-10-31 (amended 2026-11-22)             |
 | [0014](./0014-configurable-recipe-categories.md)         | Configurable recipe categories                         | Accepted | 2026-11-10 (amended 2026-11-14, 2026-11-22) |
 | [0015](./0015-recipe-details-modal.md)                   | Recipe details modal with hash deep links              | Accepted | 2026-11-14 (amended 2026-11-26)             |
-| [0016](./0016-education-cards-and-modal.md)              | Education cards with details modal                     | Accepted | 2026-11-14                                  |
+| [0016](./0016-education-cards-and-modal.md)              | Education cards with details modal                     | Accepted | 2026-11-14 (amended 2026-11-27)             |
 | [0017](./0017-product-recommendations-as-collections.md) | Product recommendations as content collections         | Accepted | 2026-11-14                                  |
 | [0018](./0018-light-theme-and-responsive-hero-banner.md) | Light sage/steel theme and responsive hero banner      | Accepted | 2026-11-15 (amended 2026-11-17, 2026-11-18) |
 | [0019](./0019-collaboration-page-singleton.md)           | Collaboration page backed by a Keystatic singleton     | Accepted | 2026-11-16 (amended 2026-11-16, 2026-11-18) |
 | [0020](./0020-collaborator-directory-page.md)            | Collaborator directory page behind a collaboration CTA | Accepted | 2026-11-18 (amended 2026-11-19, 2026-11-20) |
 | [0021](./0021-custom-domain-holimedicine-eu.md)          | Custom domain `holimedicine.eu` at the site root        | Accepted | 2026-11-19                                  |
 | [0022](./0022-profile-popups-and-galleries.md)           | Profile cards with popups and per-doctor galleries     | Accepted | 2026-11-20 (amended 2026-11-21)             |
-| [0023](./0023-baza-wiedzy-hub-with-cta-tiles.md)         | Baza wiedzy hub with two CTA tiles                     | Accepted | 2026-11-21                                  |
-| [0024](./0024-static-site-search.md)                     | Static site search over recipes and the knowledge base | Accepted | 2026-11-23                                  |
+| [0023](./0023-baza-wiedzy-hub-with-cta-tiles.md)         | Baza wiedzy hub with two CTA tiles                     | Accepted | 2026-11-21 (amended 2026-11-27)             |
+| [0024](./0024-static-site-search.md)                     | Static site search over recipes and the knowledge base | Accepted | 2026-11-23 (amended 2026-11-27)             |
 | [0025](./0025-seo-metadata-and-crawler-basics.md)        | SEO metadata, canonical URLs and crawler basics        | Accepted | 2026-11-26                                  |
 | [0026](./0026-recipe-authors.md)                         | Recipe author field and author in the recipe modal     | Accepted | 2026-11-26                                  |
+| [0027](./0027-baza-wiedzy-taxonomy-and-article-pages.md) | Baza wiedzy taxonomy, section pages and article pages  | Accepted | 2026-11-27                                  |
 
 ## When to add an ADR
 

@@ -1,5 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
-import { listCategories } from './support/content';
+import {
+  listCategories,
+  listKnowledgeSections,
+  listPublishedArticles,
+} from './support/content';
 
 const menuItem = (page: Page, label: string) =>
   page.locator('.nav-item-has-menu').filter({ hasText: label });
@@ -52,12 +56,16 @@ test('shows Start as the first nav link with a home icon', async ({ page }) => {
   await expect(firstLink).not.toHaveAttribute('aria-current', 'page');
 });
 
-const knowledgeSubpages = [
-  { path: 'edukacja/', child: 'edukacja' },
-  { path: 'produkty/', child: 'produkty' },
-];
+const knowledgeSections = listKnowledgeSections();
+const knowledgeHref = (section: (typeof knowledgeSections)[number]) =>
+  section.href ?? `/baza-wiedzy/${section.slug}/`;
+const knowledgeSubpages = knowledgeSections.map((section) => ({
+  path: knowledgeHref(section).replace(/^\//, ''),
+  child:
+    section.href?.replace(/^\/|\/$/g, '') ?? `baza-wiedzy/${section.slug}`,
+}));
 
-for (const { path, child } of knowledgeSubpages) {
+for (const path of ['edukacja/', ...knowledgeSubpages.map((subpage) => subpage.path)]) {
   test(`keeps Baza wiedzy current on ${path}`, async ({ page }) => {
     await page.goto(path);
 
@@ -66,6 +74,12 @@ for (const { path, child } of knowledgeSubpages) {
     for (let index = 0; index < 2; index += 1) {
       await expect(currentLinks.nth(index)).toHaveAttribute('aria-current', 'page');
     }
+  });
+}
+
+for (const { path, child } of knowledgeSubpages) {
+  test(`marks the ${child} child current on ${path}`, async ({ page }) => {
+    await page.goto(path);
 
     const childLinks = page.locator(`[data-nav-child-page="${child}"]`);
     await expect(childLinks).toHaveCount(2);
@@ -81,6 +95,24 @@ for (const { path, child } of knowledgeSubpages) {
     }
   });
 }
+
+test('keeps the section child current inside a nested article page', async ({ page }) => {
+  const article = listPublishedArticles().find((entry) => entry.section === 'styl-zycia');
+  expect(article).toBeTruthy();
+  if (!article) return;
+
+  const path = article.topic
+    ? `baza-wiedzy/${article.section}/${article.topic}/${article.slug}/`
+    : `baza-wiedzy/${article.section}/${article.slug}/`;
+
+  await page.goto(path);
+
+  const childLinks = page.locator('[data-nav-child-page="baza-wiedzy/styl-zycia"]');
+  await expect(childLinks).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    await expect(childLinks.nth(index)).toHaveAttribute('aria-current', 'page');
+  }
+});
 
 test('brand and CTA use the production base path', async ({ page }) => {
   await page.goto('edukacja/');
@@ -134,7 +166,7 @@ test('opens the collaboration menu when the trigger is focused', async ({ page }
   await expect(item.locator('.nav-menu')).toBeVisible();
 });
 
-test('reveals both knowledge areas from the Baza wiedzy menu', async ({ page }) => {
+test('reveals every knowledge section from the Baza wiedzy menu', async ({ page }) => {
   await page.goto('./');
 
   const item = menuItem(page, 'Baza wiedzy');
@@ -142,14 +174,18 @@ test('reveals both knowledge areas from the Baza wiedzy menu', async ({ page }) 
   const links = menu.locator('.nav-menu-link');
 
   await expect(menu).toBeHidden();
-  await expect(links).toHaveCount(2);
-  await expect(links.nth(0)).toHaveAttribute('href', '/edukacja/');
-  await expect(links.nth(1)).toHaveAttribute('href', '/produkty/');
+  await expect(links).toHaveCount(knowledgeSections.length);
+
+  for (const [index, section] of knowledgeSections.entries()) {
+    await expect(links.nth(index)).toContainText(section.title);
+    await expect(links.nth(index)).toHaveAttribute('href', knowledgeHref(section));
+  }
 
   await item.locator('.nav-trigger').hover();
   await expect(menu).toBeVisible();
-  await expect(links.nth(0)).toBeVisible();
-  await expect(links.nth(1)).toBeVisible();
+  for (const section of knowledgeSections) {
+    await expect(menu.getByRole('link', { name: section.title })).toBeVisible();
+  }
 });
 
 test('reveals recipe categories from the Przepisy menu', async ({ page }) => {

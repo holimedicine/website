@@ -1,0 +1,181 @@
+---
+import { getEntry, render } from 'astro:content';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import {
+  articleHref,
+  articlesForTopic,
+  findSection,
+  findTopic,
+  flatArticlesForSection,
+  isPublished,
+  loadKnowledgeBase,
+  topicHref,
+  topicsForSection,
+} from '../../../utils/knowledge';
+import { withBase } from '../../../utils/url';
+
+type Props =
+  | { kind: 'topic'; topicId: string }
+  | { kind: 'article'; articleId: string };
+
+export async function getStaticPaths() {
+  const { sections, topics, articles } = await loadKnowledgeBase();
+  const paths: Array<{
+    params: { sekcja: string; slug: string };
+    props: Props;
+  }> = [];
+
+  for (const section of sections) {
+    if (section.data.href || section.data.kind === 'supplements') continue;
+
+    for (const topic of topicsForSection(topics, section.id)) {
+      paths.push({
+        params: { sekcja: section.id, slug: topic.id },
+        props: { kind: 'topic', topicId: topic.id },
+      });
+    }
+
+    for (const article of flatArticlesForSection(articles, section.id)) {
+      if (!isPublished(article)) continue;
+
+      paths.push({
+        params: { sekcja: section.id, slug: article.id },
+        props: { kind: 'article', articleId: article.id },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { sekcja } = Astro.params;
+const props = Astro.props as Props;
+const { sections, topics, articles } = await loadKnowledgeBase();
+const section = findSection(sections, sekcja);
+
+if (!section) {
+  throw new Error(`Nie znaleziono sekcji Bazy wiedzy: ${sekcja}`);
+}
+
+const pageEntry = await getEntry('bazaWiedzyPage', 'index');
+const disclaimer =
+  pageEntry?.data.disclaimer ||
+  'Materiały mają charakter edukacyjny i nie zastępują indywidualnej konsultacji lekarskiej.';
+
+const isTopicPage = props.kind === 'topic';
+const topic = isTopicPage ? findTopic(topics, props.topicId) : undefined;
+const article = isTopicPage
+  ? undefined
+  : articles.find((candidate) => candidate.id === props.articleId);
+
+if (isTopicPage && !topic) {
+  throw new Error(`Nie znaleziono tematu Bazy wiedzy: ${props.topicId}`);
+}
+
+if (!isTopicPage && !article) {
+  throw new Error(`Nie znaleziono artykułu Bazy wiedzy: ${props.articleId}`);
+}
+
+const topicArticles = topic ? articlesForTopic(articles, topic.id) : [];
+const Content = article ? (await render(article)).Content : undefined;
+---
+
+{
+  topic ? (
+    <SiteLayout
+      title={`${topic.data.title} — ${section.data.title} | Holimedicine`}
+      description={
+        topic.data.summary || `Materiały edukacyjne z tematu ${topic.data.title}.`
+      }
+    >
+      <PageHeader
+        eyebrow={section.data.title}
+        title={topic.data.title}
+        lead={topic.data.summary || undefined}
+      />
+
+      <section class="section site-container kb-page">
+        <Breadcrumbs
+          items={[
+            { label: 'Baza wiedzy', href: withBase('/baza-wiedzy/') },
+            {
+              label: section.data.title,
+              href: withBase(`/baza-wiedzy/${section.id}/`),
+            },
+            { label: topic.data.title },
+          ]}
+        />
+
+        {topicArticles.length > 0 ? (
+          <div class="kb-grid reveal">
+            {topicArticles.map((entry) => {
+              const published = isPublished(entry);
+              return (
+                <ArticleCard
+                  title={entry.data.title}
+                  teaser={entry.data.teaser}
+                  status={entry.data.status}
+                  href={
+                    published
+                      ? articleHref(section.id, topic.id, entry.id)
+                      : undefined
+                  }
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <p class="kb-empty">Materiały w tym temacie są w przygotowaniu.</p>
+        )}
+      </section>
+    </SiteLayout>
+  ) : article && Content ? (
+    <SiteLayout
+      title={`${article.data.title} — ${section.data.title} | Holimedicine`}
+      description={
+        article.data.teaser ||
+        section.data.summary ||
+        `Materiał edukacyjny: ${article.data.title}.`
+      }
+      type="article"
+    >
+      <PageHeader
+        eyebrow={section.data.title}
+        title={article.data.title}
+        lead={article.data.teaser || undefined}
+      />
+
+      <article class="section site-container kb-article">
+        <Breadcrumbs
+          items={[
+            { label: 'Baza wiedzy', href: withBase('/baza-wiedzy/') },
+            {
+              label: section.data.title,
+              href: withBase(`/baza-wiedzy/${section.id}/`),
+            },
+            ...(topic
+              ? [
+                  {
+                    label: topic.data.title,
+                    href: topicHref(section.id, topic.id),
+                  },
+                ]
+              : []),
+            { label: article.data.title },
+          ]}
+        />
+
+        <p class="kb-article-meta">Autor: {article.data.author}</p>
+
+        <div class="rich-text kb-article-content">
+          <Content />
+        </div>
+
+        <p class="kb-disclaimer">{disclaimer}</p>
+      </article>
+    </SiteLayout>
+  ) : null
+}

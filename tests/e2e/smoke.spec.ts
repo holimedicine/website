@@ -1,7 +1,13 @@
 import { expect, test } from '@playwright/test';
-import { readCollaborationPage } from './support/content';
+import {
+  listKnowledgeSections,
+  readCollaborationPage,
+  readKnowledgePage,
+} from './support/content';
 
 const collaboration = readCollaborationPage();
+const knowledge = readKnowledgePage();
+const section = listKnowledgeSections().find((candidate) => !candidate.href);
 
 const pages = [
   {
@@ -12,15 +18,25 @@ const pages = [
   },
   {
     path: 'baza-wiedzy/',
-    title: 'Baza wiedzy o zdrowiu — artykuły i przepisy | Holimedicine',
+    title: 'Baza wiedzy o zdrowiu — sekcje i artykuły | Holimedicine',
     canonical: 'https://holimedicine.eu/baza-wiedzy/',
-    heading: 'Baza wiedzy',
+    heading: knowledge.title,
   },
+  ...(section
+    ? [
+        {
+          path: `baza-wiedzy/${section.slug}/`,
+          title: `${section.title} — Baza wiedzy | Holimedicine`,
+          canonical: `https://holimedicine.eu/baza-wiedzy/${section.slug}/`,
+          heading: section.title,
+        },
+      ]
+    : []),
   {
     path: 'edukacja/',
-    title: 'Edukacja zdrowotna — jelita, sen, hormony | Holimedicine',
+    title: 'Wszystkie artykuły — Baza wiedzy | Holimedicine',
     canonical: 'https://holimedicine.eu/edukacja/',
-    heading: 'Materiały, które poszerzają świadomość',
+    heading: 'Wszystkie artykuły',
   },
   {
     path: 'przepisy/',

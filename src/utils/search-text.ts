@@ -5,9 +5,9 @@
  * intentionally has no Astro/browser imports so it can be used from both sides.
  */
 
-export type SearchEntryType = 'edukacja' | 'przepis' | 'produkt';
+export type SearchEntryType = 'artykul' | 'przepis' | 'produkt';
 
-/** One searchable item: a recipe, an education article, or a product. */
+/** One searchable item: a knowledge-base article, a recipe, or a product. */
 export type SearchEntry = {
   type: SearchEntryType;
   title: string;

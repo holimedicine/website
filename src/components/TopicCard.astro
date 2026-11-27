@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  summary?: string;
+  href: string;
+  count: number;
+}
+
+const { title, summary, href, count } = Astro.props;
+const mod10 = count % 10;
+const mod100 = count % 100;
+const countLabel =
+  count === 1
+    ? '1 materiał'
+    : mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)
+      ? `${count} materiały`
+      : `${count} materiałów`;
+---
+
+<a class="kb-topic-card" href={href}>
+  <span class="kb-topic-card-title">{title}</span>
+  {summary && <span class="kb-topic-card-summary">{summary}</span>}
+  <span class="kb-topic-card-count">{count > 0 ? countLabel : 'Materiały w przygotowaniu'}</span>
+</a>

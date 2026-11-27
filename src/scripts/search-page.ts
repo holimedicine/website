@@ -9,12 +9,12 @@ import {
   type SnippetPart,
 } from '../utils/search-text';
 
-const GROUP_ORDER: SearchEntryType[] = ['przepis', 'edukacja', 'produkt'];
+const GROUP_ORDER: SearchEntryType[] = ['przepis', 'artykul', 'produkt'];
 
 const GROUP_LABELS: Record<SearchEntryType, string> = {
   przepis: 'Przepisy',
-  edukacja: 'Materiały edukacyjne',
-  produkt: 'Polecane produkty',
+  artykul: 'Baza wiedzy',
+  produkt: 'Suplementy i probiotyki',
 };
 
 const MIN_QUERY_LENGTH = 2;

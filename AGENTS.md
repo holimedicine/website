@@ -43,8 +43,15 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 - **Base path:** the site is served from the custom domain at `/` (dev and
   production). Keep wrapping root-relative links/assets with `withBase()` from
   `src/utils/url.ts` so a future base change stays a one-line config edit.
-- **Content fields:** when changing a collection, keep `keystatic.config.ts` and
-  `src/content.config.ts` in sync.
+- **Content fields:** when changing a collection, keep `src/content.config.ts` and
+  the matching module under `src/keystatic/` in sync.
+- **Baza wiedzy taxonomy:** top-level sections live in
+  `src/content/sekcje-bazy-wiedzy/*.json`, topics in
+  `src/content/tematy-bazy-wiedzy/*.json`, and articles in
+  `src/content/edukacja/*.mdx` with `section`, optional `topic`, and `status`.
+  Published articles get dedicated pages under `/baza-wiedzy/`; drafts are shown
+  as "Wkrótce", have no page, and are excluded from search and the sitemap.
+  "Suplementy" (`kind: supplements`) links to the existing `/produkty/` page.
 - **Builds are test-gated:** `npm run build` runs `scripts/check-dist.mjs` and
   the Playwright E2E suite. Content-only commits (only `src/content/**` or
   `public/images/**`) run `npm run build:site` and skip E2E; see ADR 0013. The

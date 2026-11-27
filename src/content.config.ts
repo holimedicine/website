@@ -1,13 +1,52 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const sekcjeBazyWiedzy = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/sekcje-bazy-wiedzy' }),
+  schema: z.object({
+    title: z.string(),
+    order: z.number().default(0),
+    summary: z.string().default(''),
+    kind: z.enum(['articles', 'supplements']).default('articles'),
+    href: z.string().optional(),
+  }),
+});
+
+const tematyBazyWiedzy = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/tematy-bazy-wiedzy' }),
+  schema: z.object({
+    title: z.string(),
+    order: z.number().default(0),
+    section: z.string(),
+    summary: z.string().default(''),
+  }),
+});
+
+const bazaWiedzyPage = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/baza-wiedzy-page' }),
+  schema: z.object({
+    eyebrow: z.string().default('Baza wiedzy'),
+    title: z.string().default('Baza wiedzy'),
+    lead: z.string().default(''),
+    allArticlesLabel: z.string().default('Zobacz wszystkie artykuły'),
+    disclaimer: z
+      .string()
+      .default(
+        'Materiały mają charakter edukacyjny i nie zastępują indywidualnej konsultacji lekarskiej.'
+      ),
+  }),
+});
+
 const edukacja = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/edukacja' }),
   schema: z.object({
     title: z.string(),
     author: z.string().default('Donat Cupiał'),
     teaser: z.string().optional(),
+    section: z.string(),
+    topic: z.string().optional(),
     order: z.number().default(0),
+    status: z.enum(['published', 'draft']).default('published'),
   }),
 });
 
@@ -57,6 +96,8 @@ const produkty = defineCollection({
 const produktyPage = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/produkty-page' }),
   schema: z.object({
+    eyebrow: z.string().default('Suplementy i probiotyki – co mówią badania'),
+    heading: z.string().default('Suplementy i probiotyki – co mówią badania'),
     lead: z.string().default(''),
     intro: z.string().default(''),
   }),
@@ -253,6 +294,9 @@ const contact = defineCollection({
 });
 
 export const collections = {
+  sekcjeBazyWiedzy,
+  tematyBazyWiedzy,
+  bazaWiedzyPage,
   edukacja,
   kategoriePrzepisow,
   przepisy,

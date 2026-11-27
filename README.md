@@ -17,9 +17,15 @@ Live: https://holimedicine.eu/
 
 ## Content
 
-Three collections:
+The knowledge base and recipes:
 
-- `src/content/edukacja/*.mdx` — educational articles.
+- `src/content/sekcje-bazy-wiedzy/*.json` — the six Baza wiedzy sections shown on
+  the hub and in the nav dropdown.
+- `src/content/tematy-bazy-wiedzy/*.json` — topics inside a section (the nine
+  "Zdrowie według układów" topics).
+- `src/content/edukacja/*.mdx` — knowledge articles with `section`, optional
+  `topic`, and `status` (`published` or `draft`). Published articles get
+  dedicated pages under `/baza-wiedzy/`; drafts show as "Wkrótce".
 - `src/content/przepisy/*.mdx` — recipes.
 - `src/content/kategorie-przepisow/*.json` — recipe categories (name, tab order,
   ordered recipe list), rendered as tabs on `/przepisy/`. A recipe can appear in

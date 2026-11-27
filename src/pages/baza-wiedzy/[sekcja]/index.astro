@@ -1,0 +1,110 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import TopicCard from '../../../components/TopicCard.astro';
+import {
+  articleHref,
+  articlesForTopic,
+  findSection,
+  flatArticlesForSection,
+  isPublished,
+  loadKnowledgeBase,
+  sectionNumber,
+  topicHref,
+  topicsForSection,
+} from '../../../utils/knowledge';
+import { withBase } from '../../../utils/url';
+
+export async function getStaticPaths() {
+  const { sections } = await loadKnowledgeBase();
+
+  return sections
+    .filter((section) => !section.data.href && section.data.kind !== 'supplements')
+    .map((section) => ({
+      params: { sekcja: section.id },
+    }));
+}
+
+const { sekcja } = Astro.params;
+const { sections, topics, articles } = await loadKnowledgeBase();
+const section = findSection(sections, sekcja);
+
+if (!section) {
+  throw new Error(`Nie znaleziono sekcji Bazy wiedzy: ${sekcja}`);
+}
+
+const sectionIndex = sections.findIndex((candidate) => candidate.id === section.id);
+const sectionTopics = topicsForSection(topics, section.id);
+const isTopicSection = sectionTopics.length > 0;
+const flatArticles = flatArticlesForSection(articles, section.id);
+const topicCards = sectionTopics.map((topic) => ({
+  topic,
+  count: articlesForTopic(articles, topic.id).filter(isPublished).length,
+}));
+
+const breadcrumbs = [
+  { label: 'Baza wiedzy', href: withBase('/baza-wiedzy/') },
+  { label: section.data.title },
+];
+---
+
+<SiteLayout
+  title={`${section.data.title} — Baza wiedzy | Holimedicine`}
+  description={section.data.summary || `Materiały edukacyjne: ${section.data.title}.`}
+>
+  <PageHeader
+    eyebrow={`Baza wiedzy · ${sectionNumber(sectionIndex)}`}
+    title={section.data.title}
+    lead={section.data.summary || undefined}
+  />
+
+  <section class="section site-container kb-page">
+    <Breadcrumbs items={breadcrumbs} />
+
+    {
+      isTopicSection && (
+        <div class="kb-topic-grid reveal">
+          {topicCards.map(({ topic, count }) => (
+            <TopicCard
+              title={topic.data.title}
+              summary={topic.data.summary || undefined}
+              href={topicHref(section.id, topic.id)}
+              count={count}
+            />
+          ))}
+        </div>
+      )
+    }
+
+    {
+      flatArticles.length > 0 && (
+        <div class:list={[{ 'kb-article-group': isTopicSection }]}>
+          {isTopicSection && <h2 class="sub-title">Pozostałe materiały</h2>}
+          <div class="kb-grid reveal">
+            {flatArticles.map((article) => {
+              const published = isPublished(article);
+              return (
+                <ArticleCard
+                  title={article.data.title}
+                  teaser={article.data.teaser}
+                  status={article.data.status}
+                  href={
+                    published
+                      ? articleHref(section.id, article.data.topic, article.id)
+                      : undefined
+                  }
+                />
+              );
+            })}
+          </div>
+        </div>
+      )
+    }
+
+    {!isTopicSection && flatArticles.length === 0 && (
+      <p class="kb-empty">Materiały w tej sekcji są w przygotowaniu.</p>
+    )}
+  </section>
+</SiteLayout>

@@ -1,5 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { listEntries, listProducts } from './support/content';
+import {
+  listEntries,
+  listProducts,
+  listPublishedArticles,
+} from './support/content';
 import { slugify } from '../../src/utils/slug';
 
 const PL_DIACRITICS: Record<string, string> = {
@@ -42,14 +46,18 @@ function bodyQuery(entry: { title: string; body?: string }): string {
   return candidate;
 }
 
-const articles = listEntries('edukacja');
+const articles = listPublishedArticles();
 const article = articles.find((entry) => entry.hasContent && (entry.body?.length ?? 0) > 200);
 const articleQuery = article ? bodyQuery(article) : '';
-const articleDialogId = article ? `edukacja-${slugify(article.slug)}` : '';
+const articleHref = (entry: (typeof articles)[number]) =>
+  entry.topic
+    ? `/baza-wiedzy/${entry.section}/${entry.topic}/${entry.slug}/`
+    : `/baza-wiedzy/${entry.section}/${entry.slug}/`;
+const articleUrl = article ? articleHref(article) : '';
 
 const polishArticle = articles.find((entry) => /[ąćęłńóśźż]/i.test(entry.title));
 const polishQuery = polishArticle ? toAscii(polishArticle.title) : '';
-const polishDialogId = polishArticle ? `edukacja-${slugify(polishArticle.slug)}` : '';
+const polishUrl = polishArticle ? articleHref(polishArticle) : '';
 
 const recipes = listEntries('przepisy');
 const recipe = recipes.find((entry) => (entry.title.match(WORDS) ?? []).length > 0);
@@ -85,20 +93,20 @@ test('mobile menu contains the search link', async ({ page }) => {
   await expect(link).toHaveAttribute('href', '/szukaj/');
 });
 
-test('finds an education article by a body phrase and opens its modal', async ({ page }) => {
-  expect(article, 'No education article with a body').toBeTruthy();
+test('finds a knowledge article by a body phrase and opens its page', async ({ page }) => {
+  expect(article, 'No knowledge article with a body').toBeTruthy();
   expect(articleQuery).toBeTruthy();
 
   await page.goto(`szukaj/?q=${encodeURIComponent(articleQuery)}`);
 
-  const link = page.locator(`a[href$="#${articleDialogId}"]`);
+  const link = page.locator(`a[href="${articleUrl}"]`);
   await expect(link).toBeVisible();
   await expect(link).toContainText(article?.title ?? '');
 
   await link.click();
 
-  await expect(page).toHaveURL(new RegExp(`#${articleDialogId}$`));
-  await expect(page.locator(`#${articleDialogId}`)).toBeVisible();
+  await expect(page).toHaveURL(new RegExp(`${articleUrl}$`));
+  await expect(page.locator('.page-header h1')).toHaveText(article?.title ?? '');
 });
 
 test('finds a recipe by a title word and opens its modal', async ({ page }) => {
@@ -130,12 +138,26 @@ test('finds a product by a body phrase and opens its modal', async ({ page }) =>
 });
 
 test('matches titles without requiring Polish diacritics', async ({ page }) => {
-  expect(polishArticle, 'No education title with Polish diacritics').toBeTruthy();
+  expect(polishArticle, 'No knowledge title with Polish diacritics').toBeTruthy();
   expect(polishQuery).toBeTruthy();
 
   await page.goto(`szukaj/?q=${encodeURIComponent(polishQuery)}`);
 
-  await expect(page.locator(`a[href$="#${polishDialogId}"]`)).toBeVisible();
+  await expect(page.locator(`a[href="${polishUrl}"]`)).toBeVisible();
+});
+
+test('does not return draft articles', async ({ page }) => {
+  const draft = listEntries('edukacja').find((entry) => entry.status === 'draft');
+  expect(draft).toBeTruthy();
+  if (!draft) return;
+
+  const draftUrl = draft.topic
+    ? `/baza-wiedzy/${draft.section}/${draft.topic}/${draft.slug}/`
+    : `/baza-wiedzy/${draft.section}/${draft.slug}/`;
+
+  await page.goto(`szukaj/?q=${encodeURIComponent(toAscii(draft.title))}`);
+
+  await expect(page.locator(`a[href="${draftUrl}"]`)).toHaveCount(0);
 });
 
 test('updates the URL and shows an empty state for unmatched queries', async ({ page }) => {

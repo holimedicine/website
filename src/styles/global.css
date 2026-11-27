@@ -637,7 +637,6 @@
 
   /* RECIPE / EDUCATION / PRODUCT / COLLABORATION / PROFILE MODAL */
   .recipe-modal,
-  .edu-modal,
   .prod-modal,
   .collab-modal,
   .profile-modal {
@@ -650,7 +649,6 @@
     box-shadow: 0 30px 80px rgba(15, 35, 45, 0.28);
   }
   .recipe-modal::backdrop,
-  .edu-modal::backdrop,
   .prod-modal::backdrop,
   .collab-modal::backdrop,
   .profile-modal::backdrop {
@@ -658,7 +656,6 @@
     backdrop-filter: blur(4px);
   }
   .recipe-modal-scroll,
-  .edu-modal-scroll,
   .prod-modal-scroll,
   .collab-modal-scroll,
   .profile-modal-scroll {
@@ -667,7 +664,6 @@
     overscroll-behavior: contain;
   }
   .recipe-modal-close,
-  .edu-modal-close,
   .prod-modal-close,
   .collab-modal-close,
   .profile-modal-close {
@@ -680,7 +676,6 @@
     line-height: 1;
   }
   .recipe-modal-close:hover,
-  .edu-modal-close:hover,
   .prod-modal-close:hover,
   .collab-modal-close:hover,
   .profile-modal-close:hover {
@@ -691,7 +686,6 @@
     @apply block aspect-[16/9] w-full object-cover;
   }
   .recipe-modal-body,
-  .edu-modal-body,
   .prod-modal-body,
   .collab-modal-body,
   .profile-modal-body {
@@ -701,31 +695,26 @@
     @apply m-0 pr-14 text-[0.7rem] uppercase tracking-[0.08em] text-accent;
   }
   .recipe-modal-body h2,
-  .edu-modal-body h2,
   .prod-modal-body h2,
   .collab-modal-body h2,
   .profile-modal-body h2 {
     @apply mt-2 pr-14 text-[1.5rem] leading-tight;
   }
   .recipe-modal-summary,
-  .edu-modal-summary,
   .prod-modal-summary,
   .collab-modal-summary {
     @apply mb-5 mt-3 text-[0.95rem] text-text-muted;
   }
-  .edu-modal-author,
   .prod-modal-author,
   .recipe-modal-author {
     @apply m-0 mt-2 pr-14 text-[0.8rem] font-medium text-text-muted;
   }
   .recipe-modal-content,
-  .edu-modal-content,
   .prod-modal-content,
   .collab-modal-content {
     @apply border-t border-line pt-5;
   }
-  .recipe-modal-empty,
-  .edu-modal-empty {
+  .recipe-modal-empty {
     @apply m-0 rounded-xl border border-line px-4 py-3 text-[0.88rem] text-text-muted;
   }
   .profile-modal-role {
@@ -794,7 +783,6 @@
     @apply mt-6 inline-flex;
   }
   body:has(dialog.recipe-modal[open]),
-  body:has(dialog.edu-modal[open]),
   body:has(dialog.prod-modal[open]),
   body:has(dialog.collab-modal[open]),
   body:has(dialog.profile-modal[open]) {
@@ -802,7 +790,6 @@
   }
   @media (max-width: 520px) {
     .recipe-modal,
-    .edu-modal,
     .prod-modal,
     .collab-modal,
     .profile-modal {
@@ -810,14 +797,12 @@
       max-height: 94vh;
     }
     .recipe-modal-scroll,
-    .edu-modal-scroll,
     .prod-modal-scroll,
     .collab-modal-scroll,
     .profile-modal-scroll {
       max-height: 94vh;
     }
     .recipe-modal-body,
-    .edu-modal-body,
     .prod-modal-body,
     .collab-modal-body,
     .profile-modal-body {
@@ -845,50 +830,6 @@
     @apply block;
   }
 
-  /* EDUCATION CARDS */
-  .edu-page {
-    @apply pt-8;
-  }
-  .edu-grid {
-    @apply grid grid-cols-3 gap-6;
-  }
-  .edu-card {
-    @apply relative flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-card px-[22px] py-6 transition duration-300;
-    box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
-  }
-  .edu-card:hover,
-  .edu-card:focus-within {
-    @apply border-accent-soft;
-    transform: translateY(-2px);
-  }
-  .edu-card h3 {
-    @apply m-0 pr-2 text-[1.05rem];
-  }
-  .edu-card p {
-    @apply mb-5 mt-2.5 text-[0.88rem] text-text-muted;
-  }
-  .edu-card-more {
-    @apply mt-auto text-[0.75rem] uppercase tracking-[0.08em] text-accent-strong;
-  }
-  .edu-card-open {
-    @apply absolute inset-0 z-10 cursor-pointer border-none bg-transparent p-0;
-  }
-  .edu-card-open:focus-visible {
-    outline-offset: -3px;
-  }
-  @media (max-width: 760px) {
-    .edu-grid {
-      @apply grid-cols-1;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .edu-card,
-    .edu-card:hover,
-    .edu-card:focus-within {
-      @apply transition-none;
-      transform: none;
-    }
-  }
   .rich-text {
     @apply text-[0.94rem] text-text-muted;
   }
@@ -939,10 +880,6 @@
   .rich-text th {
     @apply bg-bg-elevated font-semibold text-accent-strong;
   }
-  .edu-disclaimer {
-    @apply mb-8 rounded-xl border border-line bg-bg-card px-5 py-4 text-[0.82rem] text-text-muted;
-  }
-
   /* CONTACT */
   .contact-box {
     @apply relative overflow-hidden rounded-[20px] border border-line p-14 text-center;
@@ -1133,11 +1070,11 @@
   /* BAZA WIEDZY TILES */
   .knowledge-grid {
     @apply grid gap-6;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .knowledge-tile {
-    min-height: clamp(240px, 26vw, 320px);
-    padding: clamp(22px, 3vw, 36px);
+    min-height: clamp(220px, 21vw, 290px);
+    padding: clamp(22px, 2.6vw, 34px);
   }
   .knowledge-tile::before {
     top: -90px;
@@ -1148,6 +1085,9 @@
   .knowledge-tile-products {
     background: linear-gradient(145deg, #2b5876 0%, #31667a 55%, #3a7d71 130%);
   }
+  .knowledge-tile-number {
+    @apply mb-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-[0.75rem] font-semibold tracking-[0.08em] text-white/90;
+  }
   .knowledge-tile-title {
     max-width: 22ch;
     min-height: 2.3em;
@@ -1156,6 +1096,11 @@
   }
   .knowledge-tile-description {
     @apply my-4 max-w-[46ch] text-[0.92rem] leading-[1.6] text-white/85;
+  }
+  @media (max-width: 1100px) {
+    .knowledge-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   @media (max-width: 860px) {
     .knowledge-grid {
@@ -1174,6 +1119,148 @@
     }
     .knowledge-tile-action svg {
       @apply transition-none;
+    }
+  }
+
+  /* KNOWLEDGE BASE PAGES */
+  .kb-page {
+    @apply pt-8;
+  }
+  .kb-breadcrumbs {
+    @apply mb-7 text-[0.78rem] text-text-muted;
+  }
+  .kb-breadcrumbs ol {
+    @apply m-0 flex list-none flex-wrap items-center gap-2 p-0;
+  }
+  .kb-breadcrumbs li {
+    @apply flex items-center gap-2;
+  }
+  .kb-breadcrumbs li + li::before {
+    content: '/';
+    @apply text-line;
+  }
+  .kb-breadcrumbs a {
+    @apply text-accent-strong underline-offset-4 hover:underline;
+  }
+  .kb-breadcrumbs [aria-current='page'] {
+    @apply font-medium text-text-primary;
+  }
+  .kb-grid {
+    @apply grid grid-cols-3 gap-6;
+  }
+  .kb-card {
+    @apply relative flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-card px-[22px] py-6 text-text-primary no-underline transition duration-300;
+    box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
+  }
+  .kb-card:hover,
+  .kb-card:focus-visible {
+    @apply border-accent-soft;
+    transform: translateY(-2px);
+  }
+  .kb-card:focus-visible {
+    outline-offset: -3px;
+  }
+  .kb-card h3 {
+    @apply m-0 pr-2 text-[1.05rem];
+  }
+  .kb-card p {
+    @apply mb-5 mt-2.5 text-[0.88rem] text-text-muted;
+  }
+  .kb-card-eyebrow {
+    @apply mb-2 text-[0.7rem] uppercase tracking-[0.08em] text-accent;
+  }
+  .kb-card-action {
+    @apply mt-auto text-[0.75rem] uppercase tracking-[0.08em] text-accent-strong;
+  }
+  .kb-card-soon {
+    @apply mt-auto inline-flex self-start rounded-full border border-line px-3 py-1 text-[0.7rem] uppercase tracking-[0.08em] text-text-muted;
+  }
+  .kb-card-draft {
+    @apply border-dashed bg-bg-soft;
+  }
+  .kb-card-draft h3 {
+    @apply text-text-muted;
+  }
+  .kb-topic-grid {
+    @apply grid grid-cols-3 gap-6;
+  }
+  .kb-topic-card {
+    @apply flex flex-col rounded-2xl border border-line bg-bg-card px-[22px] py-6 text-text-primary no-underline transition duration-300;
+    box-shadow: 0 12px 30px rgba(27, 58, 75, 0.05);
+  }
+  .kb-topic-card:hover,
+  .kb-topic-card:focus-visible {
+    @apply border-accent-soft;
+    transform: translateY(-2px);
+  }
+  .kb-topic-card:focus-visible {
+    outline-offset: -3px;
+  }
+  .kb-topic-card-title {
+    @apply font-display text-[1.1rem] font-semibold text-text-primary;
+  }
+  .kb-topic-card-summary {
+    @apply mb-5 mt-2.5 text-[0.88rem] text-text-muted;
+  }
+  .kb-topic-card-count {
+    @apply mt-auto text-[0.72rem] uppercase tracking-[0.08em] text-accent-strong;
+  }
+  .kb-empty {
+    @apply rounded-xl border border-dashed border-line px-4 py-5 text-[0.9rem] text-text-muted;
+  }
+  .kb-article {
+    @apply pt-8;
+  }
+  .kb-article > .kb-breadcrumbs,
+  .kb-article > .kb-article-meta,
+  .kb-article > .kb-article-content,
+  .kb-article > .kb-disclaimer {
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .kb-article-meta {
+    @apply mb-6 text-[0.82rem] font-medium text-text-muted;
+  }
+  .kb-article-content {
+    @apply text-[0.96rem];
+  }
+  .kb-article-group {
+    @apply mb-12;
+  }
+  .kb-article-group .sub-title {
+    @apply mb-5;
+  }
+  .kb-disclaimer {
+    @apply mt-10 rounded-xl border border-line bg-bg-soft px-4 py-3 text-[0.82rem] text-text-muted;
+  }
+  .kb-hub-footer {
+    @apply mt-8 flex flex-col items-start gap-4;
+  }
+  .kb-text-link {
+    @apply text-[0.8rem] font-semibold uppercase tracking-[0.08em] text-accent-strong underline-offset-4 hover:underline;
+  }
+  @media (max-width: 1000px) {
+    .kb-grid,
+    .kb-topic-grid {
+      @apply grid-cols-2;
+    }
+  }
+  @media (max-width: 760px) {
+    .kb-grid,
+    .kb-topic-grid {
+      @apply grid-cols-1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kb-card,
+    .kb-card:hover,
+    .kb-card:focus-visible,
+    .kb-topic-card,
+    .kb-topic-card:hover,
+    .kb-topic-card:focus-visible {
+      @apply transition-none;
+      transform: none;
     }
   }
 

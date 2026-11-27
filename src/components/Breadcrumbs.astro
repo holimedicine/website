@@ -1,0 +1,30 @@
+---
+interface Item {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="kb-breadcrumbs" aria-label="Ścieżka nawigacji">
+  <ol>
+    {
+      items.map((item, index) => (
+        <li>
+          {item.href ? (
+            <a href={item.href}>{item.label}</a>
+          ) : (
+            <span aria-current={index === items.length - 1 ? 'page' : undefined}>
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

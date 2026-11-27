@@ -1,92 +1,92 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getEntry } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import {
+  articleHref,
+  articlesForSection,
+  findTopic,
+  isPublished,
+  loadKnowledgeBase,
+} from '../utils/knowledge';
 import { slugify } from '../utils/slug';
+import { withBase } from '../utils/url';
 
-const entries = (await getCollection('edukacja')).sort((a, b) => a.data.order - b.data.order);
+const [pageEntry, { sections, topics, articles }] = await Promise.all([
+  getEntry('bazaWiedzyPage', 'index'),
+  loadKnowledgeBase(),
+]);
 
-const articles = await Promise.all(
-  entries.map(async (entry) => ({
-    entry,
-    Content: (await render(entry)).Content,
-    hasContent: Boolean(entry.body?.trim()),
-    dialogId: `edukacja-${slugify(entry.id)}`,
+const disclaimer =
+  pageEntry?.data.disclaimer ||
+  'Materiały mają charakter edukacyjny i nie zastępują indywidualnej konsultacji lekarskiej.';
+
+const groups = sections
+  .map((section) => ({
+    section,
+    articles: articlesForSection(articles, section.id).filter(isPublished),
   }))
-);
+  .filter((group) => group.articles.length > 0);
 ---
 
 <SiteLayout
-  title="Edukacja zdrowotna — jelita, sen, hormony | Holimedicine"
-  description="Krótkie, przystępne materiały o zdrowiu: jelita, odporność, sen, hormony i styl życia — od lekarzy Holimedicine."
+  title="Wszystkie artykuły — Baza wiedzy | Holimedicine"
+  description="Wszystkie opublikowane materiały edukacyjne Holimedicine: styl życia, żywienie, zdrowie według układów i przegląd tego, co mówi nauka."
 >
   <PageHeader
     eyebrow="Baza wiedzy"
-    title="Materiały, które poszerzają świadomość"
-    lead="Krótkie, przystępne wyjaśnienia tematów, o które pytają nas pacjenci. Sekcja będzie się stopniowo rozrastać."
+    title="Wszystkie artykuły"
+    lead="Pełna lista opublikowanych materiałów edukacyjnych. Możesz też wejść w konkretną sekcję Bazy wiedzy."
   />
 
-  <section class="section site-container edu-page">
-    <p class="edu-disclaimer reveal">
-      Poniższe materiały mają charakter edukacyjny i nie zastępują indywidualnej konsultacji
-      lekarskiej. Kliknij kafelek, aby przeczytać całą treść.
-    </p>
+  <section class="section site-container kb-page">
+    <Breadcrumbs
+      items={[
+        { label: 'Baza wiedzy', href: withBase('/baza-wiedzy/') },
+        { label: 'Wszystkie artykuły' },
+      ]}
+    />
 
-    <div class="edu-grid reveal">
-      {articles.map(({ entry, dialogId }) => (
-        <article class="edu-card">
-          <h3 class="edu-card-title">{entry.data.title}</h3>
-          {entry.data.teaser && <p class="edu-card-teaser">{entry.data.teaser}</p>}
-          <span class="edu-card-more" aria-hidden="true">Czytaj więcej →</span>
-          <button
-            type="button"
-            class="edu-card-open"
-            aria-haspopup="dialog"
-            aria-controls={dialogId}
-            aria-label={`Otwórz pełną treść: ${entry.data.title}`}
-            data-dialog={dialogId}
-          />
-        </article>
-      ))}
-    </div>
+    {
+      groups.map(({ section, articles: sectionArticles }) => (
+        <div class="kb-article-group">
+          <h2 class="sub-title">{section.data.title}</h2>
+          <div class="kb-grid reveal">
+            {sectionArticles.map((article) => {
+              const topic = article.data.topic
+                ? findTopic(topics, article.data.topic)
+                : undefined;
+
+              return (
+                <ArticleCard
+                  title={article.data.title}
+                  teaser={article.data.teaser}
+                  eyebrow={topic?.data.title}
+                  href={articleHref(section.id, article.data.topic, article.id)}
+                  slug={slugify(article.id)}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ))
+    }
+
+    <p class="kb-disclaimer">{disclaimer}</p>
   </section>
 
-  {articles.map(({ entry, Content, hasContent, dialogId }) => (
-    <dialog class="edu-modal" id={dialogId} aria-labelledby={`${dialogId}-title`}>
-      <button
-        type="button"
-        class="edu-modal-close"
-        aria-label="Zamknij materiał"
-        data-close-dialog
-      >
-        <span aria-hidden="true">×</span>
-      </button>
-
-      <div class="edu-modal-scroll">
-        <div class="edu-modal-body">
-          <h2 id={`${dialogId}-title`}>{entry.data.title}</h2>
-          <p class="edu-modal-author">Autor: {entry.data.author}</p>
-          {entry.data.teaser && <p class="edu-modal-summary">{entry.data.teaser}</p>}
-
-          {hasContent ? (
-            <div class="edu-modal-content rich-text">
-              <Content />
-            </div>
-          ) : (
-            <p class="edu-modal-empty">Pełna treść pojawi się wkrótce.</p>
-          )}
-        </div>
-      </div>
-    </dialog>
-  ))}
-
   <script>
-    import { initModalGroup } from '../scripts/modals';
-
-    initModalGroup({
-      dialogSelector: 'dialog.edu-modal',
-      triggerSelector: '.edu-card-open',
-      getDialogId: (button) => button.dataset.dialog,
-    });
+    // Preserve old /edukacja/#edukacja-<slug> deep links after articles moved
+    // to their own pages.
+    const legacyPrefix = '#edukacja-';
+    if (window.location.hash.startsWith(legacyPrefix)) {
+      const slug = window.location.hash.slice(legacyPrefix.length);
+      const target = document.querySelector(`[data-article-slug="${CSS.escape(slug)}"]`);
+      if (target instanceof HTMLAnchorElement) {
+        window.location.replace(target.href);
+      }
+    }
   </script>
 </SiteLayout>

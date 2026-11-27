@@ -2,6 +2,9 @@
 
 - Status: Accepted
 - Date: 2026-11-14
+- Amended: 2026-11-27 — education articles moved to dedicated pages under
+  `/baza-wiedzy/`; the education modal was removed. Modals remain for recipes and
+  products.
 
 ## Context
 

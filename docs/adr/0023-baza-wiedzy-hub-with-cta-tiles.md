@@ -2,6 +2,9 @@
 
 - Status: Accepted
 - Date: 2026-11-21
+- Amended: 2026-11-27 — the hub now renders six section tiles generated from
+  `sekcjeBazyWiedzy`; the nav dropdown lists those sections, and `/edukacja/`
+  became an "Wszystkie artykuły" index. See ADR 0027.
 
 ## Context
 

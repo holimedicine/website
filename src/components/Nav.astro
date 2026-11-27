@@ -12,6 +12,10 @@ const recipeCategories = (await getCollection('kategoriePrzepisow')).sort(
   (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
 );
 
+const knowledgeSections = (await getCollection('sekcjeBazyWiedzy')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl')
+);
+
 type NavChild = {
   href: string;
   label: string;
@@ -73,18 +77,12 @@ const links: NavLink[] = (
       label: 'Baza wiedzy',
       page: 'baza-wiedzy',
       pages: ['baza-wiedzy', 'edukacja', 'produkty'],
-      children: [
-        {
-          href: '/edukacja/',
-          label: 'Materiały edukacyjne',
-          page: 'edukacja',
-        },
-        {
-          href: '/produkty/',
-          label: 'Polecane produkty',
-          page: 'produkty',
-        },
-      ],
+      children: knowledgeSections.map((section) => ({
+        href: section.data.href ?? `/baza-wiedzy/${section.id}/`,
+        label: section.data.title,
+        page:
+          section.data.href?.replace(/^\/|\/$/g, '') ?? `baza-wiedzy/${section.id}`,
+      })),
     },
     {
       href: '/wspolpraca',
@@ -106,7 +104,7 @@ const links: NavLink[] = (
   children: (link.children ?? []).map((child) => ({
     ...child,
     href: withBase(child.href),
-    isCurrent: child.page ? currentPath === `/${child.page}` : false,
+    isCurrent: child.page ? isCurrentPage(child.page) : false,
   })),
 }));
 

@@ -2,6 +2,9 @@
 
 - Status: Accepted
 - Date: 2026-11-23
+- Amended: 2026-11-27 — the `edukacja` result type is now `artykul` and links to
+  published article pages under `/baza-wiedzy/`; draft articles are excluded. See
+  ADR 0027.
 
 ## Context
 

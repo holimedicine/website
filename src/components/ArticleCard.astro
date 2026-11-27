@@ -1,0 +1,34 @@
+---
+interface Props {
+  title: string;
+  teaser?: string;
+  href?: string;
+  status?: 'published' | 'draft';
+  eyebrow?: string;
+  /** Slugified legacy ID, used by the /edukacja/ hash redirect. */
+  slug?: string;
+}
+
+const { title, teaser, href, status = 'published', eyebrow, slug } = Astro.props;
+const isDraft = status === 'draft';
+---
+
+{
+  isDraft ? (
+    <article class="kb-card kb-card-draft" data-article-slug={slug}>
+      {eyebrow && <span class="kb-card-eyebrow">{eyebrow}</span>}
+      <h3>{title}</h3>
+      {teaser && <p>{teaser}</p>}
+      <span class="kb-card-soon">Wkrótce</span>
+    </article>
+  ) : (
+    <a class="kb-card" href={href} data-article-slug={slug}>
+      {eyebrow && <span class="kb-card-eyebrow">{eyebrow}</span>}
+      <h3>{title}</h3>
+      {teaser && <p>{teaser}</p>}
+      <span class="kb-card-action" aria-hidden="true">
+        Czytaj więcej →
+      </span>
+    </a>
+  )
+}

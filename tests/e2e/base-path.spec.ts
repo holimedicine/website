@@ -1,4 +1,18 @@
 import { expect, test } from '@playwright/test';
+import {
+  listKnowledgeSections,
+  listKnowledgeTopics,
+  listPublishedArticles,
+} from './support/content';
+
+const articleHref = (article: {
+  section: string;
+  topic?: string;
+  slug: string;
+}) =>
+  article.topic
+    ? `baza-wiedzy/${article.section}/${article.topic}/${article.slug}/`
+    : `baza-wiedzy/${article.section}/${article.slug}/`;
 
 const pages = [
   './',
@@ -9,6 +23,13 @@ const pages = [
   'szukaj/',
   'wspolpraca/',
   'wspolpraca/partnerzy/',
+  ...listKnowledgeSections()
+    .filter((section) => !section.href)
+    .map((section) => `baza-wiedzy/${section.slug}/`),
+  ...listKnowledgeTopics().map(
+    (topic) => `baza-wiedzy/${topic.section}/${topic.slug}/`
+  ),
+  ...listPublishedArticles().map(articleHref),
 ];
 
 for (const path of pages) {

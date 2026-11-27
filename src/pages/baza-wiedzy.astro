@@ -1,58 +1,66 @@
 ---
+import { getEntry } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { loadKnowledgeBase, sectionHref, sectionNumber } from '../utils/knowledge';
 import { withBase } from '../utils/url';
 
-const tiles = [
-  {
-    href: withBase('/edukacja/'),
-    title: 'Materiały, które poszerzają świadomość',
-    description:
-      'Krótkie, przystępne wyjaśnienia tematów, o które pytają nasi pacjenci — od jelit i odporności po sen, hormony i styl życia.',
-    action: 'Przejdź do materiałów',
-    variant: 'education',
-  },
-  {
-    href: withBase('/produkty/'),
-    title: 'Suplementy i probiotyki – co mówią badania',
-    description:
-      'Popularne suplementy i probiotyki z oceną siły dowodów naukowych. Materiał edukacyjny, nie reklama.',
-    action: 'Zobacz suplementy i probiotyki',
-    variant: 'products',
-  },
-];
+const [pageEntry, { sections }] = await Promise.all([
+  getEntry('bazaWiedzyPage', 'index'),
+  loadKnowledgeBase(),
+]);
+
+if (!pageEntry) {
+  throw new Error('Brak treści strony głównej Bazy wiedzy w CMS.');
+}
+
+const page = pageEntry.data;
 ---
 
 <SiteLayout
-  title="Baza wiedzy o zdrowiu — artykuły i przepisy | Holimedicine"
-  description="Materiały edukacyjne o zdrowiu i polecane produkty w jednym miejscu. Wybierz, od czego chcesz zacząć — Holimedicine."
+  title="Baza wiedzy o zdrowiu — sekcje i artykuły | Holimedicine"
+  description="Materiały edukacyjne o zdrowiu: styl życia, żywienie, suplementy, zdrowie według układów i przegląd tego, co mówi nauka — Holimedicine."
 >
-  <PageHeader
-    eyebrow="Baza wiedzy"
-    title="Baza wiedzy"
-    lead="Materiały edukacyjne i polecane produkty — w jednym miejscu. Wybierz, od czego chcesz zacząć."
-  />
+  <PageHeader eyebrow={page.eyebrow} title={page.title} lead={page.lead || undefined} />
 
   <section class="section site-container">
     <div class="knowledge-grid reveal">
-      {tiles.map((tile) => (
-        <a class={`knowledge-tile knowledge-tile-${tile.variant}`} href={tile.href}>
-          <span class="knowledge-tile-title">{tile.title}</span>
-          <span class="knowledge-tile-description">{tile.description}</span>
-          <span class="knowledge-tile-action">
-            {tile.action}
-            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
-              <path
-                d="M4 10h11M10.5 5.5 15 10l-4.5 4.5"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-        </a>
-      ))}
+      {
+        sections.map((section, index) => {
+          const isSupplements = section.data.kind === 'supplements';
+          return (
+            <a
+              class:list={[
+                'knowledge-tile',
+                { 'knowledge-tile-products': isSupplements },
+              ]}
+              href={sectionHref(section)}
+              data-section={section.id}
+            >
+              <span class="knowledge-tile-number">{sectionNumber(index)}</span>
+              <span class="knowledge-tile-title">{section.data.title}</span>
+              <span class="knowledge-tile-description">{section.data.summary}</span>
+              <span class="knowledge-tile-action">
+                {isSupplements ? 'Zobacz suplementy' : 'Przejdź do sekcji'}
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+                  <path
+                    d="M4 10h11M10.5 5.5 15 10l-4.5 4.5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </a>
+          );
+        })
+      }
+    </div>
+
+    <div class="kb-hub-footer reveal">
+      <a class="kb-text-link" href={withBase('/edukacja/')}>{page.allArticlesLabel} →</a>
+      <p class="kb-disclaimer">{page.disclaimer}</p>
     </div>
   </section>
 </SiteLayout>

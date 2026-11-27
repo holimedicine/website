@@ -11,10 +11,49 @@ export type ContentEntry = {
   author?: string;
   order: number;
   coverImage?: string;
+  section: string;
+  topic?: string;
+  status: 'published' | 'draft';
   hasContent: boolean;
   /** Raw body without frontmatter, used by content-driven search tests. */
   body?: string;
 };
+
+export type KnowledgeSection = {
+  slug: string;
+  title: string;
+  order: number;
+  kind: 'articles' | 'supplements';
+  href?: string;
+};
+
+export type KnowledgeTopic = {
+  slug: string;
+  title: string;
+  order: number;
+  section: string;
+};
+
+export type KnowledgePage = {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  allArticlesLabel: string;
+  disclaimer: string;
+};
+
+export function readKnowledgePage(): KnowledgePage {
+  const file = path.join(CONTENT_ROOT, 'baza-wiedzy-page', 'index.json');
+  const data = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
+
+  return {
+    eyebrow: String(data.eyebrow ?? ''),
+    title: String(data.title ?? ''),
+    lead: String(data.lead ?? ''),
+    allArticlesLabel: String(data.allArticlesLabel ?? ''),
+    disclaimer: String(data.disclaimer ?? ''),
+  };
+}
 
 export type CategoryEntry = {
   slug: string;
@@ -60,11 +99,64 @@ export function listEntries(collection: 'edukacja' | 'przepisy'): ContentEntry[]
             : 'Donat Cupiał',
         order: Number(data.order ?? 0),
         coverImage: data.coverImage ? String(data.coverImage) : undefined,
+        section: String(data.section ?? ''),
+        topic: data.topic ? String(data.topic) : undefined,
+        status: data.status === 'draft' ? ('draft' as const) : ('published' as const),
         hasContent: hasBody(source),
         body: bodyOf(source),
       };
     })
     .sort((a, b) => a.order - b.order);
+}
+
+export function listPublishedArticles(): ContentEntry[] {
+  return listEntries('edukacja').filter((entry) => entry.status === 'published');
+}
+
+export function listKnowledgeSections(): KnowledgeSection[] {
+  const directory = path.join(CONTENT_ROOT, 'sekcje-bazy-wiedzy');
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => {
+      const data = JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')) as {
+        title?: unknown;
+        order?: unknown;
+        kind?: unknown;
+        href?: unknown;
+      };
+
+      return {
+        slug: file.slice(0, -'.json'.length),
+        title: String(data.title ?? ''),
+        order: Number(data.order ?? 0),
+        kind: data.kind === 'supplements' ? ('supplements' as const) : ('articles' as const),
+        href: data.href ? String(data.href) : undefined,
+      };
+    })
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));
+}
+
+export function listKnowledgeTopics(): KnowledgeTopic[] {
+  const directory = path.join(CONTENT_ROOT, 'tematy-bazy-wiedzy');
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => {
+      const data = JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')) as {
+        title?: unknown;
+        order?: unknown;
+        section?: unknown;
+      };
+
+      return {
+        slug: file.slice(0, -'.json'.length),
+        title: String(data.title ?? ''),
+        order: Number(data.order ?? 0),
+        section: String(data.section ?? ''),
+      };
+    })
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'pl'));
 }
 
 export function listCategories(): CategoryEntry[] {

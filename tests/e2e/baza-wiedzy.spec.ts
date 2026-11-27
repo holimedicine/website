@@ -1,68 +1,91 @@
 import { expect, test } from '@playwright/test';
+import {
+  listKnowledgeSections,
+  readKnowledgePage,
+} from './support/content';
 
-const tiles = [
-  {
-    title: 'Materiały, które poszerzają świadomość',
-    href: '/edukacja/',
-    action: 'Przejdź do materiałów',
-  },
-  {
-    title: 'Suplementy i probiotyki – co mówią badania',
-    href: '/produkty/',
-    action: 'Zobacz suplementy i probiotyki',
-  },
-];
+const sections = listKnowledgeSections();
+const page = readKnowledgePage();
 
-test('links to both knowledge areas as large tiles', async ({ page }) => {
-  await page.goto('baza-wiedzy/');
+const hrefFor = (section: (typeof sections)[number]) =>
+  section.href ?? `/baza-wiedzy/${section.slug}/`;
 
-  const cards = page.locator('.knowledge-tile');
-  await expect(cards).toHaveCount(tiles.length);
+test('lists every knowledge section as a large tile in order', async ({ page: browserPage }) => {
+  await browserPage.goto('baza-wiedzy/');
+
+  const cards = browserPage.locator('.knowledge-tile');
+  await expect(cards).toHaveCount(sections.length);
   await expect(cards.locator('.knowledge-tile-title')).toHaveText(
-    tiles.map((tile) => tile.title)
+    sections.map((section) => section.title)
   );
 
-  for (const [index, tile] of tiles.entries()) {
+  for (const [index, section] of sections.entries()) {
     const card = cards.nth(index);
-    await expect(card).toHaveAttribute('href', tile.href);
-    await expect(card.locator('.knowledge-tile-action')).toContainText(tile.action);
+    await expect(card).toHaveAttribute('href', hrefFor(section));
+    await expect(card).toHaveAttribute('data-section', section.slug);
+    await expect(card.locator('.knowledge-tile-number')).toHaveText(
+      String(index + 1).padStart(2, '0')
+    );
+    await expect(card.locator('.knowledge-tile-action')).toContainText(
+      section.kind === 'supplements' ? 'Zobacz suplementy' : 'Przejdź do sekcji'
+    );
   }
 });
 
-test('the materials tile opens the article list', async ({ page }) => {
-  await page.goto('baza-wiedzy/');
+test('shows the editable hub header and the all-articles link', async ({ page: browserPage }) => {
+  await browserPage.goto('baza-wiedzy/');
 
-  await page.locator('.knowledge-tile').first().click();
-
-  await expect(page).toHaveURL(/\/edukacja\/?$/);
-  await expect(page.locator('h1').first()).toHaveText(
-    'Materiały, które poszerzają świadomość'
+  await expect(browserPage.locator('.page-header .eyebrow')).toHaveText(page.eyebrow);
+  await expect(browserPage.locator('.page-header h1')).toHaveText(page.title);
+  if (page.lead) {
+    await expect(browserPage.locator('.page-header .lead')).toHaveText(page.lead);
+  }
+  await expect(browserPage.locator('.kb-text-link')).toHaveText(
+    `${page.allArticlesLabel} →`
   );
+  await expect(browserPage.locator('.kb-disclaimer')).toHaveText(page.disclaimer);
 });
 
-test('the products tile opens the product list', async ({ page }) => {
-  await page.goto('baza-wiedzy/');
+test('a normal section tile opens the section page', async ({ page: browserPage }) => {
+  const section = sections.find((candidate) => candidate.kind !== 'supplements');
+  expect(section).toBeTruthy();
+  if (!section) return;
 
-  await page.locator('.knowledge-tile').nth(1).click();
+  await browserPage.goto('baza-wiedzy/');
+  await browserPage.locator(`.knowledge-tile[data-section="${section.slug}"]`).click();
 
-  await expect(page).toHaveURL(/\/produkty\/?$/);
-  await expect(page.locator('h1').first()).toHaveText(
-    'Suplementy i probiotyki – co mówią badania'
+  await expect(browserPage).toHaveURL(
+    new RegExp(`/baza-wiedzy/${section.slug}/?$`)
   );
+  await expect(browserPage.locator('.page-header h1')).toHaveText(section.title);
 });
 
-test('stacks the tiles on narrow screens', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('baza-wiedzy/');
+test('the supplements tile opens the products page', async ({ page: browserPage }) => {
+  const section = sections.find((candidate) => candidate.kind === 'supplements');
+  expect(section).toBeTruthy();
+  if (!section) return;
 
-  const boxes = await page.locator('.knowledge-tile').evaluateAll((elements) =>
+  await browserPage.goto('baza-wiedzy/');
+  await browserPage.locator(`.knowledge-tile[data-section="${section.slug}"]`).click();
+
+  await expect(browserPage).toHaveURL(/\/produkty\/?$/);
+  await expect(browserPage.locator('.page-header h1')).not.toBeEmpty();
+});
+
+test('stacks the tiles on narrow screens', async ({ page: browserPage }) => {
+  await browserPage.setViewportSize({ width: 390, height: 844 });
+  await browserPage.goto('baza-wiedzy/');
+
+  const boxes = await browserPage.locator('.knowledge-tile').evaluateAll((elements) =>
     elements.map((element) => {
       const { top, bottom, left } = element.getBoundingClientRect();
       return { top, bottom, left };
     })
   );
 
-  expect(boxes).toHaveLength(2);
-  expect(boxes[1].top).toBeGreaterThanOrEqual(boxes[0].bottom - 1);
-  expect(Math.abs(boxes[1].left - boxes[0].left)).toBeLessThan(2);
+  expect(boxes).toHaveLength(sections.length);
+  for (let index = 1; index < boxes.length; index += 1) {
+    expect(boxes[index].top).toBeGreaterThanOrEqual(boxes[index - 1].bottom - 1);
+    expect(Math.abs(boxes[index].left - boxes[index - 1].left)).toBeLessThan(2);
+  }
 });
