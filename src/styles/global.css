@@ -1234,6 +1234,9 @@
   .kb-disclaimer {
     @apply mt-10 rounded-xl border border-line bg-bg-soft px-4 py-3 text-[0.82rem] text-text-muted;
   }
+  .kb-hub-top {
+    @apply mb-6 flex flex-wrap items-center justify-end gap-4;
+  }
   .kb-hub-footer {
     @apply mt-8 flex flex-col items-start gap-4;
   }
@@ -1250,6 +1253,9 @@
     .kb-grid,
     .kb-topic-grid {
       @apply grid-cols-1;
+    }
+    .kb-hub-top {
+      @apply justify-start;
     }
   }
   @media (prefers-reduced-motion: reduce) {

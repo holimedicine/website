@@ -24,6 +24,10 @@ const page = pageEntry.data;
   <PageHeader eyebrow={page.eyebrow} title={page.title} lead={page.lead || undefined} />
 
   <section class="section site-container">
+    <div class="kb-hub-top reveal">
+      <a class="kb-text-link" href={withBase('/edukacja/')}>{page.allArticlesLabel} →</a>
+    </div>
+
     <div class="knowledge-grid reveal">
       {
         sections.map((section, index) => {
@@ -59,7 +63,6 @@ const page = pageEntry.data;
     </div>
 
     <div class="kb-hub-footer reveal">
-      <a class="kb-text-link" href={withBase('/edukacja/')}>{page.allArticlesLabel} →</a>
       <p class="kb-disclaimer">{page.disclaimer}</p>
     </div>
   </section>

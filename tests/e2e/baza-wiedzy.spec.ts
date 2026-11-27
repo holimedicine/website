@@ -44,6 +44,16 @@ test('shows the editable hub header and the all-articles link', async ({ page: b
     `${page.allArticlesLabel} →`
   );
   await expect(browserPage.locator('.kb-disclaimer')).toHaveText(page.disclaimer);
+
+  const linkIsAboveTiles = await browserPage.evaluate(() => {
+    const link = document.querySelector('.kb-text-link');
+    const grid = document.querySelector('.knowledge-grid');
+    if (!link || !grid) return false;
+    return Boolean(
+      link.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING
+    );
+  });
+  expect(linkIsAboveTiles).toBe(true);
 });
 
 test('a normal section tile opens the section page', async ({ page: browserPage }) => {
